@@ -14,6 +14,7 @@ import Box from './Box'
 
 const Flex = styled(Box)`
   display: flex;
+  flex-shrink: 0;
 
 	${alignItems}
   ${flex}

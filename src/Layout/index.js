@@ -16,22 +16,22 @@ const Layout = ({ children }) => {
   // }, []);
 
   return (
-    <>
+    <Box
+      width={1}
+      height={"100vh"}
+      style={{
+        overflow: "hidden"
+      }}
+    >
       <Header />
 
-      <Flex
-        width={1}
-        height={"100%"}
-        // bg="backing"
-        // justifyContent="center"
-        // alignItems="center"
-      >
+      <Flex height={"calc(100% - 64px)"} width={1}>
         <Sidenav />
         <Chat />
         <Page>{children}</Page>
       </Flex>
       {/* <Footer /> */}
-    </>
+    </Box>
   );
 };
 

@@ -101,11 +101,11 @@ export default p => {
   };
 
   return (
-    <Sidebar p={2} width={350} bg="backingDark" alignItems="center">
+    <Sidebar p={2} width={330} bg="backingDark" alignItems="center">
       <Heading />
-      <Text fontSize={4} color="text">
+      {/* <Text fontSize={4} color="text">
         Chat
-      </Text>
+      </Text> */}
 
       <Flex
         flex={1}

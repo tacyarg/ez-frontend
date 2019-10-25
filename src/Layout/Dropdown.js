@@ -14,7 +14,8 @@ const UserMenu = ({ entries, children }) => {
     <Flex
       style={{
         cursor: "pointer",
-        position: "relative"
+        position: "relative",
+        zIndex: 999
       }}
       onMouseEnter={toggleMenu}
       onMouseLeave={toggleMenu}

@@ -18,6 +18,7 @@ const colors = {
   offwhiteBorder: '#ececec',
   border: '#1b1b1b',
   blue: '#00aeef',
+  yellow: '#ffd200',
   // #232a30
   // old
   white: "#fff",

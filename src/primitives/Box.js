@@ -22,22 +22,28 @@ import {
   borderBottom,
   borderTop,
   borderLeft,
+  borderColor,
   fontFamily,
   boxShadow,
-  zIndex
+  zIndex,
+  overflow,
+  background
 } from "styled-system";
 import theme from "../styles/theme";
 
 const Box = styled.div`
+  // position: relative;
   box-sizing: border-box;
 
   // shadow-bottom: ${p =>
     p.shadowBottom ? "0px 10px 10px -10px black" : "none"}
   // shadow-top: ${p => (p.shadowTop ? "0px -10px 10px -10px black" : "none")}
 
+  ${background}
   ${zIndex}
   ${boxShadow}
-	${borderRadius}
+  ${borderRadius}
+  ${borderColor}
   ${border}
   ${borderRight}
   ${borderLeft}
@@ -60,7 +66,7 @@ const Box = styled.div`
   ${minHeight}
   ${maxHeight}
   ${fontFamily}
-
+  ${overflow}
 
   ::-webkit-scrollbar {
     background-color: ${theme.colors.black};
