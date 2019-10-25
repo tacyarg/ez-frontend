@@ -25,6 +25,46 @@ const SpinnerBet = styled(Box)`
   // min-width: 40px;
 `;
 
+const TopArrow = styled(Box)`
+  display: inline-block;
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 50%;
+
+  margin-left: -13px;
+  -ms-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+
+  border-bottom: 26px solid transparent;
+  border-top: 26px solid transparent;
+
+  z-index: 2;
+  top: -13px;
+  border-right: 26px solid rgba(27, 27, 28, 1);
+`;
+
+const BottomArrow = styled(Box)`
+  display: inline-block;
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 50%;
+
+  margin-left: -13px;
+  -ms-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+
+  border-bottom: 26px solid transparent;
+  border-top: 26px solid transparent;
+
+  z-index: 2;
+  bottom: -13px;
+  border-left: 26px solid rgba(27, 27, 28, 1);
+`;
+
 const Spinner = ({
   value = 119.71,
   bets = [
@@ -53,10 +93,15 @@ const Spinner = ({
 }) => {
   return (
     <Flex bg="backingLight" height={100} border="1px solid #18181a">
+      {/* TODO: show only based on state. */}
+      <TopArrow />
+      <BottomArrow />
+
       <Flex overflow="hidden" width={1}>
+        {/* TODO: write logic to create "spin" effect. */}
         <Flex
-        width={`${bets.length}0%`}
-        // width={`${items.length}%`}
+          width={`${bets.length}0%`}
+          // width={`${items.length}%`}
         >
           {bets.map(({ color = "#8847ff", ...b }, i) => {
             let background = `repeating-linear-gradient(

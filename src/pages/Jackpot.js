@@ -20,7 +20,7 @@ const Players = p => {
 
 export default p => {
   return (
-    <Box bg="backing" height={'100%'}>
+    <Box bg="rgba(0,0,0,0.7)" height={'100%'}>
       <BetItems />
       <Spinner />
       <Players />

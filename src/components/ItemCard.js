@@ -2,10 +2,11 @@ import React from "react";
 import { Flex, Badge, Box, Page, Avatar, Image, Text } from "../primitives";
 
 export default ({
-  price = 25.99, 
-  name = 'Afterglow Wired Controller for Xbox One', 
+  price = 25.99,
+  name = "Afterglow Wired Controller for Xbox One",
   // image = 'https://files.opskins.media/file/vgo-img/item/wax-key-300.png'
-  image = 'https://files.opskins.media/file/vgo-img/item/awp-golden-illusion-factory-new-300.png'
+  // image = 'https://files.opskins.media/file/vgo-img/item/awp-golden-illusion-factory-new-300.png'
+  image = "https://static.wax.io/d-img/dynamic-apps/img/phpqkombg-ca194a2788.png"
 }) => {
   return (
     <Image
