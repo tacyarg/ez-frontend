@@ -7,7 +7,7 @@ import theme from "../styles/theme";
 
 const Styled = styled.input`
   background-color: rgba(0, 0, 0, 0);
-  font-size: ${theme.fontSizes[3]};
+  font-size: ${theme.fontSizes[2]};
   border: none;
   flex: 1;
   color: white;
@@ -28,10 +28,11 @@ const StyledInput = ({
   children,
   icon,
   error,
+  width,
   ...props
 }) =>
   withWrapper ? (
-    <StyledInput.Wrapper width={1} error={error}>
+    <StyledInput.Wrapper width={width} error={error} alignItems="center">
       {icon && <Image src={icon} size={20} mr={2} />}
       {label && (
         <>

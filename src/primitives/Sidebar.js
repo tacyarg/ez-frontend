@@ -12,7 +12,8 @@ const Sidebar = styled(Flex)`
   border-right: 1px solid rgba(0, 0, 0, 0.2);
 
   @media only screen and (max-width: 600px) {
-    display: ${p => (p.open ? 'block' : 'none')};
+    display: none;
+    // display: '${p => (p.open ? 'block' : 'none')}';
   }
 `
 

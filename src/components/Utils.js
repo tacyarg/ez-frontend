@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 
 import {
   Card,
@@ -9,32 +9,32 @@ import {
   Image,
   Sidebar,
   Spinner,
-  Divider,
-} from '../primitives'
+  Divider
+} from "../primitives";
 
-import Assets from './Assets'
+import Assets from "./Assets";
 
-import axios from 'axios'
-import ReactMarkdown from 'react-markdown'
+import axios from "axios";
+import ReactMarkdown from "react-markdown";
 
-import assert from 'assert'
+import assert from "assert";
 
-import moment from 'moment'
+import moment from "moment";
 
 const RenderError = ({
   color,
-  message = 'Nothing happen yet, check back later.',
+  message = "Nothing happen yet, check back later."
 }) => {
   return (
     <Card flexDirection="column" m={2}>
       <Text color={color}>{message}</Text>
     </Card>
-  )
-}
+  );
+};
 
 // render shallow object.
 const RenderObject = ({ heading, data, ...p }) => {
-  const valid = !data || typeof data !== 'object' ? false : true
+  const valid = !data || typeof data !== "object" ? false : true;
 
   // console.log('RenderObject', data)
   return (
@@ -48,7 +48,7 @@ const RenderObject = ({ heading, data, ...p }) => {
       )}
       {valid ? (
         Object.keys(data).map(k => {
-          if (typeof data[k] === 'object') return
+          if (typeof data[k] === "object") return;
           // if (!data[k]) return
 
           return (
@@ -56,44 +56,44 @@ const RenderObject = ({ heading, data, ...p }) => {
               key={k}
               label={`${k.toUpperCase()}:`}
               value={data[k]}
-              type={k === 'created' || k === 'updated' ? 'time' : null}
+              type={k === "created" || k === "updated" ? "time" : null}
             />
-          )
+          );
         })
       ) : (
         <Text p={2}>Nothing to show yet, check back later.</Text>
       )}
     </Card>
-  )
-}
+  );
+};
 
 const renderProp = (value, type) => {
   // console.log('render', typeof value, value)
   switch (type || typeof value) {
-    case 'time':
-      return moment(value).calendar()
-    case 'boolean':
-      return Boolean(value) ? 'yes' : 'no'
-    case 'number':
-      return <Text.Number value={value} />
+    case "time":
+      return moment(value).calendar();
+    case "boolean":
+      return Boolean(value) ? "yes" : "no";
+    case "number":
+      return <Text.Number value={value} />;
     default:
-      return value
+      return value;
   }
-}
+};
 
 RenderObject.Prop = ({ label, value, type }) => {
   return (
     <Flex
-      flexDirection={['column', 'row']}
-      alignItems={['center', 'end']}
+      flexDirection={["column", "row"]}
+      alignItems={["center", "end"]}
       m={1}
     >
       <Text bold>{label}</Text>
       <Box mx={1} />
       <Text>{renderProp(value, type)}</Text>
     </Flex>
-  )
-}
+  );
+};
 
 const LoadingPage = p => {
   return (
@@ -106,20 +106,20 @@ const LoadingPage = p => {
     >
       <Spinner>/</Spinner>
     </Flex>
-  )
-}
+  );
+};
 
 const MarkdownLink = ({ link }) => {
-  const [state, setState] = useState(null)
+  const [state, setState] = useState(null);
 
   const getMarkdown = async link => {
-    const { data } = await axios(link).catch(console.error)
-    return setState(data)
-  }
+    const { data } = await axios(link).catch(console.error);
+    return setState(data);
+  };
 
   useEffect(() => {
-    getMarkdown(link)
-  }, [])
+    getMarkdown(link);
+  }, []);
 
   return state ? (
     <Box p={4} width={[1, 2 / 3]}>
@@ -127,44 +127,44 @@ const MarkdownLink = ({ link }) => {
     </Box>
   ) : (
     <LoadingPage />
-  )
-}
+  );
+};
 
 const generateCSV = data => {
-  const { parse } = require('json2csv')
+  const { parse } = require("json2csv");
   const fields = data[0]
     ? Object.keys(data[0])
-    : ['id', 'price', 'closingPrice', 'profit', 'change']
+    : ["id", "price", "closingPrice", "profit", "change"];
   return parse(data, {
     fields,
-    flatten: true,
-  })
-}
+    flatten: true
+  });
+};
 
 const downloadFile = async (filename, data) => {
-  assert(filename, 'filename required')
-  assert(data, 'data required')
+  assert(filename, "filename required");
+  assert(data, "data required");
 
-  let link = document.createElement('a')
-  link.id = 'download-csv'
+  let link = document.createElement("a");
+  link.id = "download-csv";
   link.setAttribute(
-    'href',
-    'data:text/plain;charset=utf-8,' + encodeURIComponent(data)
-  )
-  link.setAttribute('download', filename)
-  document.body.appendChild(link)
-  document.querySelector('#download-csv').click()
+    "href",
+    "data:text/plain;charset=utf-8," + encodeURIComponent(data)
+  );
+  link.setAttribute("download", filename);
+  document.body.appendChild(link);
+  document.querySelector("#download-csv").click();
   // var encodedUri = encodeURI(csv)
   // console.log('URI:', encodedUri)
   // return window.open(encodedUri)
-}
+};
 
-const DownloadCSV = ({ filename = 'list.csv', data = [] }) => (
+const DownloadCSV = ({ filename = "list.csv", data = [] }) => (
   <Button
     type="simple"
     onClick={e => {
-      const csv = generateCSV(data)
-      downloadFile(filename, csv)
+      const csv = generateCSV(data);
+      downloadFile(filename, csv);
     }}
   >
     <Flex alignItems="center" justifyContent="center">
@@ -173,15 +173,15 @@ const DownloadCSV = ({ filename = 'list.csv', data = [] }) => (
       Download .csv
     </Flex>
   </Button>
-)
+);
 
-const DownloadJson = ({ filename = 'row.json', data = {} }) => {
+const DownloadJson = ({ filename = "row.json", data = {} }) => {
   return (
     <Button
       type="simple"
       onClick={e => {
-        data = JSON.stringify(data, null, 2)
-        downloadFile(filename, data)
+        data = JSON.stringify(data, null, 2);
+        downloadFile(filename, data);
       }}
     >
       <Flex alignItems="center" justifyContent="center">
@@ -190,17 +190,48 @@ const DownloadJson = ({ filename = 'row.json', data = {} }) => {
         Download .json
       </Flex>
     </Button>
-  )
+  );
+};
+
+function getDark(hex) {
+  let thing = [
+    ("0x" + hex[1] + hex[2]) | 0,
+    ("0x" + hex[3] + hex[4]) | 0,
+    ("0x" + hex[5] + hex[6]) | 0
+  ];
+  thing[0] -= 27;
+  thing[1] -= 10;
+  thing[2] -= 10;
+  return `${thing[0]}, ${thing[1]}, ${thing[2]}`;
+}
+
+function generateBackground(i, color) {
+  return `repeating-linear-gradient(
+    ${i % 2 ? `-50deg` : `50deg`},
+    ${color} 1px,
+    rgba(${getDark(color)},1) 2px,
+    rgba(${getDark(color)},1) 11px,
+    ${color} 12px,
+    ${color} 20px
+  )`;
+}
+
+function hexToRgb(hex) {
+  let thing = ['0x' + hex[1] + hex[2] | 0, '0x' + hex[3] + hex[4] | 0, '0x' + hex[5] + hex[6] | 0];
+  return `${thing[0]}, ${thing[1]}, ${thing[2]}`;
 }
 
 export default {
+  hexToRgb,
+  getDark,
+  generateBackground,
   RenderError,
   RenderObject,
   LoadingPage,
   MarkdownLink,
   RenderMarkdown(p) {
-    return <ReactMarkdown {...p} />
+    return <ReactMarkdown {...p} />;
   },
   DownloadCSV,
-  DownloadJson,
-}
+  DownloadJson
+};

@@ -43,7 +43,7 @@ const Image = ({ children, ...props }) => (
 Image.displayName = "Image";
 
 Image.defaultProps = {
-  borderRadius: "normal"
+  // borderRadius: "normal"
 };
 
 export default Image;

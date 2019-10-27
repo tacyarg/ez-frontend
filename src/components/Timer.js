@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {} from "styled-system";
-import { Box, Flex } from "../../primitives";
+import { Box, Flex } from "../primitives";
 
 const Timer = styled(Flex)`
   z-index: -1;

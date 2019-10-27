@@ -27,13 +27,14 @@ import {
   boxShadow,
   zIndex,
   overflow,
-  background
+  background,
 } from "styled-system";
 import theme from "../styles/theme";
 
 const Box = styled.div`
   // position: relative;
   box-sizing: border-box;
+  // flex-shrink: 0;
 
   // shadow-bottom: ${p =>
     p.shadowBottom ? "0px 10px 10px -10px black" : "none"}

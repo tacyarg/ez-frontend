@@ -9,6 +9,8 @@ import Theme from "./Theme";
 
 import Utils from "./components/Utils";
 
+import Wiring from "./libs/wiring";
+
 const START = async p => {
   // render the loading page for now...
   // ReactDOM.render(
@@ -32,9 +34,9 @@ const START = async p => {
   return ReactDOM.render(
     <Theme>
       <HashRouter>
-        <App
-        // actions={actions} user={user} token={token}
-        />
+        <Wiring.Provider>
+          <App />
+        </Wiring.Provider>
       </HashRouter>
     </Theme>,
     document.getElementById("app")

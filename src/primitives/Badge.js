@@ -5,7 +5,7 @@ import {} from "styled-system";
 import { Box, Flex } from "./";
 import theme from "../styles/theme";
 
-const Badge = styled.div`
+const Badge = styled(Flex)`
   height: 40px;
   line-height: 40px;
   // position: absolute;
@@ -19,7 +19,10 @@ const Badge = styled.div`
 `;
 
 Badge.displayName = "Badge";
-Badge.defaultProps = {};
+Badge.defaultProps = {
+  alignItems: "center"
+
+};
 
 const LeftTriangle = styled.div`
   // position: absolute;

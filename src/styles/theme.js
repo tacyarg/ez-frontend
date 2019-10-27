@@ -5,6 +5,7 @@ const breakpoints = ["40em", "52em", "64em", "80em"];
 const space = [0, 4, 8, 16, 32, 64, 128, 160, 256, 512];
 
 const colors = {
+  subnavbg: '#434346',
   offwhite: "#f6f6f6",
   text: "#dcdcdc",
   subtext: '#979797',
@@ -25,7 +26,7 @@ const colors = {
   black: "#000",
   orange: "#FB6C2B",
   foregroundBacking: "#252B31",
-  text: "#52565A",
+  // text: "#52565A",
   backing: "#191E23",
   darkBacking: "#171C20",
   consumer: "#B0C3D9",
@@ -54,6 +55,9 @@ const colors = {
   get lightCard() {
     return lighten(0.04, this.foregroundBacking);
   },
+  get shaded() {
+    return opacify(0.5, this.backingDark)
+  },
   twitter: "#1DA1F2",
   twitch: "#6441A4",
   discord: "#7289DA",
@@ -75,7 +79,8 @@ const colorStyles = {
 
 const borders = {
   none: "none",
-  normal: "1px solid"
+  normal: "1px solid",
+  thick: "2px solid"
 };
 
 const radii = {

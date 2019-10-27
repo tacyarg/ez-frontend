@@ -1,9 +1,27 @@
 import React from "react";
 
 import styled from "styled-components";
-import { width, height, backgroundPosition, backgroundImage, backgroundSize } from "styled-system";
+import {
+  width,
+  height,
+  backgroundPosition,
+  backgroundImage,
+  backgroundSize
+} from "styled-system";
 
 import Box from "./Box";
+import theme from "../styles/theme";
+
+const clickable = props => {
+  return `
+      cursor: pointer;
+
+      &:hover,
+      &:focus {
+        // background-color: 
+      };
+  `;
+};
 
 const Styled = styled(Box)`
   background-size: contain;
@@ -15,6 +33,7 @@ const Styled = styled(Box)`
   ${backgroundSize}
   ${height}
   ${width}
+  ${clickable}
 
   mask: url('${p => p.src}') no-repeat ;
 `;

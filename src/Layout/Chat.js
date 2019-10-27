@@ -16,7 +16,9 @@ import {
   Input
 } from "../primitives";
 
-import FakeChat from "../libs/fake/messages";
+import Level from '../components/Level'
+import Wiring from "../libs/wiring";
+
 
 const Online = p => {
   const [count, setCount] = useState(100);
@@ -41,7 +43,7 @@ const Heading = p => {
   );
 };
 
-const Room = ({ messages = FakeChat() }) => {
+const Room = ({ messages = [] }) => {
   return (
     <Flex
       flexDirection="column"
@@ -54,12 +56,14 @@ const Room = ({ messages = FakeChat() }) => {
   );
 };
 
-export default p => {
-  const [messages, setMessages] = useState(FakeChat());
+
+export default Wiring.connect(p => {
+  const { chat, dispatch } = p;
+
   const [pauseScroll, setPauseScroll] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
 
   let chatElement = null;
 
@@ -76,38 +80,31 @@ export default p => {
   const handleKeyPress = event => {
     if (loading) return;
     if (event.key == "Enter") {
-      sendChatMessage();
+      dispatchMessage();
     }
   };
 
-  useEffect(() => {
-    // sessionScope.on('change', setSessions)
-    // chatScope.on('messages', setMessages)
-
-    scrollToBottom();
-
-    return () => {
-      // chatScope.disconnect()
-      // sessionScope.disconnect()
-    };
-  }, []);
+  const dispatchMessage = () => {
+    if (message.length < 1) return;
+    setLoading(true);
+    dispatch("sendChatMessage")(message);
+    setMessage("");
+    setLoading(false);
+  };
 
   useEffect(() => {
     scrollToBottom();
   });
 
-  const sendChatMessage = () => {
-    // TODO: do somthing relevant...
-  };
-
   return (
     <Sidebar p={2} width={330} bg="backingDark" alignItems="center">
       <Heading />
-      {/* <Text fontSize={4} color="text">
-        Chat
-      </Text> */}
+      <Text fontSize={1} color="text">
+        {p.time}
+      </Text>
 
       <Flex
+        width={1}
         flex={1}
         my={3}
         bg="backingLight"
@@ -127,12 +124,18 @@ export default p => {
           chatElement = el;
         }}
       >
-        {messages.map((m, k) => {
+        {chat.messages.map((m, k) => {
           return (
             <Box m={2} key={m.id || k}>
               <Flex alignItems="center" p={1}>
                 <Avatar size={30} src={m.image} mr={2} />
-                <Text fontWeight="bold" letterSpacing="slight" mr={2}>
+                <Level rank={m.rank} />
+                <Text
+                  fontWeight="bold"
+                  letterSpacing="slight"
+                  mr={2}
+                  color="offwhite"
+                >
                   {m.username}
                 </Text>
               </Flex>
@@ -145,7 +148,12 @@ export default p => {
         })}
       </Flex>
 
-      <Input onKeyDown={handleKeyPress} placeholder="Say something..." />
+      <Input
+        value={message}
+        onKeyDown={handleKeyPress}
+        onChange={e => setMessage(e.target.value)}
+        placeholder="Say something..."
+      />
     </Sidebar>
   );
-};
+});

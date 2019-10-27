@@ -1,5 +1,7 @@
 import React from "react";
 
+// TODO: use the wildcard import
+
 import Logo from "../assets/images/logo.png";
 import Avatar from "../assets/images/avatar.jpg";
 
@@ -15,11 +17,15 @@ import Question from "../assets/images/icons/question-circle.svg";
 import CaretDown from "../assets/images/icons/caret-down.svg";
 import UserCog from "../assets/images/icons/user-cog.svg";
 import SignOut from "../assets/images/icons/sign-out-alt.svg";
+import Close from "../assets/images/icons/times.svg";
 
 import VolumeDown from "../assets/images/icons/volume-down.svg";
 import VolumeMute from "../assets/images/icons/volume-mute.svg";
 import VolumeOff from "../assets/images/icons/volume-off.svg";
 import VolumeUp from "../assets/images/icons/volume-up.svg";
+
+import Gun from "../assets/images/icons/gun.png";
+import Coins from "../assets/images/icons/coins.svg";
 
 import User from "../assets/images/icons/user.svg";
 import Edit from "../assets/images/icons/edit.svg";
@@ -42,6 +48,8 @@ import Twitter from "../assets/images/icons/twitter.svg";
 import Telegram from "../assets/images/icons/telegram.svg";
 import Github from "../assets/images/icons/github.svg";
 import Discord from "../assets/images/icons/discord.svg";
+
+import Background from "../assets/images/jackpotBackground.png";
 
 import { Box, Icon, Image } from "../primitives";
 import theme from "../styles/theme";
@@ -83,7 +91,10 @@ const sets = mapAssets({
     VolumeDown,
     VolumeUp,
     VolumeMute,
-    VolumeOff
+    VolumeOff,
+    Gun,
+    Coins,
+    Close
   },
   Processors: {
     Bitcoin,
@@ -105,5 +116,19 @@ const sets = mapAssets({
 export default {
   ...sets,
   Logo: p => <Image src={Logo} {...p} />,
-  Avatar: p => <Image size={40} src={Avatar} m={2} {...p} />
+  Avatar: p => <Image size={40} src={Avatar} m={2} {...p} />,
+  Background: ({ children, ...p }) => {
+    return (
+      <Image
+        width={1}
+        height={"100%"}
+        backgroundSize="cover"
+        src={Background}
+        bg="backingDark"
+        {...p}
+      >
+        {children}
+      </Image>
+    );
+  }
 };

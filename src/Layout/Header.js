@@ -56,6 +56,7 @@ export default p => {
       bg="offwhite"
       alignItems="center"
       // justifyContent="center"
+      height={64}
     >
       <Assets.Logo mx={15} width={150} height={64} />
       <Box mx="auto" />

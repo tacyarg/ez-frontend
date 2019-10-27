@@ -17,15 +17,15 @@ import Box from "./Box";
 
 const Text = styled(Box)`
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ${p => p.cutoff ? 'ellipsis' : 'none'};
   white-space: ${p => (p.wrap ? "wrap" : "nowrap")};
-  color: white;
+  color: ${theme.colors.text};
 
-  // letter-spacing: ${theme.letterSpacings.slight};
-  // text-shadow: ${props => (props.color ? "0 0 0.05em" : "none")};
+  letter-spacing: ${theme.letterSpacings.slight};
+  // text-shadow: 0 0 0.05em;
 
-  // -webkit-font-smoothing: antialiased !important;
-  // text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+  -webkit-font-smoothing: antialiased !important;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
 
 	${color}
 	${fontSize}

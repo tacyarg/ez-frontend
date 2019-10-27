@@ -7,6 +7,7 @@ import Chat from "./Chat";
 
 import { Box, Flex, Page } from "../primitives";
 import Pages from "../pages";
+import Assets from "../components/Assets";
 
 const Layout = ({ children }) => {
   // const links = Object.keys(Pages).reduce((memo, k) => {
@@ -28,7 +29,7 @@ const Layout = ({ children }) => {
       <Flex height={"calc(100% - 64px)"} width={1}>
         <Sidenav />
         <Chat />
-        <Page>{children}</Page>
+        <Page as={Assets.Background}>{children}</Page>
       </Flex>
       {/* <Footer /> */}
     </Box>
