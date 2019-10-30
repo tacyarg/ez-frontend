@@ -221,7 +221,15 @@ function hexToRgb(hex) {
   return `${thing[0]}, ${thing[1]}, ${thing[2]}`;
 }
 
+function parseValue(data = 0) {
+  return Number(data).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  })
+}
+
 export default {
+  parseValue,
   hexToRgb,
   getDark,
   generateBackground,

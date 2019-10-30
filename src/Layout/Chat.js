@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import ReactDOM from "react-dom";
 
 import Assets from "../components/Assets";
@@ -16,20 +16,45 @@ import {
   Input
 } from "../primitives";
 
-import Level from '../components/Level'
+import Level from "../components/Level";
 import Wiring from "../libs/wiring";
 
+const Online = Wiring.connectMemo(
+  ({ online = 100 }) => {
+    console.log("Online", online);
 
-const Online = p => {
-  const [count, setCount] = useState(100);
+    const [count, setCount] = useState(online);
 
-  return (
-    <Flex alignItems="center" justifyContent="center">
-      {count}
-      <Assets.Icons.User bg="red" ml={2} size={18} />
-    </Flex>
-  );
-};
+    return (
+      <Flex alignItems="center" justifyContent="center">
+        {count}
+        <Assets.Icons.User bg="red" ml={2} size={18} />
+      </Flex>
+    );
+  },
+  p => {
+    return {
+      online: p.online
+    };
+  }
+);
+
+const Clock = Wiring.connectMemo(
+  ({ time = Date.now() }) => {
+    console.log("Clock", time);
+
+    return (
+      <Text fontSize={1} color="text">
+        {time}
+      </Text>
+    );
+  },
+  p => {
+    return {
+      time: p.time
+    };
+  }
+);
 
 const Heading = p => {
   return (
@@ -43,27 +68,36 @@ const Heading = p => {
   );
 };
 
-const Room = ({ messages = [] }) => {
+const SendChatMessage = () => {
+  const [message, setMessage] = useState("");
+  const handleKeyPress = event => {
+    if (event.key == "Enter") {
+      dispatchMessage();
+    }
+  };
+
+  const dispatchMessage = () => {
+    if (message.length < 1) return;
+    Wiring.dispatch("sendChatMessage")(message);
+    setMessage("");
+  };
+
   return (
-    <Flex
-      flexDirection="column"
-      m={2}
+    <Input
       width={1}
-      style={{
-        "flex-shrink": 0
-      }}
-    ></Flex>
+      value={message}
+      onKeyDown={handleKeyPress}
+      onChange={e => setMessage(e.target.value)}
+      placeholder="Say something..."
+    />
   );
 };
 
-
-export default Wiring.connect(p => {
-  const { chat, dispatch } = p;
+const Chat = p => {
+  console.log("Chat", p);
+  const { chat } = p;
 
   const [pauseScroll, setPauseScroll] = useState(false);
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState(null);
 
   let chatElement = null;
 
@@ -77,21 +111,6 @@ export default Wiring.connect(p => {
       maxScrollTop > 0 ? maxScrollTop : 0;
   };
 
-  const handleKeyPress = event => {
-    if (loading) return;
-    if (event.key == "Enter") {
-      dispatchMessage();
-    }
-  };
-
-  const dispatchMessage = () => {
-    if (message.length < 1) return;
-    setLoading(true);
-    dispatch("sendChatMessage")(message);
-    setMessage("");
-    setLoading(false);
-  };
-
   useEffect(() => {
     scrollToBottom();
   });
@@ -99,9 +118,7 @@ export default Wiring.connect(p => {
   return (
     <Sidebar p={2} width={330} bg="backingDark" alignItems="center">
       <Heading />
-      <Text fontSize={1} color="text">
-        {p.time}
-      </Text>
+      {/* <Clock /> */}
 
       <Flex
         width={1}
@@ -147,13 +164,13 @@ export default Wiring.connect(p => {
           );
         })}
       </Flex>
-
-      <Input
-        value={message}
-        onKeyDown={handleKeyPress}
-        onChange={e => setMessage(e.target.value)}
-        placeholder="Say something..."
-      />
+      <SendChatMessage />
     </Sidebar>
   );
+};
+
+export default Wiring.connectMemo(Chat, p => {
+  return {
+    chat: p.chat
+  };
 });

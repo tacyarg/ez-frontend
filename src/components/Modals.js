@@ -35,7 +35,7 @@ const Search = ({ onSearch }) => {
 
   const debouncedSearchTerm = useDebounce(search, 500);
   useEffect(() => {
-    if (search.length < 2) return;
+    // if (search.length < 2) return;
     onSearch(search);
   }, [debouncedSearchTerm]);
 
@@ -61,7 +61,7 @@ const WiredModal = ({
 }) => {
   return (
     <Modal isOpen={isOpen} width={[1, 2 / 3]} m={4}>
-      <Flex width={1} p={3}>
+      <Flex width={1} p={3} alignItems="center">
         <Text.Heading fontSize={6}>{title}</Text.Heading>
         <Box mx="auto" />
         <Assets.Icons.Close onClick={onClose} clickable />
@@ -95,11 +95,53 @@ const WiredModal = ({
 
 WiredModal.Deposit = Wiring.connect(
   React.memo(({ items = [], ...p }) => {
+    const [loading, setLoading] = useState(false);
+    const [cache, setCache] = useState(items);
+
+    const onSearch = value => {
+      console.log("searching:", value);
+
+      if (value.length < 2) return setCache(items);
+      setLoading(true);
+
+      const searchResults = items.filter(row => {
+        return ["price", "name", "rarity"].find(prop => {
+          if (!row[prop]) return null;
+          return row[prop]
+            .toString()
+            .toLowerCase()
+            .includes(value);
+        });
+      });
+
+      setLoading(false);
+      return setCache(searchResults);
+    };
+
+    const totalValue = cache
+      .reduce((memo, item) => {
+        memo += Number(item.price);
+        return memo;
+      }, 0)
+      .toFixed(2);
+
     return (
-      <WiredModal {...p} onSearch={console.log}>
+      <WiredModal
+        {...p}
+        onSearch={onSearch}
+        title={
+          <Flex alignItems="center">
+            Deposit Items:
+            <Box mx={1} />
+            <Text color="green" fontSize={4}>
+              {totalValue}
+            </Text>
+          </Flex>
+        }
+      >
         <Flex width={1} p={1} flexWrap="wrap" justifyContent="center">
-          {items.length > 0 ? (
-            items.map(item => {
+          {cache.length > 0 ? (
+            cache.map(item => {
               return <Cards.JackpotItem key={item.id} {...item} />;
             })
           ) : (

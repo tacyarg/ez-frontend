@@ -10,31 +10,27 @@ import Theme from "./Theme";
 import Utils from "./components/Utils";
 
 import Wiring from "./libs/wiring";
+// import Client from "./libs/client"
+
+import Socket from './libs/socket'
+
+
 
 const START = async p => {
-  // render the loading page for now...
-  // ReactDOM.render(
-  //   <Theme>
-  //     <Utils.LoadingPage bg="backing" />
-  //   </Theme>,
-  //   document.getElementById("app")
-  // );
 
-  // let actions = await Actions('https://api.fundingrate.io', null)
+  // connect to socket before we init the app...
+  const socket = await Socket('wss://socket.ezrage.chips.gg', (channel, channelState, fullState) => {
+    console.log("state changed:", channel, channelState)
+    Wiring.dispatch('updateChannelState')(channel, channelState)
+  })
 
-  // // if we have a token saved authenticate the user.
-  // const token = await actions.getLocalStorage('token')
-  // let user = null
-  // if (token) {
-  //   actions = await Actions('https://api.fundingrate.io', token)
-  //   user = await actions.me() // authenticate the user
-  // }
+  // socket.public('echo').then(console.log)
 
   // start the main react app.
   return ReactDOM.render(
     <Theme>
       <HashRouter>
-        <Wiring.Provider>
+        <Wiring.Provider socket={socket}>
           <App />
         </Wiring.Provider>
       </HashRouter>

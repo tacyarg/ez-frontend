@@ -55,42 +55,48 @@ const BottomArrow = styled(Box)`
 `;
 
 const Spinner = ({
-  value = 119.71,
+  state = "open",
+  items = [],
+  value = 5.43,
   bets = [
-    {
-      items: [],
-      value: 32.42,
-      id: "0",
-      color: "#e94c4c",
-      userid: "01010101"
-    },
-    {
-      items: [],
-      value: 32.42,
-      id: "1",
-      color: "#00aeef",
-      userid: "01010101"
-    },
-    {
-      items: [],
-      value: 54.87,
-      id: "1",
-      color: "#ffd200",
-      userid: "01010101"
-    }
+    // {
+    //   items: [],
+    //   value: 32.42,
+    //   id: "0",
+    //   color: "#e94c4c",
+    //   userid: "01010101"
+    // },
+    // {
+    //   items: [],
+    //   value: 32.42,
+    //   id: "1",
+    //   color: "#00aeef",
+    //   userid: "01010101"
+    // },
+    // {
+    //   items: [],
+    //   value: 54.87,
+    //   id: "1",
+    //   color: "#ffd200",
+    //   userid: "01010101"
+    // }
   ]
 }) => {
   return (
     <Flex bg="subnavbg" height={100} border="1px solid #18181a">
       {/* TODO: show only based on state. */}
-      <TopArrow />
-      <BottomArrow />
+      {state == "rolling" && (
+        <>
+          <TopArrow />
+          <BottomArrow />
+        </>
+      )}
 
       <Flex overflow="hidden" width={1}>
         {/* TODO: write logic to create "spin" effect. */}
         <Flex
-          width={`${bets.length}0%`}
-          // width={`${items.length}%`}
+          // width={`${bets.length}0%`}
+          width={`${items.length}%`} // of 100 (max items is 100)
         >
           {bets.map(({ color = "#8847ff", ...b }, i) => {
             const background = utils.generateBackground(i, color);
@@ -109,16 +115,16 @@ const Spinner = ({
   );
 };
 
-const RoundInfo = p => {
+const RoundInfo = ({ value = 5.43, items = [], config = {} }) => {
   return (
     <Flex position="absolute" width={1} top={-20} zIndex={2}>
       <Badge>
-        <Assets.Icons.Coins size={20} bg="yellow" /> <Box mx={1} /> 5.43
+        <Assets.Icons.Coins size={20} bg="yellow" /> <Box mx={1} />
+        {utils.parseValue(value)}
       </Badge>
       <Box mx="auto" />
       <Badge>
-        <Assets.Icons.Gun bg="yellow" />
-        (19/100)
+        <Assets.Icons.Gun bg="yellow" />({items.length}/{config.roundItemLimit})
       </Badge>
     </Flex>
   );
@@ -128,9 +134,9 @@ export default p => {
   return (
     // jackpotOverallBoxContain
     <Box position="relative" my={4} zIndex={1}>
-      <RoundInfo />
-      <Spinner />
-      <Timer />
+      <RoundInfo {...p} />
+      <Spinner {...p} />
+      <Timer value={p.timeleft} />
     </Box>
   );
 };

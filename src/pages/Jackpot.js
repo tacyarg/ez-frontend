@@ -1,24 +1,26 @@
 import React, { useState } from "react";
-
 import { Flex, Box, Text, Button } from "../primitives";
 import Spinner from "../components/Spinner";
 import Cards from "../components/Cards";
 import Assets from "../components/Assets";
 import Modal from "../components/Modals";
 
-const BetItems = ({
-  items = ["3", "3", "3", "3", "3", "3", "3", "3", "3", "3", "3", "3"]
-}) => {
+import Wiring from "../libs/wiring";
+import Utils from '../components/Utils'
+
+const BetItems = ({ players = {}, items = [] }) => {
   return (
     <Flex width={1} p={1}>
       {items.map(item => {
+        // merge the player metadata
+        item.user = players[item.userid];
         return <Cards.JackpotItem key={item.id} {...item} />;
       })}
     </Flex>
   );
 };
 
-const Bets = ({ bets = ["1", "1", "1", "1"] }) => {
+const Bets = ({ players = {}, bets = [] }) => {
   return (
     <Flex
       width={1}
@@ -28,7 +30,8 @@ const Bets = ({ bets = ["1", "1", "1", "1"] }) => {
       justifyContent="center"
     >
       {bets.map((b, index) => {
-        return <Cards.JackpotBet index={b.id || index} bet={b} m={2} />;
+        b.user = players[b.userid];
+        return <Cards.JackpotBet key={b.id} index={index} bet={b} m={2} />;
       })}
     </Flex>
   );
@@ -50,32 +53,44 @@ const Rule = ({ children, ...p }) => {
   );
 };
 
-const Rules = p => {
+const Rules = ({
+  betValueMax = 100000, // max value per bet
+  betValueMin = 1, // min value per bet
+  betItemLimit = 20 // max items per bet
+}) => {
   return (
     <Flex width={1} justifyContent="center">
       <Flex justifyContent="space-between" my={2}>
-        <Rule>SKIN LIMIT: 20</Rule>
-        <Rule>MIN BET: 1.00</Rule>
-        <Rule>MAX BET: ∞</Rule>
+        <Rule>SKIN LIMIT: {betItemLimit}</Rule>
+        <Rule>MIN BET: {Utils.parseValue(betValueMin)}</Rule>
+        <Rule>MAX BET: {Utils.parseValue(betValueMax)}</Rule>
       </Flex>
     </Flex>
   );
 };
 
-const CurrentRound = p => {
-  return (
-    <>
-      <Rules />
-      <BetItems />
-      <Spinner />
-      <Bets />
-    </>
-  );
-};
+const CurrentRound = Wiring.connect(
+  p => {
+    return (
+      <>
+        <Rules {...p.config} />
+        <BetItems {...p} />
+        <Spinner {...p} />
+        <Bets {...p} />
+      </>
+    );
+  },
+  p => p.jackpot
+);
 
 const History = p => {
   return <Box>{/* do somthing relevant */}</Box>;
 };
+
+// const calcOdds = (betValue, JackpotValue) => {
+//   const percent = betValue / JackpotValue;
+//   return (percent * 100).toFixed(0);
+// }
 
 const Nav = ({ onDeposit }) => {
   return (
@@ -92,7 +107,7 @@ const Nav = ({ onDeposit }) => {
 };
 
 export default p => {
-  const [isOpen, setOpen] = useState(true);
+  const [isOpen, setOpen] = useState(false);
 
   function toggleModal() {
     setOpen(!isOpen);

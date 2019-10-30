@@ -28,12 +28,7 @@ const JackpotItem = ({
       borderRadius="normal"
     >
       <Flex>
-        <Text color="yellow">
-          {Number(price).toLocaleString(undefined, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          })}
-        </Text>
+        <Text color="yellow">{utils.parseValue(price)}</Text>
         {user && (
           <>
             <Box mx="auto" />
@@ -69,11 +64,11 @@ const JackpotBet = ({ index = 0, bet = {}, ...p }) => {
       <Avatar src="" size={40} m={2} />
       <Box>
         <Flex alignItems="center">
-          <Level />
-          <Text>Tacyarg</Text>
+          <Level rank={bet.user.rank} />
+          <Text>{bet.user.username}</Text>
         </Flex>
         <Text color="subtext" fontSize={1}>
-          9 skins @ 24.19
+          {bet.items.length} skins @ {utils.parseValue(bet.value)}
         </Text>
       </Box>
       <Box mx="auto" />

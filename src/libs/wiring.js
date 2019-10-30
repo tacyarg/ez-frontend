@@ -9,11 +9,13 @@ const defaultState = {
   time: Date.now(),
   user: null,
   token: null,
+  online: 69,
   chat: {
     id: "en",
     messages: fake.messages()
   },
-  inventory: fake.inventory()
+  inventory: fake.inventory(),
+  jackpot: fake.jackpot()
 };
 
 //design your state reducers
@@ -25,6 +27,8 @@ const reducers = {
     };
   },
   tick(state, time) {
+    // state.time = Date.now()
+    // return state
     return {
       ...state,
       time: Date.now()
@@ -40,20 +44,44 @@ const reducers = {
       rank: 1,
       message
     };
-    
-    const newState = { ...state };
-    newState.chat.messages = [...state.chat.messages, message];
-    return newState;
+
+    return {
+      ...state,
+      chat: {
+        ...state.chat,
+        messages: [...state.chat.messages, message]
+      }
+    };
+  },
+  updateChannelState(channel, channelState) {
+    return {
+      ...state,
+      [channel]: channelState
+    }
   }
 };
 
 const wiring = Wiring(React, defaultState, reducers);
-
 // let {Provider,dispatch,connect} = wiring
 
 // tick time
-setInterval(function() {
+setInterval(function () {
   wiring.dispatch("tick")();
 }, 1000);
+
+function isEqual(prev, next) {
+  const prevKeys = Object.keys(prev);
+  const nextKeys = Object.keys(next);
+  if (prevKeys.length !== nextKeys.length) return false;
+  // console.log(prev, next)
+  return nextKeys.every(key => {
+    // console.log(key, prev[key] === next[key])
+    return prev[key] === next[key];
+  });
+}
+
+wiring.connectMemo = (component, map) => {
+  return wiring.connect(React.memo(component, isEqual), map);
+};
 
 export default wiring;
