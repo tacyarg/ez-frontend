@@ -24,7 +24,9 @@ const START = async p => {
     Wiring.dispatch('updateChannelState')(channel, channelState)
   })
 
-  // socket.public('echo').then(console.log)
+  console.log('socket', socket)
+
+  socket.public.call('echo', {test: true}).then(console.log).catch(console.error)
 
   // start the main react app.
   return ReactDOM.render(
