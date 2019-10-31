@@ -19,9 +19,19 @@ import Socket from './libs/socket'
 const START = async p => {
 
   // connect to socket before we init the app...
-  const socket = await Socket('wss://socket.ezrage.chips.gg', (channel, channelState, fullState) => {
-    console.log("state changed:", channel, channelState)
-    Wiring.dispatch('updateChannelState')(channel, channelState)
+  const socket = await Socket('wss://socket.ezrage.chips.gg', (type, channel, channelState, fullState) => {
+    if(type==='change'){
+      console.log("state changed:", channel, channelState)
+      Wiring.dispatch('updateChannelState')(channel, channelState)
+    }
+
+    if(type==='close'){
+      //server went offline
+    }
+
+    if(type === 'reconnect'){
+      //socket reconnected after being disconnected
+    }
   })
 
   console.log('socket', socket)
