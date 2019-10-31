@@ -3,19 +3,13 @@ import ReactDOM from "react-dom";
 
 import { BrowserRouter, HashRouter, Switch, Route } from "react-router-dom";
 
-import Actions from "./libs/actions";
 import App from "./App";
 import Theme from "./Theme";
 
-import Utils from "./components/Utils";
+// wire to the backend.
 import {Authenticate} from './libs/utils'
-
 import Wiring from "./libs/wiring";
-// import Client from "./libs/client"
-
 import Socket from './libs/socket'
-
-
 
 const START = async p => {
 
