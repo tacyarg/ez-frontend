@@ -34,8 +34,8 @@ const Profile = Wiring.connectMemo(
         <Text color="black">{p.user.username}</Text>
       </Dropdown>
     ) : (
-        <Buttons.Login />
-      )
+      <Buttons.Login />
+    )
   },
   ({ env, tokenid, ...props }) => {
     return { AUTH_URL: env.AUTH_URL, user: props.private.me, tokenid }
@@ -59,8 +59,8 @@ const Volume = p => {
       {muted ? (
         <Assets.Icons.VolumeMute size={24} mx={2} />
       ) : (
-          <Assets.Icons.VolumeUp size={24} mx={2} />
-        )}
+        <Assets.Icons.VolumeUp size={24} mx={2} />
+      )}
     </Box>
   )
 }
