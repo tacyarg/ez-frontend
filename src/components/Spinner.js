@@ -1,12 +1,12 @@
-import React from "react";
-import styled from "styled-components";
-import {} from "styled-system";
-import { Badge, Box, Flex, Text } from "../primitives";
-import utils from "./Utils";
-import Assets from "./Assets";
-import Timer from "./Timer";
+import React from 'react'
+import styled from 'styled-components'
+import {} from 'styled-system'
+import { Badge, Box, Flex, Text } from '../primitives'
+import utils from './Utils'
+import Assets from './Assets'
+import Timer from './Timer'
 
-import Wiring from "../libs/wiring";
+import Wiring from '../libs/wiring'
 
 const SpinnerBet = styled(Box)`
   will-change: transform;
@@ -14,7 +14,7 @@ const SpinnerBet = styled(Box)`
   display: inline-block;
   z-index: 1;
   // min-width: 40px;
-`;
+`
 
 const TopArrow = styled(Box)`
   display: inline-block;
@@ -34,7 +34,7 @@ const TopArrow = styled(Box)`
   z-index: 2;
   top: -13px;
   border-right: 26px solid rgba(27, 27, 28, 1);
-`;
+`
 
 const BottomArrow = styled(Box)`
   display: inline-block;
@@ -54,11 +54,11 @@ const BottomArrow = styled(Box)`
   z-index: 2;
   bottom: -13px;
   border-left: 26px solid rgba(27, 27, 28, 1);
-`;
+`
 
 const Spinner = Wiring.connectMemo(
   ({
-    state = "open",
+    state = 'open',
     items = [],
     value = 5.43,
     bets = [
@@ -83,12 +83,12 @@ const Spinner = Wiring.connectMemo(
       //   color: "#ffd200",
       //   userid: "01010101"
       // }
-    ]
+    ],
   }) => {
     return (
       <Flex bg="subnavbg" height={100} border="1px solid #18181a">
         {/* TODO: show only based on state. */}
-        {state == "rolling" && (
+        {state == 'rolling' && (
           <>
             <TopArrow />
             <BottomArrow />
@@ -101,8 +101,8 @@ const Spinner = Wiring.connectMemo(
             // width={`${bets.length}0%`}
             width={`${items.length}%`} // of 100 (max items is 100)
           >
-            {bets.map(({ color = "#8847ff", ...b }, i) => {
-              const background = utils.generateBackground(i, color);
+            {bets.map(({ color = '#8847ff', ...b }, i) => {
+              const background = utils.generateBackground(i, color)
               return (
                 <SpinnerBet
                   width={`${(b.value / value) * 100}%`}
@@ -110,22 +110,22 @@ const Spinner = Wiring.connectMemo(
                   key={b.id}
                   {...b}
                 />
-              );
+              )
             })}
           </Flex>
         </Flex>
       </Flex>
-    );
+    )
   },
   p => {
     return {
       state: p.jackpot.state,
       items: p.jackpot.items,
       value: p.jackpot.value,
-      bets: p.jackpot.bets
-    };
+      bets: p.jackpot.bets,
+    }
   }
-);
+)
 
 const RoundInfo = Wiring.connectMemo(
   ({ value = 5.43, items = [], config = {} }) => {
@@ -141,16 +141,16 @@ const RoundInfo = Wiring.connectMemo(
           {config.roundItemLimit})
         </Badge>
       </Flex>
-    );
+    )
   },
   p => {
     return {
       value: p.jackpot.value,
       items: p.jackpot.items,
-      config: p.jackpot.config
-    };
+      config: p.jackpot.config,
+    }
   }
-);
+)
 
 export default p => {
   return (
@@ -160,5 +160,5 @@ export default p => {
       <Spinner />
       <Timer />
     </Box>
-  );
-};
+  )
+}

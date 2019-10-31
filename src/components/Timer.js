@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import {} from "styled-system";
-import { Box, Flex } from "../primitives";
-import Wiring from "../libs/wiring";
+import React from 'react'
+import styled from 'styled-components'
+import {} from 'styled-system'
+import { Box, Flex } from '../primitives'
+import Wiring from '../libs/wiring'
 
 const Timer = styled(Flex)`
   z-index: -1;
@@ -11,10 +11,10 @@ const Timer = styled(Flex)`
   bottom: -5px;
   left: 25%;
   background-color: rgb(20, 20, 21);
-`;
+`
 
-Timer.displayName = "Timer";
-Timer.defaultProps = {};
+Timer.displayName = 'Timer'
+Timer.defaultProps = {}
 
 const LeftTriangle = styled.div`
   position: absolute;
@@ -26,7 +26,7 @@ const LeftTriangle = styled.div`
 
   left: -10px;
   border-right: 10px solid rgb(23, 23, 25);
-`;
+`
 
 const RightTriangle = styled.div`
   position: absolute;
@@ -38,28 +38,28 @@ const RightTriangle = styled.div`
 
   right: -10px;
   border-left: 10px solid rgb(23, 23, 25);
-`;
+`
 
 const Progress = styled(Flex)`
   margin-bottom: 0;
   height: 5px;
   padding: 1px 0 2px 0;
-`;
+`
 
 const Bar = styled.div`
   transition: width linear 1s !important;
   width: ${p => p.value}%;
   background-color: rgb(68, 175, 71);
-`;
+`
 
 const TimerBar = Wiring.connectMemo(
   p => <Bar value={p.timeleft} />,
   p => {
     return {
-      timeleft: p.jackpot.timeleft
-    };
+      timeleft: p.jackpot.timeleft,
+    }
   }
-);
+)
 
 export default p => {
   return (
@@ -70,5 +70,5 @@ export default p => {
       </Progress>
       <RightTriangle />
     </Timer>
-  );
-};
+  )
+}

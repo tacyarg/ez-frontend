@@ -6,7 +6,7 @@ import fake from './fake'
 //default state you want your component props to see
 const defaultState = {
   env: {
-    AUTH_URL: process.env.AUTH_URL
+    AUTH_URL: process.env.AUTH_URL,
   },
   initialized: false,
   time: Date.now(),
@@ -20,10 +20,10 @@ const defaultState = {
   },
   inventory: fake.inventory(),
   jackpot: fake.jackpot(),
-  public:{},
-  private:{},
-  admin:{},
-  auth:{},
+  public: {},
+  private: {},
+  admin: {},
+  auth: {},
 }
 
 //design your state reducers
