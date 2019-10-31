@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 import {
   borderRadius,
   space,
@@ -28,8 +28,8 @@ import {
   zIndex,
   overflow,
   background,
-} from "styled-system";
-import theme from "../styles/theme";
+} from 'styled-system'
+import theme from '../styles/theme'
 
 const Box = styled.div`
   // position: relative;
@@ -37,8 +37,8 @@ const Box = styled.div`
   // flex-shrink: 0;
 
   // shadow-bottom: ${p =>
-    p.shadowBottom ? "0px 10px 10px -10px black" : "none"}
-  // shadow-top: ${p => (p.shadowTop ? "0px -10px 10px -10px black" : "none")}
+    p.shadowBottom ? '0px 10px 10px -10px black' : 'none'}
+  // shadow-top: ${p => (p.shadowTop ? '0px -10px 10px -10px black' : 'none')}
 
   ${background}
   ${zIndex}
@@ -86,8 +86,8 @@ const Box = styled.div`
   ::-webkit-scrollbar-track {
     background-color: ${theme.colors.scrollbarTrack};
   }
-`;
+`
 
-Box.displayName = "Box";
+Box.displayName = 'Box'
 
-export default Box;
+export default Box

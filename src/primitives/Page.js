@@ -1,6 +1,5 @@
-import styled from "styled-components";
-import { Flex, Box } from "./";
-
+import styled from 'styled-components'
+import { Flex, Box } from './'
 
 const Page = styled(Box)`
   // margin: 0 auto;
@@ -13,14 +12,14 @@ const Page = styled(Box)`
 
   overflow: hidden;
   overflow-y: auto;
-`;
+`
 
-Page.displayName = "Page";
+Page.displayName = 'Page'
 
 Page.defaultProps = {
-  flexDirection: "column",
+  flexDirection: 'column',
   // justifyContent: 'center',
-  alignItems: "center"
-};
+  alignItems: 'center',
+}
 
-export default Page;
+export default Page

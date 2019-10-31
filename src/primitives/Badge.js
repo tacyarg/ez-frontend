@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import {} from "styled-system";
+import React from 'react'
+import styled from 'styled-components'
+import {} from 'styled-system'
 
-import { Box, Flex } from "./";
-import theme from "../styles/theme";
+import { Box, Flex } from './'
+import theme from '../styles/theme'
 
 const Badge = styled(Flex)`
   height: 40px;
@@ -16,13 +16,12 @@ const Badge = styled(Flex)`
   font-size: 20px;
   font-weight: bold;
   // z-index: 2;
-`;
+`
 
-Badge.displayName = "Badge";
+Badge.displayName = 'Badge'
 Badge.defaultProps = {
-  alignItems: "center"
-
-};
+  alignItems: 'center',
+}
 
 const LeftTriangle = styled.div`
   // position: absolute;
@@ -33,7 +32,7 @@ const LeftTriangle = styled.div`
   top: 0;
   left: -20px;
   border-right: 20px solid rgb(23, 23, 25);
-`;
+`
 
 const RightTriangle = styled.div`
   // position: absolute;
@@ -44,7 +43,7 @@ const RightTriangle = styled.div`
   top: 0;
   right: -20px;
   border-left: 20px solid rgb(23, 23, 25);
-`;
+`
 
 export default ({ children, ...p }) => {
   return (
@@ -53,5 +52,5 @@ export default ({ children, ...p }) => {
       <Badge {...p}>{children}</Badge>
       <RightTriangle />
     </Flex>
-  );
-};
+  )
+}

@@ -34,11 +34,14 @@
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-bundle-visualiser": "^1.2.0",
     "polished": "^3.4.1",
+    "prettier-eslint": "^9.0.0",
+    "prettier-eslint-cli": "^5.0.0",
     "styled-components": "^4.4.0",
     "styled-normalize": "^8.0.6",
     "styled-system": "^5.1.2"
   },
   "scripts": {
+    "lint": "prettier-eslint --write '**/*.{js,jsx}' --no-semi --trailing-comma es5 --tab-width 2 --single-quote",
     "predeploy": "rm -rf dist &&  parcel build index.html --out-dir dist",
     "deploy": "gh-pages -d dist",
     "start": "parcel index.html",

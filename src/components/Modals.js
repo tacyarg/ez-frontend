@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react'
 import {
   Flex,
   Box,
@@ -7,53 +7,53 @@ import {
   Modal,
   Divider,
   Input,
-  Page
-} from "../primitives";
-import Cards from "./Cards";
-import Assets from "./Assets";
-import Wiring from "../libs/wiring";
+  Page,
+} from '../primitives'
+import Cards from './Cards'
+import Assets from './Assets'
+import Wiring from '../libs/wiring'
 
 function useDebounce(value, delay = 500) {
-  const [debouncedValue, setDebouncedValue] = useState(value);
+  const [debouncedValue, setDebouncedValue] = useState(value)
 
   useEffect(() => {
     // Set debouncedValue to value (passed in) after the specified delay
     const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
+      setDebouncedValue(value)
+    }, delay)
 
     return () => {
-      clearTimeout(handler);
-    };
-  }, [value]);
+      clearTimeout(handler)
+    }
+  }, [value])
 
-  return debouncedValue;
+  return debouncedValue
 }
 
 const Search = ({ onSearch }) => {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('')
 
-  const debouncedSearchTerm = useDebounce(search, 500);
+  const debouncedSearchTerm = useDebounce(search, 500)
   useEffect(() => {
     // if (search.length < 2) return;
-    onSearch(search);
-  }, [debouncedSearchTerm]);
+    onSearch(search)
+  }, [debouncedSearchTerm])
 
   return (
     <Input
       value={search}
       placeholder="Search..."
       onChange={e => {
-        setSearch(e.target.value.toString().toLowerCase());
+        setSearch(e.target.value.toString().toLowerCase())
       }}
     />
-  );
-};
+  )
+}
 
 const WiredModal = ({
   children,
   isOpen,
-  title = "Ello Moto",
+  title = 'Ello Moto',
   onSearch,
   onConfirm,
   onClose,
@@ -71,8 +71,8 @@ const WiredModal = ({
         p={4}
         maxHeight={400}
         style={{
-          overflow: "hidden",
-          overflowY: "auto"
+          overflow: 'hidden',
+          overflowY: 'auto',
         }}
       >
         {children}
@@ -90,40 +90,40 @@ const WiredModal = ({
         </Button>
       </Flex>
     </Modal>
-  );
-};
+  )
+}
 
 WiredModal.Deposit = Wiring.connect(
   React.memo(({ items = [], ...p }) => {
-    const [loading, setLoading] = useState(false);
-    const [cache, setCache] = useState(items);
+    const [loading, setLoading] = useState(false)
+    const [cache, setCache] = useState(items)
 
     const onSearch = value => {
-      console.log("searching:", value);
+      // console.log("searching:", value);
 
-      if (value.length < 2) return setCache(items);
-      setLoading(true);
+      if (value.length < 2) return setCache(items)
+      setLoading(true)
 
       const searchResults = items.filter(row => {
-        return ["price", "name", "rarity"].find(prop => {
-          if (!row[prop]) return null;
+        return ['price', 'name', 'rarity'].find(prop => {
+          if (!row[prop]) return null
           return row[prop]
             .toString()
             .toLowerCase()
-            .includes(value);
-        });
-      });
+            .includes(value)
+        })
+      })
 
-      setLoading(false);
-      return setCache(searchResults);
-    };
+      setLoading(false)
+      return setCache(searchResults)
+    }
 
     const totalValue = cache
       .reduce((memo, item) => {
-        memo += Number(item.price);
-        return memo;
+        memo += Number(item.price)
+        return memo
       }, 0)
-      .toFixed(2);
+      .toFixed(2)
 
     return (
       <WiredModal
@@ -142,7 +142,7 @@ WiredModal.Deposit = Wiring.connect(
         <Flex width={1} p={1} flexWrap="wrap" justifyContent="center">
           {cache.length > 0 ? (
             cache.map(item => {
-              return <Cards.JackpotItem key={item.id} {...item} />;
+              return <Cards.JackpotItem key={item.id} {...item} />
             })
           ) : (
             <Box>
@@ -152,13 +152,13 @@ WiredModal.Deposit = Wiring.connect(
           )}
         </Flex>
       </WiredModal>
-    );
+    )
   }),
   p => {
     return {
-      items: p.inventory
-    };
+      items: p.inventory,
+    }
   }
-);
+)
 
-export default WiredModal;
+export default WiredModal

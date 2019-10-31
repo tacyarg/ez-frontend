@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react'
 
-import styled from "styled-components";
+import styled from 'styled-components'
 import {
   width,
   height,
   backgroundPosition,
   backgroundImage,
-  backgroundSize
-} from "styled-system";
+  backgroundSize,
+} from 'styled-system'
 
-import Box from "./Box";
-import theme from "../styles/theme";
+import Box from './Box'
+import theme from '../styles/theme'
 
 const clickable = props => {
   return `
@@ -20,8 +20,8 @@ const clickable = props => {
       &:focus {
         // background-color: 
       };
-  `;
-};
+  `
+}
 
 const Styled = styled(Box)`
   background-size: contain;
@@ -36,13 +36,13 @@ const Styled = styled(Box)`
   ${clickable}
 
   mask: url('${p => p.src}') no-repeat ;
-`;
+`
 
-Styled.displayName = "Icon";
+Styled.displayName = 'Icon'
 
 Styled.defaultProps = {
-  borderRadius: "normal",
-  size: 28
-};
+  borderRadius: 'normal',
+  size: 28,
+}
 
-export default Styled;
+export default Styled
