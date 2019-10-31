@@ -21,6 +21,7 @@ import Wiring from './libs/wiring'
 import Socket from './libs/socket'
 
 console.log(process.env.HOST, process.env.AUTH_URL)
+
 const START = async p => {
   // connect to socket before we init the app...
   const socket = await Socket(

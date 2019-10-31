@@ -51,6 +51,7 @@ const Menu = ({
   >
     {entries.map(row => (
       <Text.Link
+        onClick={row.onClick}
         color="black"
         as={Flex}
         alignItems="center"

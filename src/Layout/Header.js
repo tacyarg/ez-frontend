@@ -9,11 +9,8 @@ import Buttons from '../components/Buttons'
 
 const Profile = Wiring.connectMemo(
   p => {
-    const click = () => {
-      const url = `${p.AUTH_URL}/opskins/auth?access_token=${p.tokenid}`
-      // const url = `${process.env.AUTH_URL}/steam/auth?access_token=${token}`
-      window.location.replace(url)
-    }
+
+    console.log(p)
 
     return p.user ? (
       <Dropdown
@@ -26,7 +23,10 @@ const Profile = Wiring.connectMemo(
           {
             label: 'Logout',
             icon: Assets.Icons.SignOut,
-            path: '/profile/logout',
+            // path: '/profile/logout',
+            onClick: () => {
+              return p.socket.auth.call('logout')
+            }
           },
         ]}
       >
@@ -34,11 +34,12 @@ const Profile = Wiring.connectMemo(
         <Text color="black">{p.user.username}</Text>
       </Dropdown>
     ) : (
-      <Buttons.Login />
-    )
+        <Buttons.Login />
+      )
   },
-  ({ env, tokenid, ...props }) => {
-    return { AUTH_URL: env.AUTH_URL, user: props.private.me, tokenid }
+  ({ env, tokenid, socket, ...props }) => {
+    console.log(props)
+    return { user: props.private.me, tokenid, socket }
   }
 )
 
@@ -59,8 +60,8 @@ const Volume = p => {
       {muted ? (
         <Assets.Icons.VolumeMute size={24} mx={2} />
       ) : (
-        <Assets.Icons.VolumeUp size={24} mx={2} />
-      )}
+          <Assets.Icons.VolumeUp size={24} mx={2} />
+        )}
     </Box>
   )
 }
