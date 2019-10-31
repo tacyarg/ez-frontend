@@ -43,6 +43,7 @@ export default {
   updateChannelState(channel, channelState) {
     return {
       ...state,
+      // ...channelState,
       [channel]: channelState,
     }
   },

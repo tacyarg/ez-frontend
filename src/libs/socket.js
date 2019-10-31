@@ -12,9 +12,9 @@ import Client from 'ws-api-client'
 // Client(window.WebSocket, config, {}, handleStateChange)
 
 // connect to the socket and set the api.
-export default (host, onChange, initState = {}) => {
+export default (host= 'wss://socket.ezrage.chips.gg', onChange, initState = {private:{},public:{},auth:{}}) => {
   const config = {
-    host: 'wss://socket.ezrage.chips.gg',
+    host,
     channels: ['public', 'private', 'auth'],
   }
 
