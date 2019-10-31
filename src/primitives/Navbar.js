@@ -5,7 +5,7 @@ const Navbar = ({ links, onClick, cPage, fixedVertical }) => {
   // LINK: { label: 'Home', href: '/home' }
   return (
     <Flex
-      flexDirection={ fixedVertical ? 'column' : ['column', 'row']}
+      flexDirection={fixedVertical ? 'column' : ['column', 'row']}
       width={1}
       bg="foregroundBacking"
       justifyContent="space-evenly"

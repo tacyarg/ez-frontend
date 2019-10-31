@@ -1,7 +1,7 @@
-import uuid from "uuid/v4";
+import uuid from 'uuid/v4'
 
 module.exports = () => {
-  const inventory = [];
+  const inventory = []
 
   // image = 'https://files.opskins.media/file/vgo-img/item/wax-key-300.png'
   // image = 'https://files.opskins.media/file/vgo-img/item/awp-golden-illusion-factory-new-300.png'
@@ -9,13 +9,13 @@ module.exports = () => {
   for (var i = 0; i < 100; i++) {
     inventory.push({
       id: uuid(),
-      color: "#de3ee6",
+      color: '#de3ee6',
       price: 25.99,
-      name: "Afterglow Wired Controller for Xbox One",
+      name: 'Afterglow Wired Controller for Xbox One',
       image:
-        "https://static.wax.io/d-img/dynamic-apps/img/phpqkombg-ca194a2788.png"
-    });
+        'https://static.wax.io/d-img/dynamic-apps/img/phpqkombg-ca194a2788.png',
+    })
   }
 
-  return inventory;
-};
+  return inventory
+}

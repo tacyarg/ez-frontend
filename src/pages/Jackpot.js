@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Flex, Box, Text, Button } from "../primitives";
-import Spinner from "../components/Spinner";
-import Cards from "../components/Cards";
-import Assets from "../components/Assets";
-import Modal from "../components/Modals";
+import React, { useState } from 'react'
+import { Flex, Box, Text, Button } from '../primitives'
+import Spinner from '../components/Spinner'
+import Cards from '../components/Cards'
+import Assets from '../components/Assets'
+import Modal from '../components/Modals'
 
-import Wiring from "../libs/wiring";
+import Wiring from '../libs/wiring'
 import Utils from '../components/Utils'
 
 const BetItems = ({ players = {}, items = [] }) => {
@@ -13,29 +13,29 @@ const BetItems = ({ players = {}, items = [] }) => {
     <Flex width={1} p={1}>
       {items.map(item => {
         // merge the player metadata
-        item.user = players[item.userid];
-        return <Cards.JackpotItem key={item.id} {...item} />;
+        item.user = players[item.userid]
+        return <Cards.JackpotItem key={item.id} {...item} />
       })}
     </Flex>
-  );
-};
+  )
+}
 
 const Bets = ({ players = {}, bets = [] }) => {
   return (
     <Flex
       width={1}
       flexWrap="wrap"
-      justifyContent={"space-between"}
-      flexDirection={["column", "row"]}
+      justifyContent={'space-between'}
+      flexDirection={['column', 'row']}
       justifyContent="center"
     >
       {bets.map((b, index) => {
-        b.user = players[b.userid];
-        return <Cards.JackpotBet key={b.id} index={index} bet={b} m={2} />;
+        b.user = players[b.userid]
+        return <Cards.JackpotBet key={b.id} index={index} bet={b} m={2} />
       })}
     </Flex>
-  );
-};
+  )
+}
 
 const Rule = ({ children, ...p }) => {
   return (
@@ -50,13 +50,13 @@ const Rule = ({ children, ...p }) => {
     >
       {children}
     </Text>
-  );
-};
+  )
+}
 
 const Rules = ({
   betValueMax = 100000, // max value per bet
   betValueMin = 1, // min value per bet
-  betItemLimit = 20 // max items per bet
+  betItemLimit = 20, // max items per bet
 }) => {
   return (
     <Flex width={1} justifyContent="center">
@@ -66,8 +66,8 @@ const Rules = ({
         <Rule>MAX BET: {Utils.parseValue(betValueMax)}</Rule>
       </Flex>
     </Flex>
-  );
-};
+  )
+}
 
 const CurrentRound = Wiring.connect(
   p => {
@@ -78,14 +78,14 @@ const CurrentRound = Wiring.connect(
         <Spinner {...p} />
         <Bets {...p} />
       </>
-    );
+    )
   },
   p => p.jackpot
-);
+)
 
 const History = p => {
-  return <Box>{/* do somthing relevant */}</Box>;
-};
+  return <Box>{/* do somthing relevant */}</Box>
+}
 
 // const calcOdds = (betValue, JackpotValue) => {
 //   const percent = betValue / JackpotValue;
@@ -103,14 +103,14 @@ const Nav = ({ onDeposit }) => {
         <Text>Win Chance: 0%</Text>
       </Flex>
     </Box>
-  );
-};
+  )
+}
 
 export default p => {
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(false)
 
   function toggleModal() {
-    setOpen(!isOpen);
+    setOpen(!isOpen)
   }
 
   return (
@@ -124,5 +124,5 @@ export default p => {
       <CurrentRound />
       <History />
     </>
-  );
-};
+  )
+}

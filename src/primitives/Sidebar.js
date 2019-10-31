@@ -21,7 +21,7 @@ Sidebar.defaultProps = {
   p: 2,
   height: '100%',
   flexDirection: 'column',
-  boxShadow: "2px 0px 2px -2px rgba(0, 0, 0, 0.2)",
+  boxShadow: '2px 0px 2px -2px rgba(0, 0, 0, 0.2)',
   zIndex: 9001,
   // width: '100%',
   // flex: 1

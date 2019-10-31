@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { Flex, Box, Text } from "../primitives";
-import { Link, NavLink } from "react-router-dom";
-import Assets from "../components/Assets";
+import React, { useState, useEffect } from 'react'
+import { Flex, Box, Text } from '../primitives'
+import { Link, NavLink } from 'react-router-dom'
+import Assets from '../components/Assets'
 
 const UserMenu = ({ entries, children }) => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false)
 
   const toggleMenu = () => {
-    return setShow(!show);
-  };
+    return setShow(!show)
+  }
 
   return (
     <Flex
       style={{
-        cursor: "pointer",
-        position: "relative",
-        zIndex: 999
+        cursor: 'pointer',
+        position: 'relative',
+        zIndex: 999,
       }}
       onMouseEnter={toggleMenu}
       onMouseLeave={toggleMenu}
@@ -27,8 +27,8 @@ const UserMenu = ({ entries, children }) => {
       </Flex>
       {show ? <Menu entries={entries} /> : null}
     </Flex>
-  );
-};
+  )
+}
 
 const Menu = ({
   entries = [
@@ -37,16 +37,16 @@ const Menu = ({
     //   icon: FaCog,
     //   path: '/profile/settings',
     // },
-  ]
+  ],
 }) => (
   <Flex
     bg="offwhite"
     flexDirection="column"
     width={1}
     style={{
-      top: "100%",
-      position: "absolute",
-      boxShadow: "1px 2px 1px rgba(0, 0, 0, 0.25)"
+      top: '100%',
+      position: 'absolute',
+      boxShadow: '1px 2px 1px rgba(0, 0, 0, 0.25)',
     }}
   >
     {entries.map(row => (
@@ -59,10 +59,10 @@ const Menu = ({
         key={row.label}
         p={2}
         style={{
-          transition: "all 0.2s ease-in-out",
-          ":hover": {
-            backgroundColor: "rgba(0,0,0, 0.1)"
-          }
+          transition: 'all 0.2s ease-in-out',
+          ':hover': {
+            backgroundColor: 'rgba(0,0,0, 0.1)',
+          },
         }}
       >
         <row.icon size={24} mx={2} />
@@ -70,6 +70,6 @@ const Menu = ({
       </Text.Link>
     ))}
   </Flex>
-);
+)
 
-export default UserMenu;
+export default UserMenu

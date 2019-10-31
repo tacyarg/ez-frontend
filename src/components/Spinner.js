@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import {} from "styled-system";
-import { Badge, Box, Flex, Text } from "../primitives";
-import utils from "./Utils";
-import Assets from "./Assets";
-import Timer from "./Timer";
+import React from 'react'
+import styled from 'styled-components'
+import {} from 'styled-system'
+import { Badge, Box, Flex, Text } from '../primitives'
+import utils from './Utils'
+import Assets from './Assets'
+import Timer from './Timer'
 
 const SpinnerBet = styled(Box)`
   will-change: transform;
@@ -12,7 +12,7 @@ const SpinnerBet = styled(Box)`
   display: inline-block;
   z-index: 1;
   // min-width: 40px;
-`;
+`
 
 const TopArrow = styled(Box)`
   display: inline-block;
@@ -32,7 +32,7 @@ const TopArrow = styled(Box)`
   z-index: 2;
   top: -13px;
   border-right: 26px solid rgba(27, 27, 28, 1);
-`;
+`
 
 const BottomArrow = styled(Box)`
   display: inline-block;
@@ -52,10 +52,10 @@ const BottomArrow = styled(Box)`
   z-index: 2;
   bottom: -13px;
   border-left: 26px solid rgba(27, 27, 28, 1);
-`;
+`
 
 const Spinner = ({
-  state = "open",
+  state = 'open',
   items = [],
   value = 5.43,
   bets = [
@@ -80,12 +80,12 @@ const Spinner = ({
     //   color: "#ffd200",
     //   userid: "01010101"
     // }
-  ]
+  ],
 }) => {
   return (
     <Flex bg="subnavbg" height={100} border="1px solid #18181a">
       {/* TODO: show only based on state. */}
-      {state == "rolling" && (
+      {state == 'rolling' && (
         <>
           <TopArrow />
           <BottomArrow />
@@ -98,8 +98,8 @@ const Spinner = ({
           // width={`${bets.length}0%`}
           width={`${items.length}%`} // of 100 (max items is 100)
         >
-          {bets.map(({ color = "#8847ff", ...b }, i) => {
-            const background = utils.generateBackground(i, color);
+          {bets.map(({ color = '#8847ff', ...b }, i) => {
+            const background = utils.generateBackground(i, color)
             return (
               <SpinnerBet
                 width={`${(b.value / value) * 100}%`}
@@ -107,13 +107,13 @@ const Spinner = ({
                 key={b.id}
                 {...b}
               />
-            );
+            )
           })}
         </Flex>
       </Flex>
     </Flex>
-  );
-};
+  )
+}
 
 const RoundInfo = ({ value = 5.43, items = [], config = {} }) => {
   return (
@@ -127,8 +127,8 @@ const RoundInfo = ({ value = 5.43, items = [], config = {} }) => {
         <Assets.Icons.Gun bg="yellow" />({items.length}/{config.roundItemLimit})
       </Badge>
     </Flex>
-  );
-};
+  )
+}
 
 export default p => {
   return (
@@ -138,5 +138,5 @@ export default p => {
       <Spinner {...p} />
       <Timer value={p.timeleft} />
     </Box>
-  );
-};
+  )
+}
