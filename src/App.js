@@ -1,19 +1,19 @@
-import React from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 // Pages
-import Pages from './pages'
-import Layout from './Layout'
+import Pages from "./pages";
+import Layout from "./Layout";
 
-export default globalProps => {
+export default React.memo(globalProps => {
   return (
     <Switch>
       <Redirect exact from="/" to="/jackpot" />
 
       {Object.keys(Pages).map(pageKey => {
-        const Page = Pages[pageKey]
-        if (pageKey === 'NotFound')
-          return <Route key={`page_${pageKey}`} component={Page} />
+        const Page = Pages[pageKey];
+        if (pageKey === "NotFound")
+          return <Route key={`page_${pageKey}`} component={Page} />;
         return (
           <Route
             key={`page_${pageKey}`}
@@ -29,11 +29,11 @@ export default globalProps => {
                 >
                   <Page {...props} {...globalProps} />
                 </Layout>
-              )
+              );
             }}
           />
-        )
+        );
       })}
     </Switch>
-  )
-}
+  );
+});

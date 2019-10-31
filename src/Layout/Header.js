@@ -1,63 +1,61 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
-import Assets from '../components/Assets'
-import { Button, Flex, Box, Avatar, Text, Divider } from '../primitives'
+import Assets from "../components/Assets";
+import { Button, Flex, Box, Avatar, Text, Divider } from "../primitives";
 
-import Dropdown from './Dropdown'
+import Dropdown from "./Dropdown";
 
-import Wiring from '../libs/wiring'
+import Wiring from "../libs/wiring";
 
 const Profile = Wiring.connectMemo(
   p => {
-    console.log(p)
-
     const click = () => {
-      const url = `https://auth.ezrage.chips.gg/steam/auth?access_token=${p.tokenid}`
+      const url = `${p.AUTH_URL}/opskins/auth?access_token=${p.tokenid}`;
       // const url = `${process.env.AUTH_URL}/steam/auth?access_token=${token}`
-      window.location.replace(url)
-    }
+      window.location.replace(url);
+    };
 
     return p.user ? (
       <Dropdown
         entries={[
           {
-            label: 'Settings',
+            label: "Settings",
             icon: Assets.Icons.UserCog,
-            path: '/profile/settings',
+            path: "/profile/settings"
           },
           {
-            label: 'Logout',
+            label: "Logout",
             icon: Assets.Icons.SignOut,
-            path: '/profile/logout',
-          },
+            path: "/profile/logout"
+          }
         ]}
       >
         <Assets.Avatar src={p.user.avatar} />
         <Text color="black">{p.user.username}</Text>
       </Dropdown>
     ) : (
-      <Button type="primary" onClick={click}>
-        Login
+      <Button mx={2} type="primary" onClick={click}>
+        Login WAX
       </Button>
-    )
+    );
   },
   ({ env, user, tokenid }) => {
-    return { env, user, tokenid }
+    return { AUTH_URL: env.AUTH_URL, user, tokenid };
   }
-)
+);
 
 const Volume = p => {
-  const [muted, setMuted] = useState(false)
+  const [muted, setMuted] = useState(false);
 
   const toggleMute = () => {
-    return setMuted(!muted)
-  }
+    return setMuted(!muted);
+  };
 
   return (
     <Box
       onClick={toggleMute}
       style={{
-        cursor: 'pointer',
+        cursor: "pointer"
       }}
     >
       {muted ? (
@@ -66,8 +64,8 @@ const Volume = p => {
         <Assets.Icons.VolumeUp size={24} mx={2} />
       )}
     </Box>
-  )
-}
+  );
+};
 
 export default p => {
   return (
@@ -84,5 +82,5 @@ export default p => {
       <Divider type="vertical" bg="offwhiteBorder" />
       <Profile />
     </Flex>
-  )
-}
+  );
+};

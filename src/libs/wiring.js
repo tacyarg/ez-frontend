@@ -5,7 +5,9 @@ import fake from './fake'
 
 //default state you want your component props to see
 const defaultState = {
-  env: process.env,
+  env: {
+    AUTH_URL: process.env.AUTH_URL
+  },
   initialized: false,
   time: Date.now(),
   user: null,
