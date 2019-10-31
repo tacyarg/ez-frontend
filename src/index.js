@@ -35,8 +35,8 @@ const START = async p => {
     }
   })
 
-  await Authenticate(actions,window.localStorage.getItem('tokenid'))
-    .then(dispatch('auth'))
+  await Authenticate(socket,window.localStorage.getItem('tokenid'))
+    .then(Wiring.dispatch('auth'))
     .catch(err=>console.log(err))
 
   console.log('socket', socket)
