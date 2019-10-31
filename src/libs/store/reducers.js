@@ -5,6 +5,13 @@ export default {
             initialized
         };
     },
+    auth(state,{tokenid,userid}){
+      return {
+        ...state,
+        tokenid,
+        userid,
+      }
+    },
     tick(state, time) {
         // state.time = Date.now()
         // return state

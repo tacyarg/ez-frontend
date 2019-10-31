@@ -8,6 +8,7 @@ import App from "./App";
 import Theme from "./Theme";
 
 import Utils from "./components/Utils";
+import {Authenticate} from './libs/utils'
 
 import Wiring from "./libs/wiring";
 // import Client from "./libs/client"
@@ -33,6 +34,10 @@ const START = async p => {
       //socket reconnected after being disconnected
     }
   })
+
+  await Authenticate(actions,window.localStorage.getItem('tokenid'))
+    .then(dispatch('auth'))
+    .catch(err=>console.log(err))
 
   console.log('socket', socket)
 

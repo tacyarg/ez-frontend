@@ -59,6 +59,20 @@ exports.makeID = function(start, end) {
   return [start, end].join('_')
 }
 
+exports.Authenticate = async function(actions,tokenid){
+  if(tokenid == null){
+    return exports.Authenticate(actions,await actions.auth.call('token'))
+  }
+
+  return actions.auth.call('authenticate',tokenid).then(userid=>{
+    window.localStorage.setItem('tokenid',tokenid)
+    return {userid,tokenid}
+  }).catch(err=>{
+    return exports.Authenticate(actions)
+  })
+}
+
+
 exports.formatJson = schema => {
   return JSON.stringify(schema, null, 2)
 }
