@@ -6,6 +6,7 @@ export default {
         };
     },
     auth(state,{tokenid,userid}){
+      window.localStorage.setItem('tokenid',tokenid)
       return {
         ...state,
         tokenid,
