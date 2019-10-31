@@ -4,8 +4,8 @@ import Assets from '../components/Assets'
 import { Button, Flex, Box, Avatar, Text, Divider } from '../primitives'
 
 import Dropdown from './Dropdown'
-
 import Wiring from '../libs/wiring'
+import Buttons from '../components/Buttons'
 
 const Profile = Wiring.connectMemo(
   p => {
@@ -34,10 +34,8 @@ const Profile = Wiring.connectMemo(
         <Text color="black">{p.user.username}</Text>
       </Dropdown>
     ) : (
-      <Button mx={2} type="primary" onClick={click}>
-        Login WAX
-      </Button>
-    )
+        <Buttons.Login />
+      )
   },
   ({ env, tokenid, ...props }) => {
     return { AUTH_URL: env.AUTH_URL, user: props.private.me, tokenid }
@@ -61,8 +59,8 @@ const Volume = p => {
       {muted ? (
         <Assets.Icons.VolumeMute size={24} mx={2} />
       ) : (
-        <Assets.Icons.VolumeUp size={24} mx={2} />
-      )}
+          <Assets.Icons.VolumeUp size={24} mx={2} />
+        )}
     </Box>
   )
 }
