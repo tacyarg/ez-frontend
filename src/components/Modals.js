@@ -94,9 +94,13 @@ const WiredModal = ({
 }
 
 WiredModal.Deposit = Wiring.connect(
-  React.memo(({ items = [], ...p }) => {
+  React.memo(({ items = [], socket, ...p }) => {
     const [loading, setLoading] = useState(false)
     const [cache, setCache] = useState(items)
+
+    useEffect(() => {
+      socket.private.call('listExpressTradeInventoryItems').then(console.log).catch(console.error)
+    }, [p.isOpen])
 
     const onSearch = value => {
       // console.log("searching:", value);
@@ -156,6 +160,7 @@ WiredModal.Deposit = Wiring.connect(
   }),
   p => {
     return {
+      socket: p.socket,
       items: p.inventory,
     }
   }

@@ -18,7 +18,7 @@ const Login = Wiring.connectMemo(
         )
     },
     ({ env, tokenid, ...props }) => {
-        return { AUTH_URL: env.AUTH_URL }
+        return { AUTH_URL: env.AUTH_URL, tokenid }
     }
 )
 
