@@ -64,7 +64,7 @@ const Heading = p => {
   )
 }
 
-const SendChatMessage = () => {
+const SendChatMessage = ({ onSubmit }) => {
   const [message, setMessage] = useState('')
   const handleKeyPress = event => {
     if (event.key == 'Enter') {
@@ -74,7 +74,7 @@ const SendChatMessage = () => {
 
   const dispatchMessage = () => {
     if (message.length < 1) return
-    Wiring.dispatch('sendChatMessage')(message)
+    onSubmit(message)
     setMessage('')
   }
 
@@ -89,8 +89,28 @@ const SendChatMessage = () => {
   )
 }
 
-const Chat = p => {
-  const { chat } = p
+const Message = React.memo(m => {
+  return <Box m={2} key={m.id}>
+    <Flex alignItems="center" p={1}>
+      <Avatar size={30} src={m.image} mr={2} />
+      <Level rank={m.rank} />
+      <Text
+        fontWeight="bold"
+        letterSpacing="slight"
+        mr={2}
+        color="offwhite"
+      >
+        {m.username}
+      </Text>
+    </Flex>
+    <Divider my={1} />
+    <Text wrap="true" fontWeight="normal" color="subtext">
+      {m.message}
+    </Text>
+  </Box>
+})
+
+const Chat = ({ messages, socket, ...p }) => {
 
   const [pauseScroll, setPauseScroll] = useState(false)
 
@@ -136,36 +156,20 @@ const Chat = p => {
           chatElement = el
         }}
       >
-        {chat.messages.map((m, k) => {
-          return (
-            <Box m={2} key={m.id || k}>
-              <Flex alignItems="center" p={1}>
-                <Avatar size={30} src={m.image} mr={2} />
-                <Level rank={m.rank} />
-                <Text
-                  fontWeight="bold"
-                  letterSpacing="slight"
-                  mr={2}
-                  color="offwhite"
-                >
-                  {m.username}
-                </Text>
-              </Flex>
-              <Divider my={1} />
-              <Text wrap="true" fontWeight="normal" color="subtext">
-                {m.message}
-              </Text>
-            </Box>
-          )
+        {messages.map(m => {
+          return <Message key={m.id} {...m} />
         })}
       </Flex>
-      <SendChatMessage />
+      <SendChatMessage onSubmit={message => {
+        return socket.private.call('sendChatMessage', { message })
+      }} />
     </Sidebar>
   )
 }
 
 export default Wiring.connectMemo(Chat, p => {
   return {
-    chat: p.chat,
+    socket: p.socket,
+    messages: Object.values(p.public.chats.en)
   }
 })

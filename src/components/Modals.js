@@ -95,11 +95,18 @@ const WiredModal = ({
 
 WiredModal.Deposit = Wiring.connect(
   React.memo(({ items = [], socket, ...p }) => {
+
+    console.log('ITEMS', items)
+
     const [loading, setLoading] = useState(false)
     const [cache, setCache] = useState(items)
 
     useEffect(() => {
-      socket.private.call('listExpressTradeInventoryItems').then(console.log).catch(console.error)
+      setCache(items)
+    }, [items])
+
+    useEffect(() => {
+      socket.private.call('listExpressTradeInventoryItems')
     }, [p.isOpen])
 
     const onSearch = value => {
@@ -143,25 +150,26 @@ WiredModal.Deposit = Wiring.connect(
           </Flex>
         }
       >
-        <Flex width={1} p={1} flexWrap="wrap" justifyContent="center">
+        <Flex width={1} flexWrap="wrap" justifyContent="center">
           {cache.length > 0 ? (
             cache.map(item => {
               return <Cards.JackpotItem key={item.id} {...item} />
             })
           ) : (
-            <Box>
-              <Text>You do not have any items.</Text>
-              {/* <Button m={2}type="simple">View Inventory</Button> */}
-            </Box>
-          )}
+              <Box>
+                <Text>You do not have any items.</Text>
+                {/* <Button m={2}type="simple">View Inventory</Button> */}
+              </Box>
+            )}
         </Flex>
       </WiredModal>
     )
   }),
   p => {
+    console.log(p)
     return {
       socket: p.socket,
-      items: p.inventory,
+      items: p.private.waxInventory,
     }
   }
 )

@@ -14,13 +14,13 @@ const defaultState = {
   userid: null,
   tokenid: null,
   online: 69,
-  chat: {
-    id: 'en',
-    messages: fake.messages(),
-  },
   inventory: fake.inventory(),
   jackpot: fake.jackpot(),
-  public: {},
+  public: {
+    chats: {
+      en: fake.messages()
+    }
+  },
   private: {},
   admin: {},
   auth: {},
