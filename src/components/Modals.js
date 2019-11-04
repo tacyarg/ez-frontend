@@ -168,6 +168,9 @@ WiredModal.Deposit = Wiring.connect(
   p => {
     console.log(p)
     return {
+      isOpen: p.isOpen,
+      onClose: p.onClose,
+      onConfirm: p.onConfirm,
       socket: p.socket,
       items: p.private.waxInventory,
     }

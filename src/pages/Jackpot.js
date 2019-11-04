@@ -4,6 +4,7 @@ import Spinner from '../components/Spinner'
 import Cards from '../components/Cards'
 import Assets from '../components/Assets'
 import Modal from '../components/Modals'
+import GameNav from '../components/GameNav'
 
 import Wiring from '../libs/wiring'
 import Utils from '../components/Utils'
@@ -131,6 +132,7 @@ export default p => {
 
   return (
     <>
+      <GameNav {...p} />
       <Nav onDeposit={e => toggleModal()} />
       <Modal.Deposit
         isOpen={isOpen}

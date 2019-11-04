@@ -20,12 +20,12 @@ import { Authenticate } from './libs/utils'
 import Wiring from './libs/wiring'
 import Socket from './libs/socket'
 
-console.log(process.env.HOST, process.env.AUTH_URL)
+console.log(process.env.SOCKET_URL, process.env.AUTH_URL)
 
 const START = async p => {
   // connect to socket before we init the app...
   const socket = await Socket(
-    process.env.HOST,
+    process.env.SOCKET_URL,
     (type, channel, channelState, fullState) => {
 
       console.log(type, channel)

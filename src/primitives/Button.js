@@ -19,6 +19,7 @@ const type = props => {
           // background-color: ${theme.colorStyles.textOnPrimary.bgColor};
           background-image: linear-gradient(290deg, ${theme.colors.lightPrimary}, ${theme.colors.primary});
           // background-image: linear-gradient(290deg, #f03c3c, #df1111);
+          
           &:hover,
           &:focus {
               opacity: 0.8
@@ -31,6 +32,7 @@ const type = props => {
         border: #f03c3c ${theme.borders.normal};
         // background-color: ${theme.colorStyles.textOnPrimary.bgColor};
         background-image: linear-gradient(290deg, #f03c3c, #df1111);
+
         &:hover,
         &:focus {
             opacity: 0.8
@@ -38,11 +40,13 @@ const type = props => {
       `
     case 'simple':
       return `
-        background-color: rgba(0,0,0,0);
-        color: ${theme.colors.lightGray};
+        background-color: ${theme.colors.backingLight};
+        color: ${theme.colors.lightbacking};
+        
         &:hover,
         &:focus {
-          box-shadow: 0px 2px 4px -4px ${theme.colors.primary};
+          background-color: rgba(0,0,0,0.5);
+          box-shadow: 0px 4px 4px -4px ${theme.colors.red};
           color: ${props.disabled ? null : theme.colors.primary}
         };
     `
@@ -50,6 +54,7 @@ const type = props => {
       return `
         background-color: rgba(0,0,0,0.5);
         color: ${theme.colors.darkGray};
+
         &:hover,
         &:focus {
           box-shadow: 0px 2px 4px -4px ${theme.colors.primary};
@@ -61,19 +66,12 @@ const type = props => {
           background-color: rgba(0,0,0,0);
           color: ${theme.colors.gray};
           border: ${theme.colors.lightGray} ${theme.borders.normal};
+
           &:hover,
           &:focus {
             background-color: ${props.disabled ? null : theme.colors.lightGray}
           };
       `
-    // return `
-    //   &:hover,
-    //   &:focus {
-    //       background-color: ${
-    //         props.disabled ? null : theme.colors.gray
-    //       }
-    //   }
-    // `;
   }
 }
 

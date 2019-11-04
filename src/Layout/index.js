@@ -9,7 +9,7 @@ import { Box, Flex, Page } from '../primitives'
 import Pages from '../pages'
 import Assets from '../components/Assets'
 
-const Layout = ({ children }) => {
+const Layout = ({ children, ...p }) => {
   // const links = Object.keys(Pages).reduce((memo, k) => {
   //   if (k === "NotFound") return memo;
   //   memo.push({ label: k, href: `/${k.toLowerCase()}` });
@@ -24,7 +24,7 @@ const Layout = ({ children }) => {
         overflow: 'hidden',
       }}
     >
-      <Header />
+      <Header {...p}/>
 
       <Flex height={'calc(100% - 64px)'} width={1}>
         <Sidenav />

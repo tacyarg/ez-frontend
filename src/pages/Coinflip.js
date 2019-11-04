@@ -10,7 +10,7 @@ import {
   Avatar,
 } from '../primitives'
 import FakeCoinflips from '../libs/fake/coinflips'
-
+import GameNav from '../components/GameNav'
 import Table from '../components/Table'
 
 const Badge = ({ value, color, money }) => {
@@ -76,11 +76,11 @@ const CoinflipListing = ({
       </Flex>
       <Flex alignItems="center">
         {items.map((p, k) => {
-          if (k > 5) return
+          if (k > 3) return
           return <Image key={p.id} src={p.image} alt={p.name} size={64} p={2} />
         })}
-        {items.length > 5 && (
-          <Text fontSize={4} color="subtext">{`+ ${items.length} more`}</Text>
+        {items.length > 3 && (
+          <Text fontSize={4} color="subtext">{`+ ${items.length - 4} more`}</Text>
         )}
       </Flex>
       <Text fontSize={4} color="subtext">
@@ -125,7 +125,8 @@ export default p => {
   const coinflips = FakeCoinflips()
 
   return (
-    <Box bg="backingLight" height={'100%'}>
+    <Box height={'100%'}>
+      <GameNav {...p} />
       <Flex
         flexWrap="wrap"
         bg="backingLight"

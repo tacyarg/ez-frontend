@@ -1,4 +1,10 @@
-import { opacify, darken, lighten, linearGradient } from 'polished'
+import {
+  opacify,
+  darken,
+  lighten,
+  linearGradient,
+  radialGradient,
+} from 'polished'
 
 const breakpoints = ['40em', '52em', '64em', '80em']
 
@@ -45,6 +51,9 @@ const colors = {
   },
   get lightPrimary() {
     return lighten(0.04, this.primary)
+  },
+  get redGradient() {
+    return '-webkit-gradient(radial, 20% 50%, 0, 50% 50%, 1000, from(#e94c4c), to(#000))'
   },
   // get primaryGradient() {
   //   return linearGradient('290deg', '#f03c3c', '#ff7e24')

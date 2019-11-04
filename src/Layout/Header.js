@@ -17,12 +17,14 @@ const Profile = Wiring.connectMemo(
           {
             label: "Settings",
             icon: Assets.Icons.UserCog,
-            path: "/profile/settings"
+            onClick: () => {
+              // window.localStorage.setItem('tokenid')
+              return p.history.push('/settings')
+            }
           },
           {
             label: "Logout",
             icon: Assets.Icons.SignOut,
-            // path: '/profile/logout',
             onClick: () => {
               // window.localStorage.setItem('tokenid')
               return p.socket.auth.call("logout");
@@ -38,7 +40,7 @@ const Profile = Wiring.connectMemo(
     );
   },
   p => {
-    return { user: p.private.me, socket: p.socket };
+    return { history: p.history, user: p.private.me, socket: p.socket };
   }
 );
 
@@ -78,7 +80,7 @@ export default p => {
       <Divider type="vertical" bg="offwhiteBorder" />
       <Volume />
       <Divider type="vertical" bg="offwhiteBorder" />
-      <Profile />
+      <Profile history={p.history}/>
     </Flex>
   );
 };

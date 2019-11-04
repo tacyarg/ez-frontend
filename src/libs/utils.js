@@ -78,3 +78,19 @@ exports.Authenticate = async function(actions, tokenid) {
 exports.formatJson = schema => {
   return JSON.stringify(schema, null, 2)
 }
+
+exports.findCurrentRound = (data = {}) => {
+  return Object.values(data)
+    .sort(function(a, b) {
+      return a.created - b.created
+    })
+    .pop()
+}
+
+
+exports.parseValue = function (data = 0) {
+  return Number(data).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
+}

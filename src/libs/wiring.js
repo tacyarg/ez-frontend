@@ -2,6 +2,7 @@ import React from 'react'
 import Wiring from 'react-wiring'
 
 import fake from './fake'
+import utils from './utils'
 
 //default state you want your component props to see
 const defaultState = {
@@ -17,6 +18,12 @@ const defaultState = {
   inventory: fake.inventory(),
   jackpot: fake.jackpot(),
   public: {
+    jackpots: {
+      'fake': fake.jackpot(),
+    },
+    coinflips: {
+      ...fake.coinflips()
+    },
     chats: {
       en: fake.messages()
     }
@@ -60,10 +67,15 @@ const reducers = {
     }
   },
   updateChannelState(state, channel, channelState) {
-    return {
+    const newState = {
       ...state,
-      [channel]: channelState,
+      [channel]: {
+        ...state[channel],
+        ...channelState
+      },
     }
+    // newState.jackpot = utils.findCurrentRound(newState.public.jackpots)
+    return newState
   },
   auth(state, auth) {
     console.log('auth', auth)
