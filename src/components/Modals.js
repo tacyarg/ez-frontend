@@ -226,7 +226,7 @@ WiredModal.CreateCoinflip = Wiring.connect(
         onSearch={onSearch}
         title={
           <Flex alignItems="center">
-            Deposit Items:
+            Create Coinflip:
             <Box mx={1} />
             <Text color="green" fontSize={4}>
               {totalValue}
