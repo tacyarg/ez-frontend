@@ -9,7 +9,7 @@ import Assets from '../components/Assets'
 import theme from '../styles/theme'
 
 const Sidebar = styled(Flex)`
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  border-right: 2px solid rgba(0, 0, 0, 0.4);
 
   @media only screen and (max-width: 600px) {
     display: none;
@@ -21,7 +21,7 @@ Sidebar.defaultProps = {
   p: 2,
   height: '100%',
   flexDirection: 'column',
-  boxShadow: '2px 0px 2px -2px rgba(0, 0, 0, 0.2)',
+  boxShadow: '4px 0px 4px -2px rgba(0, 0, 0, 0.2)',
   zIndex: 9001,
   // width: '100%',
   // flex: 1

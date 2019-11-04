@@ -47,7 +47,7 @@ const type = props => {
         &:focus {
           background-color: rgba(0,0,0,0.5);
           box-shadow: 0px 4px 4px -4px ${theme.colors.red};
-          color: ${props.disabled ? null : theme.colors.primary}
+          color: ${props.disabled ? null : theme.colors.offwhite}
         };
     `
     case 'simple-shaded':

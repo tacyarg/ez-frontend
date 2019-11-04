@@ -12,7 +12,13 @@ import Utils from '../components/Utils'
 const BetItems = Wiring.connectMemo(
   ({ players = {}, items = [] }) => {
     return (
-      <Flex width={1} p={1}>
+      <Flex
+        width={1}
+        p={1}
+        style={{
+          overflowX: 'auto',
+        }}
+      >
         {items.map(item => {
           // merge the player metadata
           item.user = players[item.userid]
@@ -35,7 +41,7 @@ const Bets = Wiring.connectMemo(
       <Flex
         width={1}
         flexWrap="wrap"
-        justifyContent={'space-between'}
+        // justifyContent={'space-between'}
         flexDirection={['column', 'row']}
         justifyContent="center"
       >
@@ -62,7 +68,7 @@ const Rule = ({ children, ...p }) => {
       fontWeight="normal"
       p={2}
       fontSize={1}
-      mx={1}
+      m={1}
       {...p}
     >
       {children}
@@ -77,8 +83,8 @@ const Rules = Wiring.connectMemo(
     betItemLimit = 20, // max items per bet
   }) => {
     return (
-      <Flex width={1} justifyContent="center">
-        <Flex justifyContent="space-between" my={2}>
+      <Flex width={1} justifyContent="center" >
+        <Flex justifyContent="space-between" my={2} flexDirection={['column', 'row']}>
           <Rule>SKIN LIMIT: {betItemLimit}</Rule>
           <Rule>MIN BET: {Utils.parseValue(betValueMin)}</Rule>
           <Rule>MAX BET: {Utils.parseValue(betValueMax)}</Rule>

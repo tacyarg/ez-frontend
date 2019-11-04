@@ -17,7 +17,7 @@ const colors = {
   subtext: '#979797',
   scrollbar: '#161a1f',
   scrollbarTrack: '#3E3E41',
-  backingDark: '#2c2c2e',
+  backingDark: '#2C2C2E',
   backingLight: '#38383C',
   red: '#e94c4c',
   green: '#42b142',

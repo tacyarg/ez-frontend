@@ -43,7 +43,7 @@ export default ({ onClick }) => {
     <Sidebar p={3} width={50} bg="backingDark" alignItems="center">
       {links.map((Row, k) => (
         <Link key={k} onClick={onClick}>
-          <Row size={22} />
+          <Row size={20} />
         </Link>
       ))}
     </Sidebar>

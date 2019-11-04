@@ -90,6 +90,7 @@ const SendChatMessage = ({ onSubmit }) => {
 }
 
 const Message = React.memo(m => {
+  console.log(m)
   return <Box m={2} key={m.id}>
     <Flex alignItems="center" p={1}>
       <Avatar size={30} src={m.image} mr={2} />
@@ -100,7 +101,7 @@ const Message = React.memo(m => {
         mr={2}
         color="offwhite"
       >
-        {m.username}
+        {m.username || m.user.username}
       </Text>
     </Flex>
     <Divider my={1} />

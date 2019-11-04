@@ -32,7 +32,7 @@ const Profile = Wiring.connectMemo(
           }
         ]}
       >
-        <Assets.Avatar src={p.user.avatar} />
+        <Assets.Avatar src={p.user.avatar} as={Avatar} />
         <Text color="black">{p.user.username}</Text>
       </Dropdown>
     ) : (

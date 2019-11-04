@@ -1,17 +1,17 @@
-import React from "react";
-import { Flex, Badge, Box, Page, Avatar, Image, Text } from "../primitives";
-import utils from "./Utils";
-import Level from "./Level";
+import React from 'react'
+import { Flex, Badge, Box, Page, Avatar, Image, Text } from '../primitives'
+import utils from './Utils'
+import Level from './Level'
 
 const JackpotItem = ({
-  color = "#d32ee6",
+  color = '#d32ee6',
   price = 25.99,
-  name = "Afterglow Wired Controller for Xbox One",
+  name = 'Afterglow Wired Controller for Xbox One',
   // image = 'https://files.opskins.media/file/vgo-img/item/wax-key-300.png'
   // image = 'https://files.opskins.media/file/vgo-img/item/awp-golden-illusion-factory-new-300.png'
-  image = "https://static.wax.io/d-img/dynamic-apps/img/phpqkombg-ca194a2788.png",
+  image = 'https://static.wax.io/d-img/dynamic-apps/img/phpqkombg-ca194a2788.png',
   onClick = x => x,
-  user
+  user,
 }) => {
   return (
     <Image
@@ -36,7 +36,7 @@ const JackpotItem = ({
             <Box mx="auto" />
             <Avatar
               src={
-                "https://www.gravatar.com/avatar/2cfb1ef04b6ec071fc74171d3687a5ee?d=identicon&r=pg&s=32"
+                'https://www.gravatar.com/avatar/2cfb1ef04b6ec071fc74171d3687a5ee?d=identicon&r=pg&s=32'
               }
               size={32}
             />
@@ -48,19 +48,19 @@ const JackpotItem = ({
         {name}
       </Text>
     </Image>
-  );
-};
+  )
+}
 
 const JackpotBet = ({ index = 0, bet = {}, ...p }) => {
-  const background = utils.generateBackground(index, bet.color || "#e94c4c");
+  const background = utils.generateBackground(index, bet.color || '#e94c4c')
   return (
     <Flex
-      minWidth={"240px"}
-      width={[1, 1 / 5]}
+      // minWidth={"260px"}
+      // width={[1, 1 / 5]}
       border="1px solid #18181a"
       // boxShadow="0 1px 1px 0 #18181a"
       alignItems="center"
-      background={`rgba(${utils.hexToRgb(bet.color || "#e94c4c")},0.1)`}
+      background={`rgba(${utils.hexToRgb(bet.color || '#e94c4c')},0.1)`}
       {...p}
     >
       <Avatar src="" size={40} m={2} />
@@ -73,13 +73,18 @@ const JackpotBet = ({ index = 0, bet = {}, ...p }) => {
           {bet.items.length} skins @ {utils.parseValue(bet.value)}
         </Text>
       </Box>
-      <Box mx="auto" />
-      <Box background={background} width="35px" height={"100%"} />
+      <Box mx={['auto', 4]} />
+      <Box
+        background={background}
+        minWidth={'35px'}
+        // height={'100%'}
+        height={58}
+      />
     </Flex>
-  );
-};
+  )
+}
 
 export default {
   JackpotItem,
-  JackpotBet
-};
+  JackpotBet,
+}

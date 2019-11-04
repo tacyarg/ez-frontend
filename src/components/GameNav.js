@@ -3,10 +3,19 @@ import { Divider, Button, Text, Box, Flex } from '../primitives'
 import Wiring from '../libs/wiring'
 import utils from '../libs/utils'
 
-const Badge = ({ children }) => {
+const Badge = ({ value, color = 'red', money }) => {
   return (
-    <Box bg="red" px={2} py={1} borderRadius="normal">
-      <Text fontSize={5}>{children}</Text>
+    <Box
+      p={2}
+      bg={color}
+      borderRadius="normal"
+      style={{
+        boxShadow: '1px 2px 1px rgba(0, 0, 0, 0.25)',
+        color: money ? '#e2c957' : null,
+      }}
+    >
+      {money && '$'}
+      {utils.parseValue(value)}
     </Box>
   )
 }
@@ -29,19 +38,20 @@ const NavBtn = ({ children, ...p }) => {
 }
 
 const JackpotBtn = Wiring.connectMemo(
-  ({ jackpot, onClick }) => {
+  ({ label = 'Jackpot', jackpot, onClick }) => {
     return (
       <NavBtn onClick={onClick}>
-        <Text fontSize={5}>Jackpot</Text>
+        <Text fontSize={5}>{label}</Text>
         <Box mx={1} />
-        <Badge>{utils.parseValue(jackpot.value)}</Badge>
+        <Badge value={jackpot.value} />
       </NavBtn>
     )
   },
   p => {
     return {
+      label: p.label,
       onClick: p.onClick,
-      jackpot: utils.findCurrentRound(p.public.jackpots)
+      jackpot: p.jackpot,
     }
   }
 )
@@ -52,7 +62,7 @@ const CoinflipBtn = Wiring.connectMemo(
       <NavBtn onClick={onClick}>
         <Text fontSize={5}>Coinflip</Text>
         <Box mx={1} />
-        <Badge>{utils.parseValue(value)}</Badge>
+        <Badge value={value} />
       </NavBtn>
     )
   },
@@ -74,16 +84,27 @@ export default ({ location, history }) => {
   // console.log('CURRENT PAGE', history)
 
   return (
-    <Flex borderBottom="2px solid #e94c4c">
-      <JackpotBtn onClick={e => {
-        history.push('/jackpot')
-      }}/>
-      <JackpotBtn onClick={e => {
-        history.push('/jackpot10max')
-      }}/>
-      <CoinflipBtn onClick={e => {
-        history.push('/coinflip')
-      }}/>
+    <Flex
+      borderBottom="2px solid #e94c4c"
+      // flexWrap="wrap"
+      flexDirection={['column', 'row']}
+    >
+      <JackpotBtn
+        onClick={e => {
+          history.push('/jackpot')
+        }}
+      />
+      <JackpotBtn
+        label="10 Max"
+        onClick={e => {
+          history.push('/jackpot10max')
+        }}
+      />
+      <CoinflipBtn
+        onClick={e => {
+          history.push('/coinflip')
+        }}
+      />
     </Flex>
   )
 }

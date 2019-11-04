@@ -51,6 +51,9 @@ import Discord from '../assets/images/icons/discord.svg'
 
 import Background from '../assets/images/jackpotBackground.png'
 
+import ctCoin from '../assets/images/ctfliplogo.png'
+import tCoin from '../assets/images/tfliplogo.png'
+
 import { Box, Icon, Image } from '../primitives'
 import theme from '../styles/theme'
 
@@ -116,7 +119,7 @@ const sets = mapAssets({
 export default {
   ...sets,
   Logo: p => <Image src={Logo} {...p} />,
-  Avatar: p => <Image size={40} src={Avatar} m={2} {...p} />,
+  Avatar: p => <Image size={[28, 40]} src={Avatar} m={2} {...p} />,
   Background: ({ children, ...p }) => {
     return (
       <Image
@@ -130,5 +133,47 @@ export default {
         {children}
       </Image>
     )
+  },
+  Coinflip: {
+    ctCoin: p =>
+      p.selected ? (
+        <Image
+          border="4px solid"
+          borderColor="primary"
+          borderRadius="circle"
+          size={[32, 64]}
+          src={ctCoin}
+          m={2}
+          {...p}
+        />
+      ) : (
+        <Image
+          style={{ cursor: 'pointer' }}
+          size={[32, 64]}
+          src={ctCoin}
+          m={2}
+          {...p}
+        />
+      ),
+    tCoin: p =>
+      p.selected ? (
+        <Image
+          border="4px solid"
+          borderColor="primary"
+          borderRadius="circle"
+          size={[32, 64]}
+          src={tCoin}
+          m={2}
+          {...p}
+        />
+      ) : (
+        <Image
+          style={{ cursor: 'pointer' }}
+          size={[32, 64]}
+          src={tCoin}
+          m={2}
+          {...p}
+        />
+      ),
   },
 }
