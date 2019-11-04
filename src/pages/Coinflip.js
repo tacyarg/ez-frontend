@@ -100,7 +100,7 @@ const CoinflipListing = ({
       <Flex>
         <Button type="primary">Join</Button>
         <Box mx={2} />
-        <Button>Watch</Button>
+        <Button type="simple">Watch</Button>
       </Flex>
     </Flex>
   )
