@@ -74,8 +74,7 @@ module.exports = () => {
     return memo
   }, 0)
 
-  const players = {}
-  players[user.id] = user
+  const players = [user]
 
   const game = {
     id: uuid(),

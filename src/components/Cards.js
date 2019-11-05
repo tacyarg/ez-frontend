@@ -3,7 +3,7 @@ import { Flex, Badge, Box, Page, Avatar, Image, Text } from '../primitives'
 import utils from './Utils'
 import Level from './Level'
 
-const JackpotItem = ({
+const JackpotItem = React.memo(({
   color = '#d32ee6',
   price = 25.99,
   name = 'Afterglow Wired Controller for Xbox One',
@@ -60,7 +60,7 @@ const JackpotItem = ({
       </Text>
     </Image>
   )
-}
+})
 
 const JackpotBet = ({ index = 0, bet = {}, ...p }) => {
   const background = utils.generateBackground(index, bet.color || '#e94c4c')

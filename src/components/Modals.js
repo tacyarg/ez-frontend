@@ -203,7 +203,131 @@ WiredModal.Deposit = Wiring.connect(
       onClose: p.onClose,
       onConfirm: p.onConfirm,
       socket: p.socket,
-      items: p.private.waxInventory,
+      items: Object.values(p.private.waxInventory),
+    }
+  }
+)
+
+WiredModal.DepositFromInventory = Wiring.connect(
+  React.memo(({ items = [], socket, ...p }) => {
+    // console.log('ITEMS', items)
+
+    const [loading, setLoading] = useState(false)
+    const [cache, setCache] = useState(items)
+
+    useEffect(() => {
+      setCache(items)
+    }, [items])
+
+    // useEffect(() => {
+    //   // socket.private.call('listAllMyExpressTadeInventoryItems')
+    // }, [p.isOpen])
+
+    const onSearch = value => {
+      if (value.length < 2) return setCache(items)
+      setLoading(true)
+
+      const searchResults = items.filter(row => {
+        return ['price', 'name', 'rarity'].find(prop => {
+          if (!row[prop]) return null
+          return row[prop]
+            .toString()
+            .toLowerCase()
+            .includes(value)
+        })
+      })
+
+      setLoading(false)
+      return setCache(searchResults)
+    }
+
+    const totalValue = cache
+      .reduce((memo, item) => {
+        memo += Number(item.price)
+        return memo
+      }, 0)
+      .toFixed(2)
+
+    const [selectedItems, setSelectedItems] = useState([])
+
+    const isSelected = itemid => {
+      return selectedItems.includes(itemid)
+    }
+
+    const handleSelect = itemid => {
+      if (isSelected(itemid)) {
+        const selected = selectedItems.filter(id => {
+          return id !== itemid
+        })
+        return setSelectedItems(selected)
+      }
+
+      return setSelectedItems([...selectedItems, itemid])
+    }
+
+    return (
+      <WiredModal
+        {...p}
+        onConfirm={e => {
+          p.onConfirm(selectedItems)
+          setSelectedItems([])
+        }}
+        onClose={e => {
+          p.onClose(selectedItems)
+          setSelectedItems([])
+        }}
+        onSearch={onSearch}
+        title={
+          <Flex alignItems="center">
+            Deposit Items:
+            <Box mx={1} />
+            <Text color="green" fontSize={4}>
+              {totalValue}
+            </Text>
+          </Flex>
+        }
+      >
+        <Box
+          p={4}
+          maxHeight={400}
+          style={{
+            overflow: 'hidden',
+            overflowY: 'auto',
+          }}
+        >
+          <Flex width={1} flexWrap="wrap" justifyContent="center">
+            {cache.length > 0 ? (
+              cache.map(item => {
+                return (
+                  <Cards.JackpotItem
+                    onClick={e => {
+                      handleSelect(item.id)
+                    }}
+                    selected={isSelected(item.id)}
+                    key={item.id}
+                    {...item}
+                  />
+                )
+              })
+            ) : (
+              <Box>
+                <Text>You do not have any items.</Text>
+                {/* <Button m={2}type="simple">View Inventory</Button> */}
+              </Box>
+            )}
+          </Flex>
+        </Box>
+      </WiredModal>
+    )
+  }),
+  p => {
+    // console.log(p)
+    return {
+      isOpen: p.isOpen,
+      onClose: p.onClose,
+      onConfirm: p.onConfirm,
+      socket: p.socket,
+      items: Object.values(p.private.inventory || {}) || [],
     }
   }
 )
@@ -318,7 +442,7 @@ WiredModal.CreateCoinflip = Wiring.connect(
       onClose: p.onClose,
       onConfirm: p.onConfirm,
       socket: p.socket,
-      items: p.private.waxInventory,
+      items: Object.values(p.private.waxInventory),
     }
   }
 )

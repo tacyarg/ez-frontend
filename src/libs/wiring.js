@@ -29,7 +29,10 @@ const defaultState = {
       en: fake.messages()
     }
   },
-  private: {},
+  private: {
+    inventory: {},
+    waxInventory: []
+  },
   admin: {},
   auth: {},
 }
@@ -75,7 +78,7 @@ const reducers = {
         ...channelState
       },
     }
-    // newState.jackpot = utils.findCurrentRound(newState.public.jackpots)
+    newState.jackpot = utils.findCurrentRound(newState.public.jackpots)
     return newState
   },
   auth(state, auth) {

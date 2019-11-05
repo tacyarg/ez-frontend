@@ -138,7 +138,7 @@ const RoundInfo = Wiring.connectMemo(
         <Box mx="auto" />
         <Badge>
           <Assets.Icons.Gun bg="yellow" />({items.length}/
-          {config.roundItemLimit})
+          {config.roundItemLimit || 100})
         </Badge>
       </Flex>
     )

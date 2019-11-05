@@ -10,7 +10,7 @@ import Wiring from '../libs/wiring'
 import Utils from '../components/Utils'
 
 const BetItems = Wiring.connectMemo(
-  ({ players = {}, items = [] }) => {
+  ({ players = [], items = [] }) => {
     return (
       <Flex
         width={1}
@@ -21,7 +21,7 @@ const BetItems = Wiring.connectMemo(
       >
         {items.map(item => {
           // merge the player metadata
-          item.user = players[item.userid]
+          item.user = players.find(u => u.id === item.userid)
           return <Cards.JackpotItem key={item.id} {...item} />
         })}
       </Flex>
@@ -36,7 +36,7 @@ const BetItems = Wiring.connectMemo(
 )
 
 const Bets = Wiring.connectMemo(
-  ({ players = {}, bets = [] }) => {
+  ({ players = [], bets = [] }) => {
     return (
       <Flex
         width={1}
@@ -46,7 +46,7 @@ const Bets = Wiring.connectMemo(
         justifyContent="center"
       >
         {bets.map((b, index) => {
-          b.user = players[b.userid]
+          b.user = players.find(u => u.id === b.userid)
           return <Cards.JackpotBet key={b.id} index={index} bet={b} m={2} />
         })}
       </Flex>
@@ -83,8 +83,12 @@ const Rules = Wiring.connectMemo(
     betItemLimit = 20, // max items per bet
   }) => {
     return (
-      <Flex width={1} justifyContent="center" >
-        <Flex justifyContent="space-between" my={2} flexDirection={['column', 'row']}>
+      <Flex width={1} justifyContent="center">
+        <Flex
+          justifyContent="space-between"
+          my={2}
+          flexDirection={['column', 'row']}
+        >
           <Rule>SKIN LIMIT: {betItemLimit}</Rule>
           <Rule>MIN BET: {Utils.parseValue(betValueMin)}</Rule>
           <Rule>MAX BET: {Utils.parseValue(betValueMax)}</Rule>
@@ -129,6 +133,34 @@ const Nav = ({ onDeposit }) => {
   )
 }
 
+const ConnectedModal = Wiring.connectMemo(
+  ({ socket, isOpen, toggleModal, gameid }) => {
+    return (
+      <Modal.DepositFromInventory
+        isOpen={isOpen}
+        onClose={e => {
+          toggleModal()
+        }}
+        onConfirm={itemids => {
+          toggleModal()
+          return socket.private.call('joinJackpotFromInventory', {
+            gameid,
+            itemids,
+          })
+        }}
+      />
+    )
+  },
+  p => {
+    return {
+      socket: p.socket,
+      isOpen: p.isOpen,
+      toggleModal: p.toggleModal,
+      gameid: p.jackpot.id,
+    }
+  }
+)
+
 export default p => {
   const [isOpen, setOpen] = useState(false)
 
@@ -138,13 +170,9 @@ export default p => {
 
   return (
     <>
+      <ConnectedModal isOpen={isOpen} toggleModal={toggleModal} />
       <GameNav {...p} />
       <Nav onDeposit={e => toggleModal()} />
-      <Modal.Deposit
-        isOpen={isOpen}
-        onClose={e => toggleModal()}
-        onConfirm={e => toggleModal()}
-      />
       <CurrentRound />
       <History />
     </>
