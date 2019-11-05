@@ -90,7 +90,7 @@ const SendChatMessage = ({ onSubmit }) => {
 }
 
 const Message = React.memo(m => {
-  console.log(m)
+  // console.log(m)
   return <Box m={2} key={m.id}>
     <Flex alignItems="center" p={1}>
       <Avatar size={30} src={m.image} mr={2} />

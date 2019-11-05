@@ -67,7 +67,7 @@ const CoinflipBtn = Wiring.connectMemo(
     )
   },
   p => {
-    console.log(p)
+    // console.log(p)
     // get the current round.
     return {
       onClick: p.onClick,

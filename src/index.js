@@ -26,12 +26,11 @@ const START = async p => {
   // connect to socket before we init the app...
   const socket = await Socket(
     process.env.SOCKET_URL,
-    (type, channel, channelState, fullState) => {
-
-      console.log(type, channel)
+    async (type, channel, channelState, fullState) => {
+      // console.log(type, channel)
 
       if (type === 'change') {
-        console.log('state changed:', channel, channelState)
+        // console.log('state changed:', channel, channelState)
         Wiring.dispatch('updateChannelState')(channel, channelState)
       }
 
@@ -41,6 +40,9 @@ const START = async p => {
 
       if (type === 'reconnect') {
         //socket reconnected after being disconnected
+        await Authenticate(socket, window.localStorage.getItem('tokenid'))
+          .then(Wiring.dispatch('auth'))
+          .catch(err => console.log('authenticate error', err))
       }
     }
   )
@@ -48,13 +50,6 @@ const START = async p => {
   await Authenticate(socket, window.localStorage.getItem('tokenid'))
     .then(Wiring.dispatch('auth'))
     .catch(err => console.log('authenticate error', err))
-
-  console.log('socket', socket)
-
-  socket.public
-    .call('echo', { test: true })
-    .then(console.log)
-    .catch(console.error)
 
   // start the main react app.
   return ReactDOM.render(

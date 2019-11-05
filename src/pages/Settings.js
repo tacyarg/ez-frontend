@@ -78,7 +78,7 @@ export default Wiring.connectMemo(
     )
   },
   p => {
-    console.log('SETTINGS', p)
+    // console.log('SETTINGS', p)
 
     return {
       location: p.location,

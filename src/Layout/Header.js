@@ -9,7 +9,7 @@ import Buttons from "../components/Buttons";
 
 const Profile = Wiring.connectMemo(
   p => {
-    console.log(p);
+    // console.log(p);
 
     return p.user ? (
       <Dropdown

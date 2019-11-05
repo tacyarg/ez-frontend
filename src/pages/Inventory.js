@@ -34,7 +34,10 @@ const TitleBar = ({ label = 'Inventory', children }) => {
 }
 
 export default Wiring.connectMemo(
-  p => {
+  ({inventory = [], socket, ...p})=> {
+
+    console.log('INVENTORY RENDER', p)
+
     const [isOpen, setOpen] = useState(false)
 
     function toggleModal() {
@@ -50,7 +53,7 @@ export default Wiring.connectMemo(
 
     useEffect(() => {
       const value = Object.values(selectedItems).reduce((memo, item) => {
-        console.log(item.price)
+        // console.log(item.price)
         memo += item.price
         return memo
       }, 0)
@@ -78,7 +81,7 @@ export default Wiring.connectMemo(
           }}
           onConfirm={itemids => {
             toggleModal()
-            return p.socket.private.call('depositExpressTradeItems', {
+            return socket.private.call('depositExpressTradeItems', {
               itemids,
             })
           }}
@@ -97,8 +100,8 @@ export default Wiring.connectMemo(
         </TitleBar>
 
         <Flex width={1} flexWrap="wrap" justifyContent="center">
-          {p.inventory.length > 0 ? (
-            p.inventory.map(item => {
+          {inventory.length > 0 ? (
+            inventory.map(item => {
               return (
                 <Cards.JackpotItem
                   key={item.id}
@@ -126,7 +129,7 @@ export default Wiring.connectMemo(
       history: p.history,
       user: p.private.me || {},
       socket: p.socket,
-      inventory: Object.values(p.private.inventory || {}) || [],
+      // inventory: Object.values(p.private.inventory || {}) || [],
     }
   }
 )
