@@ -8,6 +8,7 @@ import utils from './utils'
 const defaultState = {
   env: {
     AUTH_URL: process.env.AUTH_URL,
+    SOCKET_URL: process.env.SOCKET_URL
   },
   initialized: false,
   time: Date.now(),

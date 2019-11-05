@@ -36,7 +36,10 @@ const Profile = Wiring.connectMemo(
         <Text color="black">{p.user.username}</Text>
       </Dropdown>
     ) : (
-      <Buttons.Login />
+      <>
+      <Buttons.LoginSteam />
+      <Buttons.LoginWax />
+      </>
     );
   },
   p => {

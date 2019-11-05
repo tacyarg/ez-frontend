@@ -86,7 +86,7 @@ const WiredModal = ({
 
 WiredModal.Deposit = Wiring.connect(
   React.memo(({ items = [], socket, ...p }) => {
-    console.log('ITEMS', items)
+    // console.log('ITEMS', items)
 
     const [loading, setLoading] = useState(false)
     const [cache, setCache] = useState(items)
@@ -96,7 +96,7 @@ WiredModal.Deposit = Wiring.connect(
     }, [items])
 
     useEffect(() => {
-      socket.private.call('listExpressTradeInventoryItems')
+      socket.private.call('listAllMyExpressTadeInventoryItems')
     }, [p.isOpen])
 
     const onSearch = value => {
@@ -124,9 +124,34 @@ WiredModal.Deposit = Wiring.connect(
       }, 0)
       .toFixed(2)
 
+    const [selectedItems, setSelectedItems] = useState([])
+
+    const isSelected = itemid => {
+      return selectedItems.includes(itemid)
+    }
+
+    const handleSelect = itemid => {
+      if (isSelected(itemid)) {
+        const selected = selectedItems.filter(id => {
+          return id !== itemid
+        })
+        return setSelectedItems(selected)
+      }
+
+      return setSelectedItems([...selectedItems, itemid])
+    }
+
     return (
       <WiredModal
         {...p}
+        onConfirm={e => {
+          p.onConfirm(selectedItems)
+          setSelectedItems([])
+        }}
+        onClose={e => {
+          p.onClose(selectedItems)
+          setSelectedItems([])
+        }}
         onSearch={onSearch}
         title={
           <Flex alignItems="center">
@@ -149,7 +174,16 @@ WiredModal.Deposit = Wiring.connect(
           <Flex width={1} flexWrap="wrap" justifyContent="center">
             {cache.length > 0 ? (
               cache.map(item => {
-                return <Cards.JackpotItem key={item.id} {...item} />
+                return (
+                  <Cards.JackpotItem
+                    onClick={e => {
+                      handleSelect(item.id)
+                    }}
+                    selected={isSelected(item.id)}
+                    key={item.id}
+                    {...item}
+                  />
+                )
               })
             ) : (
               <Box>
@@ -163,7 +197,7 @@ WiredModal.Deposit = Wiring.connect(
     )
   }),
   p => {
-    console.log(p)
+    // console.log(p)
     return {
       isOpen: p.isOpen,
       onClose: p.onClose,
@@ -176,7 +210,7 @@ WiredModal.Deposit = Wiring.connect(
 
 WiredModal.CreateCoinflip = Wiring.connect(
   React.memo(({ items = [], socket, ...p }) => {
-    console.log('ITEMS', items)
+    // console.log('ITEMS', items)
 
     const [loading, setLoading] = useState(false)
     const [cache, setCache] = useState(items)
@@ -249,7 +283,7 @@ WiredModal.CreateCoinflip = Wiring.connect(
             />
             <Assets.Coinflip.ctCoin
               onClick={e => setSelection('ct')}
-              size={[50,100]}
+              size={[50, 100]}
               selected={isSelected('ct')}
             />
           </Flex>

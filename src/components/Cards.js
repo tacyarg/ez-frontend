@@ -12,6 +12,7 @@ const JackpotItem = ({
   image = 'https://static.wax.io/d-img/dynamic-apps/img/phpqkombg-ca194a2788.png',
   onClick = x => x,
   user,
+  selected,
 }) => {
   return (
     <Image
@@ -25,12 +26,17 @@ const JackpotItem = ({
       height={130}
       src={image}
       border="thick"
-      borderColor="subnavbg"
+      borderColor={selected ? 'primary' : 'subnavbg'}
       boxShadow={`0 4px 0 0 ${color}`}
       borderRadius="normal"
     >
       <Flex>
-        <Text color="yellow">{utils.parseValue(price)}</Text>
+        <Text
+          color="yellow"
+          // bg="darkBacking" p={1}
+        >
+          {utils.parseValue(price)}
+        </Text>
         {user && (
           <>
             <Box mx="auto" />
@@ -44,7 +50,12 @@ const JackpotItem = ({
         )}
       </Flex>
       <Box my="auto" />
-      <Text fontSize={1} cutoff color={color}>
+      <Text
+        fontSize={1}
+        cutoff
+        color={color}
+        // bg="darkBacking" p={1}
+      >
         {name}
       </Text>
     </Image>
