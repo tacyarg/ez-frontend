@@ -94,12 +94,12 @@ export default ({ location, history }) => {
           history.push('/jackpot')
         }}
       />
-      <JackpotBtn
+      {/* <JackpotBtn
         label="10 Max"
         onClick={e => {
           history.push('/jackpot10max')
         }}
-      />
+      /> */}
       <CoinflipBtn
         onClick={e => {
           history.push('/coinflip')

@@ -13,6 +13,7 @@ import {
 import Cards from './Cards'
 import Assets from './Assets'
 import Wiring from '../libs/wiring'
+import Utils from './Utils'
 
 function useDebounce(value, delay = 500) {
   const [debouncedValue, setDebouncedValue] = useState(value)
@@ -51,6 +52,15 @@ const Search = ({ onSearch }) => {
   )
 }
 
+const Amount = ({amount}) => {
+  return (
+    <>
+      <Box mx={1}> | </Box>
+      {Utils.parseValue(amount)}
+    </>
+  )
+}
+
 const WiredModal = ({
   children,
   isOpen,
@@ -58,6 +68,7 @@ const WiredModal = ({
   onSearch,
   onConfirm,
   onClose,
+  amount,
   ...p
 }) => {
   return (
@@ -73,8 +84,8 @@ const WiredModal = ({
       <Flex width={1} p={3}>
         {onSearch && <Search onSearch={onSearch} />}
         <Box mx="auto" />
-        <Button mx={1} type="primary" onClick={onConfirm}>
-          Confirm
+        <Button as={Flex} alignItems="center" mx={1} type="primary" onClick={onConfirm}>
+          Confirm {amount && <Amount amount={amount} />}
         </Button>
         <Button mx={1} type="warning" onClick={onClose}>
           Cancel
@@ -96,7 +107,7 @@ WiredModal.Deposit = Wiring.connect(
     }, [items])
 
     useEffect(() => {
-      socket.private.call('listlMyExpressTadeInventoryItems')
+      socket.private.call('listAllMyExpressTadeInventoryItems')
     }, [p.isOpen])
 
     const onSearch = value => {
@@ -144,6 +155,7 @@ WiredModal.Deposit = Wiring.connect(
     return (
       <WiredModal
         {...p}
+        amount={totalValue}
         onConfirm={e => {
           p.onConfirm(selectedItems)
           setSelectedItems([])

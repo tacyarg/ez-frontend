@@ -8,6 +8,15 @@ import Utils from '../components/Utils'
 import Modal from '../components/Modals'
 import Cards from '../components/Cards'
 
+const Amount = ({amount}) => {
+  return (
+    <>
+      <Box mx={1}> | </Box>
+      {Utils.parseValue(amount)}
+    </>
+  )
+}
+
 const TitleBar = ({ label = 'Inventory', children }) => {
   return (
     <Flex
@@ -77,8 +86,8 @@ export default Wiring.connectMemo(
         <GameNav {...p} />
         <TitleBar>
           {Object.values(selectedItems).length > 0 ? (
-            <Button type="warning" onClick={e => toggleModal()}>
-              Withdraw {Utils.parseValue(selectedValue)}
+            <Button as={Flex} alignItems="center" type="warning" onClick={e => toggleModal()}>
+              Withdraw <Amount amount={selectedValue}/>
             </Button>
           ) : (
             <Button type="primary" onClick={e => toggleModal()}>
