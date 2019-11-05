@@ -3,66 +3,68 @@ import { Flex, Badge, Box, Page, Avatar, Image, Text } from '../primitives'
 import utils from './Utils'
 import Level from './Level'
 
-const JackpotItem = React.memo(({
-  color = '#d32ee6',
-  price = 25.99,
-  name = 'Afterglow Wired Controller for Xbox One',
-  // image = 'https://files.opskins.media/file/vgo-img/item/wax-key-300.png'
-  // image = 'https://files.opskins.media/file/vgo-img/item/awp-golden-illusion-factory-new-300.png'
-  image = 'https://static.wax.io/d-img/dynamic-apps/img/phpqkombg-ca194a2788.png',
-  onClick = x => x,
-  user,
-  selected,
-}) => {
-  return (
-    <Image
-      onClick={onClick}
-      m={2}
-      p={2}
-      as={Flex}
-      flexDirection="column"
-      bg="backingLight"
-      width={160}
-      height={130}
-      src={image}
-      border="thick"
-      borderColor={selected ? 'primary' : 'subnavbg'}
-      boxShadow={`0 4px 0 0 ${color}`}
-      borderRadius="normal"
-    >
-      <Flex>
+const JackpotItem = React.memo(
+  ({
+    color = '#d32ee6',
+    price = 25.99,
+    name = 'Afterglow Wired Controller for Xbox One',
+    // image = 'https://files.opskins.media/file/vgo-img/item/wax-key-300.png'
+    // image = 'https://files.opskins.media/file/vgo-img/item/awp-golden-illusion-factory-new-300.png'
+    image = 'https://static.wax.io/d-img/dynamic-apps/img/phpqkombg-ca194a2788.png',
+    onClick = x => x,
+    user,
+    selected,
+  }) => {
+    return (
+      <Image.Item
+        onClick={onClick}
+        m={2}
+        p={2}
+        as={Flex}
+        flexDirection="column"
+        bg="backingLight"
+        width={160}
+        height={140}
+        src={image}
+        border="thick"
+        borderColor={selected ? 'primary' : 'subnavbg'}
+        boxShadow={`0 4px 0 0 ${color}`}
+        borderRadius="normal"
+      >
+        <Flex>
+          <Text
+            color="yellow"
+            // bg="darkBacking" p={1}
+          >
+            {utils.parseValue(price)}
+          </Text>
+          {user && (
+            <>
+              <Box mx="auto" />
+              <Avatar
+                src={
+                  'https://www.gravatar.com/avatar/2cfb1ef04b6ec071fc74171d3687a5ee?d=identicon&r=pg&s=32'
+                }
+                size={32}
+              />
+            </>
+          )}
+        </Flex>
+        <Box my="auto" />
         <Text
-          color="yellow"
+          fontSize={1}
+          cutoff
+          color={color}
           // bg="darkBacking" p={1}
         >
-          {utils.parseValue(price)}
+          {name}
         </Text>
-        {user && (
-          <>
-            <Box mx="auto" />
-            <Avatar
-              src={
-                'https://www.gravatar.com/avatar/2cfb1ef04b6ec071fc74171d3687a5ee?d=identicon&r=pg&s=32'
-              }
-              size={32}
-            />
-          </>
-        )}
-      </Flex>
-      <Box my="auto" />
-      <Text
-        fontSize={1}
-        cutoff
-        color={color}
-        // bg="darkBacking" p={1}
-      >
-        {name}
-      </Text>
-    </Image>
-  )
-})
+      </Image.Item>
+    )
+  }
+)
 
-const JackpotBet = ({ index = 0, bet = {}, ...p }) => {
+const JackpotBet = React.memo(({ index = 0, bet = {}, ...p }) => {
   const background = utils.generateBackground(index, bet.color || '#e94c4c')
   return (
     <Flex
@@ -93,7 +95,7 @@ const JackpotBet = ({ index = 0, bet = {}, ...p }) => {
       />
     </Flex>
   )
-}
+})
 
 export default {
   JackpotItem,

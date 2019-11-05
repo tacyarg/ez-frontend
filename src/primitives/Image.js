@@ -7,9 +7,10 @@ import {
   backgroundPosition,
   backgroundImage,
   backgroundSize,
+  background,
 } from 'styled-system'
 
-import Box from './Box'
+import {Box, Flex} from '.'
 
 const type = props => {
   switch (props.type) {
@@ -44,6 +45,22 @@ const Image = ({ children, ...props }) => (
   <Styled {...props} backgroundImage={`url(${props.src})`}>
     {children}
   </Styled>
+)
+
+Image.Item = ({ children, ...props }) => (
+  <Box {...props} position="relative">
+    <Styled height={'60%'} backgroundImage={`url(${props.src})`} style={{
+      position: 'absolute',
+      // top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      top: '50%',
+      transform: 'translateY(-50%)',
+      zIndex: 1
+    }}/>
+      <Flex flexDirection="column" style={{zIndex: 2, height:"100%", width:"100%"}}>{children}</Flex>
+  </Box>
 )
 
 Image.displayName = 'Image'

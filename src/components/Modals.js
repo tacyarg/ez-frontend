@@ -96,7 +96,7 @@ WiredModal.Deposit = Wiring.connect(
     }, [items])
 
     useEffect(() => {
-      socket.private.call('listAllMyExpressTadeInventoryItems')
+      socket.private.call('listlMyExpressTadeInventoryItems')
     }, [p.isOpen])
 
     const onSearch = value => {
