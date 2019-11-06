@@ -12,7 +12,7 @@ import {
 import FakeCoinflips from '../libs/fake/coinflips'
 import GameNav from '../components/GameNav'
 import Modal from '../components/Modals'
-import utils from '../components/Utils'
+import Utils from '../components/Utils'
 
 const Badge = ({ value, color, money }) => {
   return (
@@ -42,8 +42,8 @@ const Stat = ({ label = 'Label', value = 0, money, color }) => {
       borderRadius="normal"
       width={[1, 'auto']}
       // flex={[1,0]}
-      mx={[1,2]}
-      p={[1,2]}
+      mx={[1, 2]}
+      p={[1, 2]}
       alignItems="center"
       style={{
         border: '1px solid #58585c',
@@ -60,6 +60,7 @@ const Stat = ({ label = 'Label', value = 0, money, color }) => {
 }
 
 const CoinflipListing = ({
+  idx = 0,
   players = [],
   items = [],
   state = 'open',
@@ -67,37 +68,51 @@ const CoinflipListing = ({
   winner,
 }) => {
   return (
-    <Flex justifyContent="space-evenly" p={2} alignItems="center" flexDirection={['column', 'row']}>
-      <Flex alignItems="center">
-        <Avatar src={players[0].image} size={[32,64]} />
+    <Flex
+      p={2}
+      alignItems="center"
+      justifyContent="center"
+      flexDirection={['column', 'row']}
+      bg={Utils.isOdd(idx) ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0.1)'}
+    >
+      <Flex alignItems="center" width={[1, 1/5]}>
+        <Avatar src={players[0].image} size={[32, 64]} />
         {players[1] && (
           <>
             <Text mx={2}>VS</Text>
-            <Avatar src={players[1].image} size={[40,64]} />
+            <Avatar src={players[1].image} size={[40, 64]} />
           </>
         )}
       </Flex>
-      <Flex alignItems="center">
+      <Flex alignItems="center" width={[1, 1/3]}>
         {items.map((p, k) => {
           if (k > 3) return
-          return <Image key={p.id} src={p.image} alt={p.name} size={[40, 64]} p={2} />
+          return (
+            <Image
+              key={p.id}
+              src={p.image}
+              alt={p.name}
+              size={[40, 64]}
+              p={2}
+            />
+          )
         })}
         {items.length > 3 && (
-          <Flex p={2} flexDirection="column" alignItems="center">
-            <Text fontSize={4} color="subtext">{`+${items.length - 4}`}</Text>
-            <Text fontSize={2} color="subtext">
+          <Flex ml={1} p={2} flexDirection="column" alignItems="center">
+            <Text fontSize={3} color="subtext">{`+${items.length - 4}`}</Text>
+            <Text fontSize={1} color="subtext" opacity={0.5}>
               more
             </Text>
           </Flex>
         )}
       </Flex>
-      <Text fontSize={4} color="subtext"  p={[1,0]}>
+      <Text fontSize={4} color="subtext" p={[1, 0]} width={[1, 1/6]}>
         {state}
       </Text>
-      <Text fontSize={4} color={'red'}  p={[2,0]}>
-        ${utils.parseValue(value)}
+      <Text fontSize={4} color={'red'} p={[2, 0]} width={[1, 1/6]}>
+        ${Utils.parseValue(value)}
       </Text>
-      <Flex>
+      <Flex width={[1, 1/5]}>
         <Button type="primary">Join</Button>
         <Box mx={2} />
         <Button type="simple">Watch</Button>
@@ -143,15 +158,7 @@ export default p => {
       />
       <Box height={'100%'}>
         <GameNav {...p} />
-        <Flex
-          flexWrap="wrap"
-          bg="backingLight"
-          p={[2, 3]}
-          alignItems="center"
-          borderBottom="3px solid #42b142"
-          flexDirection={['column', 'row']}
-          justifyContent="center"
-        >
+        <Utils.TitleBar flexDirection={['column', 'row']}>
           <Flex flexWrap="wrap">
             {stats.map(s => {
               return <Stat {...s} />
@@ -159,19 +166,30 @@ export default p => {
           </Flex>
           <Box mx={[0, 'auto']} />
           <Button
-            // width={[1, 'auto']}
             mt={[3, 0]}
-            px={4}
-            py={3}
-            // mx={[2, 0]}
             type="primary"
             onClick={e => toggleModal()}
           >
             Create Coinflip
           </Button>
+        </Utils.TitleBar>
+        <Flex
+          // flexWrap="wrap"
+          justifyContent="center"
+          bg="backingLight"
+          p={[2, 3]}
+          alignItems="center"
+          borderBottom="3px solid #42b142"
+          flexDirection={['column', 'row']}
+        >
+          <Text width={[1, 1/5]}>Players</Text>
+          <Text width={[1, 1/3]}>Items</Text>
+          <Text width={[1, 1/7]}>Status</Text>
+          <Text width={[1, 1/7]}>Total</Text>
+          <Text width={[1, 1/5]}>Actions</Text>
         </Flex>
-        {coinflips.map(cf => {
-          return <CoinflipListing {...cf} key={cf.id} />
+        {coinflips.map((cf, idx) => {
+          return <CoinflipListing {...cf} key={cf.id} idx={idx} />
         })}
       </Box>
     </>

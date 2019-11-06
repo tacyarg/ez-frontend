@@ -11,14 +11,12 @@ import {
   Spinner,
   Divider,
 } from '../primitives'
-
+import Cards from './Cards'
 import Assets from './Assets'
 
 import axios from 'axios'
 import ReactMarkdown from 'react-markdown'
-
 import assert from 'assert'
-
 import moment from 'moment'
 
 const RenderError = ({
@@ -232,7 +230,98 @@ function parseValue(data = 0) {
   })
 }
 
+const ItemList = ({ onChange = x => x, items = [], ...p }) => {
+  const [selectedItems, setSelectedItems] = useState([])
+  const [selectedValue, setSelectedValue] = useState(0)
+
+  console.log(selectedItems, selectedValue)
+
+  useEffect(() => {
+    const selItems = items.filter(i => selectedItems.includes(i.id))
+    const value = selItems.reduce((memo, item) => {
+      memo += item.price
+      return memo
+    }, 0)
+    setSelectedValue(value)
+  }, [selectedItems])
+
+  const isSelected = itemid => {
+    return selectedItems.includes(itemid)
+  }
+
+  const handleSelect = item => {
+    if (isSelected(item.id)) {
+      console.log('DE-SELECT ITEM')
+      return setSelectedItems(selectedItems.filter(i => i !== item.id))
+    }
+
+    console.log('SELECT ITEM')
+    return setSelectedItems([...selectedItems, item.id])
+  }
+
+  useEffect(() => {
+    onChange({
+      selectedItems,
+      selectedValue,
+    })
+  }, [selectedItems, selectedValue])
+
+  return (
+    <Box
+      p={4}
+      maxHeight={400}
+      style={{
+        overflow: 'hidden',
+        overflowY: 'auto',
+      }}
+      {...p}
+    >
+      <Flex width={1} flexWrap="wrap" justifyContent="center">
+        {items.length > 0 ? (
+          items.map(item => {
+            return (
+              <Cards.JackpotItem
+                key={item.id}
+                {...item}
+                selected={isSelected(item.id)}
+                onClick={e => handleSelect(item)}
+              />
+            )
+          })
+        ) : (
+          <Box>
+            <Text m={2}>You do not have any items.</Text>
+            {/* <Button type="simple">Deposit Items</Button> */}
+          </Box>
+        )}
+      </Flex>
+    </Box>
+  )
+}
+
+const TitleBar = ({ label = 'Inventory', children, ...p }) => {
+  return (
+    <Flex
+      alignItems={'center'}
+      p={3}
+      bg="backingDark"
+      borderBottom="2px solid rgba(0, 0, 0, 0.5)"
+      // boxShadow='0px 0px 2px 0px rgba(0, 0, 0, 1)'
+      {...p}
+    >
+      {/* <Text fontSize={4}>{label}</Text>
+      <Box mx="auto" /> */}
+      {children}
+    </Flex>
+  )
+}
+
+function isOdd(num) { return num % 2 === 1; }
+
 export default {
+  isOdd,
+  TitleBar,
+  ItemList,
   parseValue,
   hexToRgb,
   getDark,

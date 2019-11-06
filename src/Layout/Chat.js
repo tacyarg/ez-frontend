@@ -91,28 +91,33 @@ const SendChatMessage = ({ onSubmit }) => {
 
 const Message = React.memo(m => {
   // console.log(m)
-  return <Box m={2} key={m.id}>
-    <Flex alignItems="center" p={1}>
-      <Avatar size={30} src={m.image} mr={2} />
-      <Level rank={m.rank} />
-      <Text
-        fontWeight="bold"
-        letterSpacing="slight"
-        mr={2}
-        color="offwhite"
-      >
-        {m.username || m.user.username}
-      </Text>
-    </Flex>
-    <Divider my={1} />
-    <Text wrap="true" fontWeight="normal" color="subtext">
-      {m.message}
-    </Text>
-  </Box>
+  return (
+    <>
+          <Divider my={1} />
+
+      <Box mx={2} key={m.id}>
+        <Flex alignItems="center" p={1} flexWrap="wrap">
+          <Avatar size={30} src={m.image} mr={2} />
+          <Level rank={m.rank} />
+          <Text
+            fontWeight="bold"
+            letterSpacing="slight"
+            mr={2}
+            color="offwhite"
+          >
+            {m.username || m.user.username}:
+          </Text>
+          <Text wrap="true" fontWeight="normal" color="subtext">
+            {m.message}
+          </Text>
+          {/* <Box mx={1}>|</Box> */}
+        </Flex>
+      </Box>
+    </>
+  )
 })
 
 const Chat = ({ messages, socket, ...p }) => {
-
   const [pauseScroll, setPauseScroll] = useState(false)
 
   let chatElement = null
@@ -161,9 +166,11 @@ const Chat = ({ messages, socket, ...p }) => {
           return <Message key={m.id} {...m} />
         })}
       </Flex>
-      <SendChatMessage onSubmit={message => {
-        return socket.private.call('sendChatMessage', { message })
-      }} />
+      <SendChatMessage
+        onSubmit={message => {
+          return socket.private.call('sendChatMessage', { message })
+        }}
+      />
     </Sidebar>
   )
 }
@@ -171,6 +178,6 @@ const Chat = ({ messages, socket, ...p }) => {
 export default Wiring.connectMemo(Chat, p => {
   return {
     socket: p.socket,
-    messages: Object.values(p.public.chats.en)
+    messages: Object.values(p.public.chats.en),
   }
 })

@@ -40,13 +40,13 @@ const type = props => {
       `
     case 'simple':
       return `
-        background-color: ${theme.colors.backingLight};
+        background-color: ${p => p.active ? theme.colors.backingDark : theme.colors.backingLight};
         color: ${theme.colors.lightbacking};
         
         &:hover,
         &:focus {
           background-color: rgba(0,0,0,0.5);
-          box-shadow: 0px 4px 4px -4px ${theme.colors.red};
+          box-shadow: 0px 4px 2px -4px ${theme.colors.primary};
           color: ${props.disabled ? null : theme.colors.offwhite}
         };
     `

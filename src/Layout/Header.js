@@ -15,10 +15,16 @@ const Profile = Wiring.connectMemo(
       <Dropdown
         entries={[
           {
+            label: "Inventory",
+            icon: Assets.Icons.Gun,
+            onClick: () => {
+              return p.history.push('/inventory')
+            }
+          },
+          {
             label: "Settings",
             icon: Assets.Icons.UserCog,
             onClick: () => {
-              // window.localStorage.setItem('tokenid')
               return p.history.push('/settings')
             }
           },
@@ -26,8 +32,8 @@ const Profile = Wiring.connectMemo(
             label: "Logout",
             icon: Assets.Icons.SignOut,
             onClick: () => {
-              // window.localStorage.setItem('tokenid')
-              return p.socket.auth.call("logout");
+              p.socket.auth.call("logout");
+              window.localStorage.setItem('tokenid')
             }
           }
         ]}

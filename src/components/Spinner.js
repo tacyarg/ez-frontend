@@ -100,11 +100,17 @@ const Spinner = Wiring.connectMemo(
           <Flex
             // width={`${bets.length}0%`}
             width={`${items.length}%`} // of 100 (max items is 100)
+            style={{
+              transition: 'width linear 1s !important',
+            }}
           >
             {bets.map(({ color = '#8847ff', ...b }, i) => {
               const background = utils.generateBackground(i, color)
               return (
                 <SpinnerBet
+                  style={{
+                    transition: 'width linear 1s !important',
+                  }}
                   width={`${(b.value / value) * 100}%`}
                   background={background}
                   key={b.id}

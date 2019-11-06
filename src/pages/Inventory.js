@@ -8,7 +8,7 @@ import Utils from '../components/Utils'
 import Modal from '../components/Modals'
 import Cards from '../components/Cards'
 
-const Amount = ({amount}) => {
+const Amount = ({ amount }) => {
   return (
     <>
       <Box mx={1}> | </Box>
@@ -34,9 +34,8 @@ const TitleBar = ({ label = 'Inventory', children }) => {
 }
 
 export default Wiring.connectMemo(
-  ({inventory = [], socket, ...p})=> {
-
-    console.log('INVENTORY RENDER', p)
+  ({ inventory = [], socket, ...p }) => {
+    inventory = Object.values(inventory)
 
     const [isOpen, setOpen] = useState(false)
 
@@ -45,40 +44,13 @@ export default Wiring.connectMemo(
     }
 
     const [selectedItems, setSelectedItems] = useState({})
-    const [selectedValue, setSelectedValue] = useState(0)
-
-    const isSelected = itemid => {
-      return Boolean(selectedItems[itemid])
-    }
-
-    useEffect(() => {
-      const value = Object.values(selectedItems).reduce((memo, item) => {
-        // console.log(item.price)
-        memo += item.price
-        return memo
-      }, 0)
-      setSelectedValue(value)
-    }, [selectedItems])
-
-    const handleSelect = item => {
-      if (isSelected(item.id)) {
-        delete selectedItems[item.id]
-        return setSelectedItems(selectedItems)
-      }
-
-      return setSelectedItems({
-        ...selectedItems,
-        [item.id]: item,
-      })
-    }
+    const [selectedValue, setAmount] = useState(0)
 
     return (
       <>
         <Modal.Deposit
           isOpen={isOpen}
-          onClose={e => {
-            toggleModal()
-          }}
+          onClose={e => toggleModal()}
           onConfirm={itemids => {
             toggleModal()
             return socket.private.call('depositExpressTradeItems', {
@@ -88,9 +60,18 @@ export default Wiring.connectMemo(
         />
         <GameNav {...p} />
         <TitleBar>
-          {Object.values(selectedItems).length > 0 ? (
-            <Button as={Flex} alignItems="center" type="warning" onClick={e => toggleModal()}>
-              Withdraw <Amount amount={selectedValue}/>
+          {selectedItems.length > 0 ? (
+            <Button
+              as={Flex}
+              alignItems="center"
+              type="warning"
+              onClick={e => {
+                socket.private.call('withdrawExpressTradeItems', {
+                  itemids: selectedItems,
+                })
+              }}
+            >
+              Withdraw <Amount amount={selectedValue} />
             </Button>
           ) : (
             <Button type="primary" onClick={e => toggleModal()}>
@@ -99,27 +80,14 @@ export default Wiring.connectMemo(
           )}
         </TitleBar>
 
-        <Flex width={1} flexWrap="wrap" justifyContent="center">
-          {inventory.length > 0 ? (
-            inventory.map(item => {
-              return (
-                <Cards.JackpotItem
-                  key={item.id}
-                  {...item}
-                  onClick={e => {
-                    handleSelect(item)
-                  }}
-                  selected={isSelected(item.id)}
-                />
-              )
-            })
-          ) : (
-            <Box mx="auto">
-              <Text>You do not have any items.</Text>
-              {/* <Button m={2}type="simple">View Inventory</Button> */}
-            </Box>
-          )}
-        </Flex>
+        <Utils.ItemList
+          maxHeight={'100%'}
+          items={inventory}
+          onChange={({ selectedItems, selectedValue }) => {
+            setSelectedItems(selectedItems)
+            setAmount(selectedValue)
+          }}
+        />
       </>
     )
   },
@@ -129,7 +97,7 @@ export default Wiring.connectMemo(
       history: p.history,
       user: p.private.me || {},
       socket: p.socket,
-      // inventory: Object.values(p.private.inventory || {}) || [],
+      inventory: p.private.inventory || {},
     }
   }
 )

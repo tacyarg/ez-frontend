@@ -21,6 +21,9 @@ const Badge = ({ value, color = 'red', money }) => {
 }
 
 const NavBtn = ({ children, ...p }) => {
+
+  console.log(p)
+
   return (
     <Button
       {...p}
@@ -31,6 +34,7 @@ const NavBtn = ({ children, ...p }) => {
       p={2}
       flex={1}
       borderBottom="4px solid red"
+      backgroundColor={p.active ? 'rgba(0,0,0,0.5)' : null}
     >
       {children}
     </Button>
@@ -38,28 +42,31 @@ const NavBtn = ({ children, ...p }) => {
 }
 
 const JackpotBtn = Wiring.connectMemo(
-  ({ label = 'Jackpot', jackpot, onClick }) => {
+  ({ label = 'Jackpot', value, ...p }) => {
     return (
-      <NavBtn onClick={onClick}>
+      <NavBtn {...p}>
         <Text fontSize={5}>{label}</Text>
         <Box mx={1} />
-        <Badge value={jackpot.value} />
+        <Badge value={value} />
       </NavBtn>
     )
   },
   p => {
     return {
+      active: p.active,
       label: p.label,
       onClick: p.onClick,
-      jackpot: p.jackpot,
+      value: p.jackpot.value,
     }
   }
 )
 
 const CoinflipBtn = Wiring.connectMemo(
-  ({ value = 0, onClick }) => {
+  ({ value=0, ...p }) => {
+
+
     return (
-      <NavBtn onClick={onClick}>
+      <NavBtn {...p}>
         <Text fontSize={5}>Coinflip</Text>
         <Box mx={1} />
         <Badge value={value} />
@@ -69,19 +76,27 @@ const CoinflipBtn = Wiring.connectMemo(
   p => {
     // console.log(p)
     // get the current round.
+
+    const value = Object.values(p.public.coinflips).reduce((memo, g) => {
+      memo += g.value
+      return memo
+    }, 0)
+
     return {
+      active: p.active,
       onClick: p.onClick,
-      value: Object.values(p.public.coinflips).reduce((memo, g) => {
-        memo += g.value
-        return memo
-      }, 0),
+      value
     }
   }
 )
 
 export default ({ location, history }) => {
-  // const cPage = location.pathname
-  // console.log('CURRENT PAGE', history)
+  const cPage = location.pathname
+  console.log('CURRENT PAGE', cPage)
+
+  const isPage = page => {
+    return cPage === page
+  }
 
   return (
     <Flex
@@ -90,6 +105,7 @@ export default ({ location, history }) => {
       flexDirection={['column', 'row']}
     >
       <JackpotBtn
+        active={isPage('/jackpot')}
         onClick={e => {
           history.push('/jackpot')
         }}
@@ -100,7 +116,9 @@ export default ({ location, history }) => {
           history.push('/jackpot10max')
         }}
       /> */}
+      <Divider type="vertical" />
       <CoinflipBtn
+        active={isPage('/coinflip')}
         onClick={e => {
           history.push('/coinflip')
         }}

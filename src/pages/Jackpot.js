@@ -83,10 +83,10 @@ const Rules = Wiring.connectMemo(
     betItemLimit = 20, // max items per bet
   }) => {
     return (
-      <Flex width={1} justifyContent="center">
+      <Flex justifyContent="center">
         <Flex
           justifyContent="space-between"
-          my={2}
+          // my={2}
           flexDirection={['column', 'row']}
         >
           <Rule>SKIN LIMIT: {betItemLimit}</Rule>
@@ -102,7 +102,7 @@ const Rules = Wiring.connectMemo(
 const CurrentRound = p => {
   return (
     <>
-      <Rules />
+      {/* <Rules /> */}
       <BetItems />
       <Spinner />
       <Bets />
@@ -119,19 +119,19 @@ const History = p => {
 //   return (percent * 100).toFixed(0);
 // }
 
-const Nav = ({ onDeposit }) => {
-  return (
-    <Box p={2} width={1} bg="subnavbg">
-      <Flex alignItems="center" p={2} border="thick" borderColor="backingLight">
-        <Button type="primary" onClick={onDeposit}>
-          Deposit
-        </Button>
-        <Box mx="auto" />
-        <Text>Win Chance: 0%</Text>
-      </Flex>
-    </Box>
-  )
-}
+// const Nav = ({ onDeposit }) => {
+//   return (
+//     <Box p={2} width={1} bg="subnavbg">
+//       <Flex alignItems="center" p={2} border="thick" borderColor="backingLight">
+//         <Button type="primary" onClick={onDeposit}>
+//           Deposit
+//         </Button>
+//         <Box mx="auto" />
+//         <Text>Win Chance: 0%</Text>
+//       </Flex>
+//     </Box>
+//   )
+// }
 
 const ConnectedModal = Wiring.connectMemo(
   ({ socket, isOpen, toggleModal, gameid }) => {
@@ -172,7 +172,15 @@ export default p => {
     <>
       <ConnectedModal isOpen={isOpen} toggleModal={toggleModal} />
       <GameNav {...p} />
-      <Nav onDeposit={e => toggleModal()} />
+      <Utils.TitleBar>
+        {/* <Text fontSize={4}>Jackpot: </Text> */}
+        <Rules />
+        <Box mx="auto" />
+        <Button type="primary" onClick={toggleModal}>
+          Join Game
+        </Button>
+      </Utils.TitleBar>
+      {/* <Nav onDeposit={e => toggleModal()} /> */}
       <CurrentRound />
       <History />
     </>
