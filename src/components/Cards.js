@@ -5,6 +5,7 @@ import Level from './Level'
 
 const JackpotItem = React.memo(
   ({
+    location,
     color = '#d32ee6',
     price = 25.99,
     name = 'Afterglow Wired Controller for Xbox One',
@@ -15,6 +16,7 @@ const JackpotItem = React.memo(
     user,
     selected,
   }) => {
+    console.log(user)
     return (
       <Image.Item
         onClick={onClick}
@@ -39,15 +41,13 @@ const JackpotItem = React.memo(
             color="yellow"
             // bg="darkBacking" p={1}
           >
-            {utils.parseValue(price)}
+            {utils.parseValue(price)} ({location})
           </Text>
           {user && (
             <>
               <Box mx="auto" />
               <Avatar
-                src={
-                  'https://www.gravatar.com/avatar/2cfb1ef04b6ec071fc74171d3687a5ee?d=identicon&r=pg&s=32'
-                }
+                src={user.avatar}
                 size={32}
               />
             </>

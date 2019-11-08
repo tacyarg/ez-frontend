@@ -177,7 +177,7 @@ export default p => {
         <Rules />
         <Box mx="auto" />
         <Button type="primary" onClick={toggleModal}>
-          Join Game
+          Join Jackpot
         </Button>
       </Utils.TitleBar>
       {/* <Nav onDeposit={e => toggleModal()} /> */}

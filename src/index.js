@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-if (process.env.NODE_ENV !== 'production') {
-  const whyDidYouRender = require('@welldone-software/why-did-you-render')
-  whyDidYouRender(React, {
-    onlyLogs: true,
-    titleColor: 'green',
-    diffNameColor: 'darkturquoise',
-  })
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   const whyDidYouRender = require('@welldone-software/why-did-you-render')
+//   whyDidYouRender(React, {
+//     onlyLogs: true,
+//     titleColor: 'green',
+//     diffNameColor: 'darkturquoise',
+//   })
+// }
 
 import { BrowserRouter, HashRouter, Switch, Route } from 'react-router-dom'
 
@@ -30,7 +30,7 @@ const START = async p => {
       // console.log(type, channel)
 
       if (type === 'change') {
-        // console.log('state changed:', channel, channelState)
+        console.log('state changed:', channel, channelState)
         Wiring.dispatch('updateChannelState')(channel, channelState)
       }
 

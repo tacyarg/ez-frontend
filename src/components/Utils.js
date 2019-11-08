@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useLayoutEffect, useState, useEffect } from 'react'
 
 import {
   Card,
@@ -318,7 +318,22 @@ const TitleBar = ({ label = 'Inventory', children, ...p }) => {
 
 function isOdd(num) { return num % 2 === 1; }
 
+
+function useWindowSize() {
+  const [size, setSize] = useState([0, 0]);
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener('resize', updateSize);
+    updateSize();
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+  return size;
+}
+
 export default {
+  useWindowSize,
   isOdd,
   TitleBar,
   ItemList,

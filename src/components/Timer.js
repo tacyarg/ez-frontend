@@ -53,10 +53,12 @@ const Bar = styled.div`
 `
 
 const TimerBar = Wiring.connectMemo(
-  p => <Bar value={p.timeleft} />,
+  p => {
+    console.log(p)
+  return <Bar value={p.timeleft} />},
   p => {
     return {
-      timeleft: p.jackpot.timeleft,
+      timeleft: p.jackpot.timeleft / 100,
     }
   }
 )
