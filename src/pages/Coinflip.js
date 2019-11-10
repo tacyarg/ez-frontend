@@ -11,7 +11,7 @@ import {
 } from '../primitives'
 import FakeCoinflips from '../libs/fake/coinflips'
 
-import { GameNav, Modals, Utils, Assets} from '../components'
+import { GameNav, Modals, Utils, Assets } from '../components'
 
 const Badge = ({ value, color, money }) => {
   return (
@@ -58,6 +58,33 @@ const Stat = ({ label = 'Label', value = 0, money, color }) => {
   )
 }
 
+const CoinSide = ({ selection }) => {
+  switch (selection) {
+    case 'heads':
+      return (
+        <Assets.Coinflip.tCoin
+          top={0}
+          left={0}
+          position="absolute"
+          size={[12, 24]}
+          m={0}
+        />
+      )
+    case 'tails':
+      return (
+        <Assets.Coinflip.ctCoin
+          top={0}
+          left={0}
+          position="absolute"
+          size={[12, 24]}
+          m={0}
+        />
+      )
+    default:
+      return null
+  }
+}
+
 const CoinflipListing = ({
   idx = 0,
   players = [],
@@ -65,21 +92,26 @@ const CoinflipListing = ({
   state = 'open',
   value = 4.2,
   winner,
+  config,
 }) => {
   return (
     <Flex
-      p={2}
+      p={3}
       alignItems="center"
       justifyContent="center"
       flexDirection={['column', 'row']}
       bg={Utils.isOdd(idx) ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0.1)'}
     >
       <Flex alignItems="center" width={[1, 1 / 5]}>
-        <Avatar src={players[0].image} size={[32, 64]} />
+        <Avatar src={players[0].image} size={[32, 48]} position="relative">
+          <CoinSide selection={players[0].selection || 'heads'} />
+        </Avatar>
         {players[1] && (
           <>
             <Text mx={2}>VS</Text>
-            <Avatar src={players[1].image} size={[40, 64]} />
+            <Avatar src={players[1].image} size={[32, 48]} position="relative">
+              <CoinSide selection={players[1].selection || 'tails'} />
+            </Avatar>
           </>
         )}
       </Flex>
@@ -91,7 +123,7 @@ const CoinflipListing = ({
               key={p.id}
               src={p.image}
               alt={p.name}
-              size={[40, 64]}
+              size={[32, 48]}
               p={2}
             />
           )
@@ -108,9 +140,21 @@ const CoinflipListing = ({
       <Text fontSize={4} color="subtext" p={[1, 0]} width={[1, 1 / 6]}>
         {state}
       </Text>
-      <Text fontSize={4} color={'red'} p={[2, 0]} width={[1, 1 / 6]}>
-        ${Utils.parseValue(value)}
-      </Text>
+      <Flex
+        alignItems="center"
+        flexDirection="column"
+        m={[2, 0]}
+        width={[1, 1 / 5]}
+      >
+        <Text fontSize={4} color={'red'}>
+          {Utils.parseValue(value)}
+        </Text>
+        <Text fontSize={1}>
+          {`${Utils.parseValue(
+            value * config.discrepancyMin
+          )} - ${Utils.parseValue(value * config.discrepancyMax)}`}
+        </Text>
+      </Flex>
       <Flex width={[1, 1 / 5]}>
         <Button type="primary">Join</Button>
         <Box mx={2} />

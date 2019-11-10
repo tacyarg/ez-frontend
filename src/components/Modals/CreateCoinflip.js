@@ -7,36 +7,16 @@ import Utils from '../Utils'
 import WiredModal from './Modal'
 
 const CreateCoinflip = ({ items = [], socket, ...p }) => {
-  items = Object.values(items)
-
   const [loading, setLoading] = useState(false)
-  const [cache, setCache] = useState(items)
+  const [cache, setCache] = useState(Object.values(items))
 
-  // useEffect(() => {
-  //   setCache(items)
-  // }, [items])
+  useEffect(() => {
+    setCache(Object.values(items))
+  }, [items])
 
   useEffect(() => {
     socket.private.call('listExpressTradeInventoryItems')
   }, [p.isOpen])
-
-  const onSearch = value => {
-    if (value.length < 2) return setCache(items)
-    setLoading(true)
-
-    const searchResults = items.filter(row => {
-      return ['price', 'name', 'rarity'].find(prop => {
-        if (!row[prop]) return null
-        return row[prop]
-          .toString()
-          .toLowerCase()
-          .includes(value)
-      })
-    })
-
-    setLoading(false)
-    return setCache(searchResults)
-  }
 
   const totalValue = cache
     .reduce((memo, item) => {
@@ -54,7 +34,7 @@ const CreateCoinflip = ({ items = [], socket, ...p }) => {
   return (
     <WiredModal
       {...p}
-      onSearch={onSearch}
+      // onSearch={onSearch}
       title={
         <Flex alignItems="center">
           Create Coinflip:
@@ -65,26 +45,21 @@ const CreateCoinflip = ({ items = [], socket, ...p }) => {
         </Flex>
       }
     >
-      <Flex>
-        <Flex
-          flexDirection="column"
-          // justifyContent="center"
-          alignItems="center"
-          p={2}
-          bg="backingLight"
-        >
+      <Flex width={1}>
+        <Box p={4} bg="backingLight">
           <Assets.Coinflip.tCoin
             onClick={e => setSelection('t')}
             size={[50, 100]}
             selected={isSelected('t')}
           />
+          <Box my={4} />
           <Assets.Coinflip.ctCoin
             onClick={e => setSelection('ct')}
             size={[50, 100]}
             selected={isSelected('ct')}
           />
-        </Flex>
-
+        </Box>
+        <Box mx="auto"/>
         <Utils.ItemList
           items={cache}
           // onChange={({ selectedItems, selectedValue }) => {

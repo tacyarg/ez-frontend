@@ -18,14 +18,14 @@ const SendMessage = ({ onSubmit }) => {
 
   return (
     <>
-    <Input
-      width={1}
-      value={message}
-      onKeyDown={handleKeyPress}
-      onChange={e => setMessage(e.target.value)}
-      placeholder="Say something..."
-    />
-    <Box mb={2} />
+      <Input
+        width={1}
+        value={message}
+        onKeyDown={handleKeyPress}
+        onChange={e => setMessage(e.target.value)}
+        placeholder="Say something..."
+      />
+      <Box mb={2} />
     </>
   )
 }

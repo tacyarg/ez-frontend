@@ -99,7 +99,9 @@ const sets = mapAssets({
     Gun,
     Coins,
     Close,
-    Comments
+    Comments,
+    ctCoin,
+    tCoin
   },
   Processors: {
     Bitcoin,

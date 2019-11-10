@@ -24,11 +24,28 @@ const item_three = {
     'https://static.wax.io/d-img/dynamic-apps/img/php83uobc-dc13bb9432.png',
 }
 
+const config = (props = {}) => {
+  return {
+    betValueMax: 100000, // max value per bet
+    betValueMin: 2.5, // min value per bet
+    betItemLimit: 10, // max items per bet
+    duration: 60 * (60 * 1000), // the time the game remains open.
+    drawDuration: 15 * 1000,
+    cooldownDuration: 10 * 1000,
+    selections: ['heads', 'tails'],
+    rake: 0.1,
+    discrepancyMin: 0.95,
+    discrepancyMax: 1.05,
+    ...props,
+  }
+}
+
 module.exports = () => {
   const coinflips = []
 
   for (var i = 0; i < 10; i++) {
     coinflips.push({
+      config: config(),
       players: [user, user],
       items: [
         item,

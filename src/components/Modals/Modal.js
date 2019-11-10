@@ -26,7 +26,14 @@ const WiredModal = ({
 }) => {
   return (
     <Modal isOpen={isOpen} width={[1, 2 / 3]} m={4}>
-      <Flex width={1} p={3} alignItems="center">
+      <Flex
+        width={1}
+        p={3}
+        alignItems="center"
+        bg="backingDark"
+        borderBottom="1px solid rgba(0, 0, 0, 0.5)"
+        boxShadow= '4px 0px 4px 0px rgba(0, 0, 0, 0.2)'
+      >
         <Text.Heading fontSize={6}>{title}</Text.Heading>
         <Box mx="auto" />
         <Assets.Icons.Close onClick={onClose} clickable />
