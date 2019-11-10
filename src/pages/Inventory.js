@@ -5,7 +5,7 @@ import Wiring from '../libs/wiring'
 import GameNav from '../components/GameNav'
 import Assets from '../components/Assets'
 import Utils from '../components/Utils'
-import Modal from '../components/Modals'
+import Modals from '../components/Modals'
 import Cards from '../components/Cards'
 
 const Amount = ({ amount }) => {
@@ -53,7 +53,7 @@ export default Wiring.connectMemo(
 
     return (
       <>
-        <Modal.Deposit
+        <Modals.ItemDeposit.WaxInventory
           isOpen={isOpen}
           onClose={e => toggleModal()}
           onConfirm={async itemids => {

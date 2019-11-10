@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Divider, Flex, Box, Text, Button } from '../primitives'
 import Spinner from '../components/Spinner'
-import Modal from '../components/Modals'
+import Modals from '../components/Modals'
 import GameNav from '../components/GameNav'
 
 import Wiring from '../libs/wiring'
@@ -48,7 +48,7 @@ const Rules = Wiring.connectMemo(
 const ConnectedModal = Wiring.connectMemo(
   ({ socket, isOpen, toggleModal, gameid }) => {
     return (
-      <Modal.DepositFromInventory
+      <Modals.ItemDeposit.LocalInventory
         isOpen={isOpen}
         onClose={e => toggleModal()}
         onConfirm={itemids => {

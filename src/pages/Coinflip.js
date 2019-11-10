@@ -11,7 +11,7 @@ import {
 } from '../primitives'
 import FakeCoinflips from '../libs/fake/coinflips'
 import GameNav from '../components/GameNav'
-import Modal from '../components/Modals'
+import Modals from '../components/Modals'
 import Utils from '../components/Utils'
 
 const Badge = ({ value, color, money }) => {
@@ -151,7 +151,7 @@ export default p => {
 
   return (
     <>
-      <Modal.CreateCoinflip
+      <Modals.CreateCoinflip
         isOpen={isOpen}
         onClose={e => toggleModal()}
         onConfirm={e => toggleModal()}
