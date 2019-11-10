@@ -1,64 +1,11 @@
 import React, { useState } from 'react'
 import { Flex, Box, Text, Button } from '../primitives'
 import Spinner from '../components/Spinner'
-import Cards from '../components/Cards'
-import Assets from '../components/Assets'
 import Modal from '../components/Modals'
 import GameNav from '../components/GameNav'
 
 import Wiring from '../libs/wiring'
 import Utils from '../components/Utils'
-
-const BetItems = Wiring.connectMemo(
-  ({ players = [], items = [] }) => {
-    return (
-      <Flex
-        width={1}
-        p={1}
-        style={{
-          overflowX: 'auto',
-        }}
-      >
-        {items.map(item => {
-          // merge the player metadata
-          item.user = players.find(u => u.id === item.userid)
-          return <Cards.JackpotItem key={item.id} {...item} />
-        })}
-      </Flex>
-    )
-  },
-  p => {
-    return {
-      players: p.jackpot.players,
-      items: p.jackpot.items,
-    }
-  }
-)
-
-const Bets = Wiring.connectMemo(
-  ({ players = [], bets = [] }) => {
-    return (
-      <Flex
-        width={1}
-        flexWrap="wrap"
-        // justifyContent={'space-between'}
-        flexDirection={['column', 'row']}
-        justifyContent="center"
-      >
-        {bets.map((b, index) => {
-          b.user = players.find(u => u.id === b.userid)
-          return <Cards.JackpotBet key={b.id} index={index} bet={b} m={2} />
-        })}
-      </Flex>
-    )
-  },
-  p => {
-    return {
-      players: p.jackpot.players,
-      bets: p.jackpot.bets,
-    }
-  }
-)
 
 const Rule = ({ children, ...p }) => {
   return (
@@ -98,17 +45,6 @@ const Rules = Wiring.connectMemo(
   },
   p => p.jackpot.config
 )
-
-const CurrentRound = p => {
-  return (
-    <>
-      {/* <Rules /> */}
-      <BetItems />
-      <Spinner />
-      <Bets />
-    </>
-  )
-}
 
 const History = p => {
   return <Box>{/* do somthing relevant */}</Box>
@@ -181,7 +117,7 @@ export default p => {
         </Button>
       </Utils.TitleBar>
       {/* <Nav onDeposit={e => toggleModal()} /> */}
-      <CurrentRound />
+      <Spinner.CurrentJackpotRound />
       <History />
     </>
   )

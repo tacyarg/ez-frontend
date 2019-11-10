@@ -21,6 +21,7 @@
     "react-pose": "^4.0.9",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
+    "react-window": "^1.8.5",
     "react-wiring": "^1.0.0",
     "request-promise": "^4.2.4",
     "unfetch": "^4.1.0",

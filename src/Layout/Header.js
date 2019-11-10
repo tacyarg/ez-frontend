@@ -33,7 +33,8 @@ const Profile = Wiring.connectMemo(
             icon: Assets.Icons.SignOut,
             onClick: () => {
               p.socket.auth.call("logout");
-              window.localStorage.setItem('tokenid')
+              window.localStorage.removeItem('tokenid')
+              window.location.reload()
             }
           }
         ]}

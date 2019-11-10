@@ -35,30 +35,36 @@ const TitleBar = ({ label = 'Inventory', children }) => {
 
 export default Wiring.connectMemo(
   ({ inventory = [], socket, ...p }) => {
-    inventory = Object.values(inventory)
-
     const [isOpen, setOpen] = useState(false)
 
     function toggleModal() {
       setOpen(!isOpen)
     }
 
+    const [cache, setCache] = useState([])
     const [selectedItems, setSelectedItems] = useState({})
     const [selectedValue, setAmount] = useState(0)
+
+    useEffect(() => {
+      setCache(Object.values(inventory))
+      setSelectedItems({})
+      setAmount(0)
+    }, [inventory])
 
     return (
       <>
         <Modal.Deposit
           isOpen={isOpen}
           onClose={e => toggleModal()}
-          onConfirm={itemids => {
+          onConfirm={async itemids => {
             toggleModal()
-            return socket.private.call('depositExpressTradeItems', {
+            await socket.private.call('depositExpressTradeItems', {
               itemids,
             })
           }}
         />
         <GameNav {...p} />
+
         <TitleBar>
           {selectedItems.length > 0 ? (
             <Button
@@ -82,7 +88,7 @@ export default Wiring.connectMemo(
 
         <Utils.ItemList
           maxHeight={'100%'}
-          items={inventory}
+          items={cache}
           onChange={({ selectedItems, selectedValue }) => {
             setSelectedItems(selectedItems)
             setAmount(selectedValue)

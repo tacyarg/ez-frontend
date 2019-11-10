@@ -230,15 +230,42 @@ function parseValue(data = 0) {
   })
 }
 
-const ItemList = ({ onChange = x => x, items = [], ...p }) => {
+import { FixedSizeList as List } from 'react-window'
+
+const ItemCardList = ({ isSelected, handleSelect, items = [] }) => {
+  return (
+    <List
+      height={Math.max(
+        document.documentElement.clientHeight,
+        window.innerHeight || 0
+      )}
+      itemCount={1000}
+      itemSize={160}
+      width="100%"
+    >
+      {({ index, style }) => {
+        const item = items[index]
+        return (
+          <div style={style}>
+            <Cards.JackpotItem
+              key={item.id}
+              selected={isSelected(item.id)}
+              onClick={e => handleSelect(item)}
+              {...item}
+            />
+          </div>
+        )
+      }}
+    </List>
+  )
+}
+
+const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
   const [selectedItems, setSelectedItems] = useState([])
   const [selectedValue, setSelectedValue] = useState(0)
 
-  console.log(selectedItems, selectedValue)
-
   useEffect(() => {
-    const selItems = items.filter(i => selectedItems.includes(i.id))
-    const value = selItems.reduce((memo, item) => {
+    const value = selectedItems.reduce((memo, item) => {
       memo += item.price
       return memo
     }, 0)
@@ -246,17 +273,22 @@ const ItemList = ({ onChange = x => x, items = [], ...p }) => {
   }, [selectedItems])
 
   const isSelected = itemid => {
-    return selectedItems.includes(itemid)
+    if (!itemid) return false
+    return selectedItems.find(item => item.id == itemid)
   }
 
   const handleSelect = item => {
     if (isSelected(item.id)) {
       console.log('DE-SELECT ITEM')
-      return setSelectedItems(selectedItems.filter(i => i !== item.id))
+      return setSelectedItems(
+        selectedItems.filter(sel => {
+          return sel.id !== item.id
+        })
+      )
     }
 
-    console.log('SELECT ITEM')
-    return setSelectedItems([...selectedItems, item.id])
+    console.log('SELECT ITEM', item.id)
+    setSelectedItems([...selectedItems, item])
   }
 
   useEffect(() => {
@@ -266,9 +298,15 @@ const ItemList = ({ onChange = x => x, items = [], ...p }) => {
     })
   }, [selectedItems, selectedValue])
 
+  useEffect(() => {
+    setSelectedItems([])
+    setSelectedValue(0)
+  }, [items])
+
   return (
     <Box
       p={4}
+      width={1}
       maxHeight={400}
       style={{
         overflow: 'hidden',
@@ -282,16 +320,20 @@ const ItemList = ({ onChange = x => x, items = [], ...p }) => {
             return (
               <Cards.JackpotItem
                 key={item.id}
-                {...item}
                 selected={isSelected(item.id)}
                 onClick={e => handleSelect(item)}
+                {...item}
               />
             )
           })
         ) : (
           <Box>
             <Text m={2}>You do not have any items.</Text>
-            {/* <Button type="simple">Deposit Items</Button> */}
+            {isLocal && (
+              <Button m={2} type="simple">
+                Deposit Items
+              </Button>
+            )}
           </Box>
         )}
       </Flex>
@@ -316,20 +358,21 @@ const TitleBar = ({ label = 'Inventory', children, ...p }) => {
   )
 }
 
-function isOdd(num) { return num % 2 === 1; }
-
+function isOdd(num) {
+  return num % 2 === 1
+}
 
 function useWindowSize() {
-  const [size, setSize] = useState([0, 0]);
+  const [size, setSize] = useState([0, 0])
   useLayoutEffect(() => {
     function updateSize() {
-      setSize([window.innerWidth, window.innerHeight]);
+      setSize([window.innerWidth, window.innerHeight])
     }
-    window.addEventListener('resize', updateSize);
-    updateSize();
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
-  return size;
+    window.addEventListener('resize', updateSize)
+    updateSize()
+    return () => window.removeEventListener('resize', updateSize)
+  }, [])
+  return size
 }
 
 export default {

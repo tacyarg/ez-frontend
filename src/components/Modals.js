@@ -140,74 +140,78 @@ const Searchable = React.memo(({ items = [], children }) => {
   )
 })
 
-// Searchable.whyDidYouRender = true
+const ItemDeposit = ({
+  items = [],
+  isOpen = x => x,
+  onClose = x => x,
+  onConfirm = x => x,
+}) => {
+  console.log('WiredModal.Deposit RENDER')
+
+  const [cache, setCache] = useState([])
+  const [total, setTotal] = useState(0)
+  const [amount, setAmount] = useState(0)
+  const [selectedItems, setSelectedItems] = useState([])
+
+  useEffect(() => {
+    setCache(Object.values(items))
+    setSelectedItems([])
+    setAmount(0)
+
+    setTotal(
+      cache
+        .reduce((memo, item) => {
+          memo += Number(item.price)
+          return memo
+        }, 0)
+        .toFixed(2)
+    )
+  }, [items])
+
+  return (
+    <WiredModal
+      isOpen={isOpen}
+      amount={amount}
+      onConfirm={e => {
+        onConfirm(selectedItems)
+        setSelectedItems([])
+      }}
+      onClose={e => {
+        onClose(selectedItems)
+        setSelectedItems([])
+      }}
+      // onSearch={onSearch}
+      title={
+        <Flex alignItems="center">
+          Deposit Items:
+          <Box mx={1} />
+          <Text color="green" fontSize={4}>
+            {total}
+          </Text>
+        </Flex>
+      }
+    >
+      <Utils.ItemList
+        items={cache}
+        onChange={({ selectedItems, selectedValue }) => {
+          setSelectedItems(selectedItems)
+          setAmount(selectedValue)
+        }}
+      />
+    </WiredModal>
+  )
+}
+
 
 WiredModal.Deposit = Wiring.connectMemo(
-  ({
-    items = [],
-    isOpen = x => x,
-    onClose = x => x,
-    onConfirm = x => x,
-    socket,
-  }) => {
-    console.log('WiredModal.Deposit RENDER')
-    items = Object.values(items)
-
+  props => {
     useEffect(() => {
-      if (socket) socket.private.call('listAllMyExpressTadeInventoryItems')
-    }, [isOpen])
-
-    const [amount, setAmount] = useState(0)
-    const [selectedItems, setSelectedItems] = useState({})
-
-    const totalValue = items
-      .reduce((memo, item) => {
-        memo += Number(item.price)
-        return memo
-      }, 0)
-      .toFixed(2)
-
-    return (
-      <Searchable items={items}>
-        {({ onSearch, cache }) => {
-          return (
-            <WiredModal
-              isOpen={isOpen}
-              amount={amount}
-              onConfirm={e => {
-                onConfirm(selectedItems)
-                setSelectedItems([])
-              }}
-              onClose={e => {
-                onClose(selectedItems)
-                setSelectedItems([])
-              }}
-              onSearch={onSearch}
-              title={
-                <Flex alignItems="center">
-                  Deposit Items:
-                  <Box mx={1} />
-                  <Text color="green" fontSize={4}>
-                    {totalValue}
-                  </Text>
-                </Flex>
-              }
-            >
-              <Utils.ItemList
-                items={cache}
-                onChange={({ selectedItems, selectedValue }) => {
-                  setSelectedItems(selectedItems)
-                  setAmount(selectedValue)
-                }}
-              />
-            </WiredModal>
-          )
-        }}
-      </Searchable>
-    )
+      if (props.socket)
+        props.socket.private.call('listAllMyExpressTadeInventoryItems')
+    }, [props.isOpen])
+    return <ItemDeposit {...props} />
   },
   p => {
-    // console.log(p)
     return {
       isOpen: p.isOpen,
       onClose: p.onClose,
@@ -219,67 +223,10 @@ WiredModal.Deposit = Wiring.connectMemo(
 )
 
 WiredModal.DepositFromInventory = Wiring.connectMemo(
-  ({
-    items = [],
-    isOpen = x => x,
-    onClose = x => x,
-    onConfirm = x => x,
-    socket,
-  }) => {
-    console.log('WiredModal.DepositFromInventory RENDER')
-    items = Object.values(items)
-
-    const [amount, setAmount] = useState(0)
-    const [selectedItems, setSelectedItems] = useState({})
-
-    const totalValue = items
-      .reduce((memo, item) => {
-        memo += Number(item.price)
-        return memo
-      }, 0)
-      .toFixed(2)
-
-    return (
-      <Searchable items={items}>
-        {({ onSearch, cache }) => {
-          return (
-            <WiredModal
-              isOpen={isOpen}
-              amount={amount}
-              onConfirm={e => {
-                onConfirm(selectedItems)
-                setSelectedItems([])
-              }}
-              onClose={e => {
-                onClose(selectedItems)
-                setSelectedItems([])
-              }}
-              onSearch={onSearch}
-              title={
-                <Flex alignItems="center">
-                  Deposit Items:
-                  <Box mx={1} />
-                  <Text color="green" fontSize={4}>
-                    {totalValue}
-                  </Text>
-                </Flex>
-              }
-            >
-              <Utils.ItemList
-                items={cache}
-                onChange={({ selectedItems, selectedValue }) => {
-                  setSelectedItems(selectedItems)
-                  setAmount(selectedValue)
-                }}
-              />
-            </WiredModal>
-          )
-        }}
-      </Searchable>
-    )
+  props => {
+    return <ItemDeposit {...props} />
   },
   p => {
-    // console.log(p)
     return {
       isOpen: p.isOpen,
       onClose: p.onClose,
@@ -289,8 +236,6 @@ WiredModal.DepositFromInventory = Wiring.connectMemo(
     }
   }
 )
-
-// WiredModal.DepositFromInventory.whyDidYouRender=true
 
 WiredModal.CreateCoinflip = Wiring.connect(
   React.memo(({ items = [], socket, ...p }) => {

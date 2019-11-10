@@ -28,7 +28,7 @@ const Layout = ({ children, ...p }) => {
 
       <Flex height={'calc(100% - 64px)'} width={1}>
         <Sidenav />
-        <Chat />
+        {/* <Chat /> */}
         <Page as={Assets.Background}>{children}</Page>
       </Flex>
       {/* <Footer /> */}

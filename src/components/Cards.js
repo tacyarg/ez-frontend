@@ -16,7 +16,6 @@ const JackpotItem = React.memo(
     user,
     selected,
   }) => {
-    console.log(user)
     return (
       <Image.Item
         onClick={onClick}

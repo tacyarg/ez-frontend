@@ -6,8 +6,7 @@ import Wiring from '../libs/wiring'
 const LoginSteam = Wiring.connectMemo(
   p => {
     const click = () => {
-      const url = `${p.AUTH_URL}/opskins/auth?access_token=${p.tokenid}`
-      // const url = `${process.env.AUTH_URL}/steam/auth?access_token=${token}`
+      const url = `${p.AUTH_URL}/steam/auth?access_token=${p.tokenid}`
       window.location.replace(url)
     }
 
@@ -26,7 +25,6 @@ const LoginWax = Wiring.connectMemo(
   p => {
     const click = () => {
       const url = `${p.AUTH_URL}/opskins/auth?access_token=${p.tokenid}`
-      // const url = `${process.env.AUTH_URL}/steam/auth?access_token=${token}`
       window.location.replace(url)
     }
 
