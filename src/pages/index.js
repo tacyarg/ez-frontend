@@ -1,6 +1,6 @@
 import Jackpot from './Jackpot'
 import Coinflip from './Coinflip'
-import Settings from './Settings'
+import Profile from './Profile'
 import NotFound from './NotFound'
 import Inventory from './Inventory'
 import Test from './Test'
@@ -8,7 +8,7 @@ import Test from './Test'
 export default {
   Jackpot,
   Coinflip,
-  Settings,
+  Profile,
   Inventory,
   Test,
   NotFound,

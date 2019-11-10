@@ -66,17 +66,26 @@ const Stats = ({ label, value }) => {
 
 export default Wiring.connectMemo(
   p => {
+    // if(!user) return history.location.push()
+
     return (
       <>
         <GameNav {...p} />
         <TitleBar />
         <Flex>
           <User user={p.user} />
-          <Stats label="Deposited" value={4.53} />
-          <Stats label="Won" value={4.53} />
-          <Stats label="Profit" value={4.53} />
+          <Stats label="Deposited" value={p.stats.valueDeposited} />
+          <Stats label="Won" value={p.stats.valueWon} />
+          <Stats
+            label="Profit"
+            value={p.stats.valueWon - p.stats.valueDeposited}
+          />
         </Flex>
-        <TitleBar label="Game History" />
+        <TitleBar label="History" >
+          {p.pages.map(page => {
+            <Text.Link>{page.name}</Text.Link>
+          })}
+        </TitleBar>
 
         <Flex p={2} flexDirection="column">
           history yo
@@ -85,13 +94,18 @@ export default Wiring.connectMemo(
     )
   },
   p => {
-    // console.log('SETTINGS', p)
+    console.log('PROFILE', p)
 
     return {
       location: p.location,
       history: p.history,
       user: p.private.me || {},
-      socket: p.socket,
+      stats: p.private.stats || {},
+      pages: [
+        {
+          name: 'commands'
+        }
+      ]
     }
   }
 )

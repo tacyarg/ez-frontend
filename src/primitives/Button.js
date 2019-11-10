@@ -25,6 +25,34 @@ const type = props => {
               opacity: 0.8
           };
         `
+    case 'steam':
+      return `
+        box-shadow: 0 2px 0px rgba(0, 0, 0, .5);
+        color: ${theme.colors.offwhite};
+        border: ${theme.colors.backingLight} ${theme.borders.normal};
+        // background-color: ${theme.colorStyles.textOnPrimary.bgColor};
+        background-image: linear-gradient(290deg, ${theme.colors.backingLight}, ${theme.colors.backingDark});
+        // background-image: linear-gradient(290deg, #f03c3c, #df1111);
+        
+        &:hover,
+        &:focus {
+            opacity: 0.8
+        };
+      `
+      case 'wax':
+          return `
+            box-shadow: 0 2px 0px ${theme.colors.orange};
+            color: ${theme.colors.backingDark};
+            border: ${theme.colors.orangeMuted} ${theme.borders.normal};
+            // background-color: ${theme.colorStyles.textOnPrimary.bgColor};
+            // background-image: linear-gradient(290deg, ${theme.colors.backingLight}, ${theme.colors.backingDark});
+            // background-image: linear-gradient(290deg, #f03c3c, #df1111);
+            
+            &:hover,
+            &:focus {
+                opacity: 0.8
+            };
+          `
     case 'warning':
       return `
         box-shadow: 0 2px 0px rgba(0, 0, 0, .5);
@@ -40,7 +68,8 @@ const type = props => {
       `
     case 'simple':
       return `
-        background-color: ${p => p.active ? theme.colors.backingDark : theme.colors.backingLight};
+        background-color: ${p =>
+          p.active ? theme.colors.backingDark : theme.colors.backingLight};
         color: ${theme.colors.lightbacking};
         
         &:hover,

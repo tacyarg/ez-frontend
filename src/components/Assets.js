@@ -49,11 +49,13 @@ import Twitter from '../assets/images/icons/twitter.svg'
 import Telegram from '../assets/images/icons/telegram.svg'
 import Github from '../assets/images/icons/github.svg'
 import Discord from '../assets/images/icons/discord.svg'
+import Steam from '../assets/images/icons/steam-symbol.svg'
 
 import Background from '../assets/images/jackpotBackground.png'
 
 import ctCoin from '../assets/images/ctfliplogo.png'
 import tCoin from '../assets/images/tfliplogo.png'
+import Wax from '../assets/images/wax-primary-logo.png'
 
 import { Box, Icon, Image } from '../primitives'
 import theme from '../styles/theme'
@@ -101,7 +103,8 @@ const sets = mapAssets({
     Close,
     Comments,
     ctCoin,
-    tCoin
+    tCoin,
+    Steam
   },
   Processors: {
     Bitcoin,
@@ -122,6 +125,7 @@ const sets = mapAssets({
 
 export default {
   ...sets,
+  Wax: p => <Image src={Wax} {...p} />,
   Logo: p => <Image src={Logo} {...p} />,
   Avatar: p => <Image size={[28, 40]} src={Avatar} m={2} {...p} />,
   Background: ({ children, ...p }) => {

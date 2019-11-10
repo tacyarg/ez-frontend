@@ -15,10 +15,12 @@ const defaultState = {
   user: null,
   userid: null,
   tokenid: null,
-  online: 69,
   inventory: fake.inventory(),
   jackpot: fake.jackpot(),
   public: {
+    stats: {
+      online: 60
+    },
     jackpots: {
       'fake': fake.jackpot(),
     },
@@ -31,7 +33,7 @@ const defaultState = {
   },
   private: {
     inventory: {},
-    waxInventory: []
+    waxInventory: {}
   },
   admin: {},
   auth: {},

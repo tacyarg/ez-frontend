@@ -30,7 +30,8 @@ const colors = {
   // old
   white: '#fff',
   black: '#000',
-  orange: '#FB6C2B',
+  // orange: '#FB6C2B',
+  orange: '#f78e1e',
   foregroundBacking: '#252B31',
   // text: "#52565A",
   backing: '#191E23',
@@ -51,6 +52,9 @@ const colors = {
   },
   get lightPrimary() {
     return lighten(0.04, this.primary)
+  },
+  get orangeMuted() {
+    return lighten(0.04, this.orange)
   },
   get redGradient() {
     return '-webkit-gradient(radial, 20% 50%, 0, 50% 50%, 1000, from(#e94c4c), to(#000))'

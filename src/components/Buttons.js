@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 
-import { Button } from '../primitives'
+import { Button, Flex } from '../primitives'
 import Wiring from '../libs/wiring'
+import { Assets } from '../components'
 
 const LoginSteam = Wiring.connectMemo(
   p => {
@@ -11,8 +12,8 @@ const LoginSteam = Wiring.connectMemo(
     }
 
     return (
-      <Button mx={2} type="primary" onClick={click}>
-        Login STEAM
+      <Button as={Flex} alignItems="center" type="steam" mx={2} onClick={click}>
+        <Assets.Icons.Steam size={20} mr={2} bg="offwhite" /> Login STEAM
       </Button>
     )
   },
@@ -29,8 +30,16 @@ const LoginWax = Wiring.connectMemo(
     }
 
     return (
-      <Button mx={2} type="primary" onClick={click}>
-        Login WAX
+      <Button
+        as={Flex}
+        alignItems="center"
+        type="steam"
+        mx={2}
+        type="wax"
+        onClick={click}
+      >
+        <Assets.Wax width={40} height={20} mr={2} /> Login
+        WAX
       </Button>
     )
   },
