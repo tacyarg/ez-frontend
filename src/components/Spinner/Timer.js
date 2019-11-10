@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {} from 'styled-system'
 import { Box, Flex } from '../../primitives'
 import Wiring from '../../libs/wiring'
+import Assets from '../Assets'
 
 const Timer = styled(Flex)`
   z-index: -1;
@@ -52,7 +53,13 @@ const Bar = styled.div`
   background-color: rgb(68, 175, 71);
 `
 
-const TimerBar = ({ timeleft = 0, ...p }) => {
+const TimerBar = ({ isSoundMuted, timeleft = 0, ...p }) => {
+
+  useEffect(() => {
+    if(timeleft > 5 || isSoundMuted) return 
+    Assets.Sounds.tick.play()
+  }, [timeleft])
+
   return (
     <Timer {...p}>
       <LeftTriangle />
@@ -66,6 +73,7 @@ const TimerBar = ({ timeleft = 0, ...p }) => {
 
 TimerBar.CurrentJackpotRound = Wiring.connectMemo(TimerBar, p => {
   return {
+    isSoundMuted: p.isSoundMuted,
     timeleft: p.jackpot.timeleft / 100,
   }
 })

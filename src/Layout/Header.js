@@ -63,7 +63,7 @@ export default p => {
       <Assets.Logo mx={15} width={150} height={64} />
       <Box mx="auto" />
       <Divider type="vertical" bg="offwhiteBorder" />
-      {/* <Settings.Volume /> */}
+      <Settings.Volume.Connected />
       <Divider type="vertical" bg="offwhiteBorder" />
       <Profile history={p.history} />
     </Flex>

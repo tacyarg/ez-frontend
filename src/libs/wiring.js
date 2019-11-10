@@ -37,7 +37,8 @@ const defaultState = {
   },
   admin: {},
   auth: {},
-  showChat: true
+  showChat: true,
+  isSoundMuted: false
 }
 
 //design your state reducers
@@ -98,6 +99,12 @@ const reducers = {
       ...auth,
     }
   },
+  setIsSoundMuted(state, isSoundMuted) {
+    return {
+      ...state,
+      isSoundMuted
+    }
+  }
 }
 
 const wiring = Wiring(React, defaultState, reducers)

@@ -59,6 +59,7 @@ import Wax from '../assets/images/wax-primary-logo.png'
 
 import RollSound from '../assets/sounds/rollSound.mp3'
 import NewBetSound from '../assets/sounds/newBetSound.mp3'
+import TickSound from '../assets/sounds/tick7.mp3'
 
 import { Box, Icon, Image } from '../primitives'
 import theme from '../styles/theme'
@@ -130,7 +131,8 @@ export default {
   ...sets,
   Sounds: {
     roll: new Audio(RollSound),
-    newBet: new Audio(NewBetSound)
+    newBet: new Audio(NewBetSound),
+    tick: new Audio(TickSound)
   },
   Wax: p => <Image src={Wax} {...p} />,
   Logo: p => <Image src={Logo} {...p} />,

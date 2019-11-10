@@ -63,13 +63,17 @@ const Wheel = ({
   config,
   items = [],
   outcome,
-  state,
+  isSoundMuted,
 }) => {
+
+
   useEffect(() => {
+    if(isRolling || isSoundMuted) return
     Assets.Sounds.newBet.play()
   }, [bets.length])
 
   useEffect(() => {
+    if(isSoundMuted) return
     Assets.Sounds.roll.play()
   }, [isRolling])
 

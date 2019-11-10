@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { Box } from '../primitives'
+import Assets from './Assets'
+import Wiring from '../libs/wiring'
 
-export const Volume = ({ globalMute }) => {
-  const [muted, setMuted] = useState(false)
+const Volume = ({ globalMute, onChange }) => {
+  const [muted, setMuted] = useState(globalMute)
 
   const toggleMute = () => {
-    return setMuted(!muted)
+    const state = !muted
+    setMuted(state)
+    onChange(state)
   }
 
   // keep in sync with global state
@@ -25,4 +29,19 @@ export const Volume = ({ globalMute }) => {
       )}
     </Box>
   )
+}
+
+Volume.Connected = Wiring.connectMemo(
+  ({ isSoundMuted }) => {
+    return <Volume globalMute={isSoundMuted} onChange={Wiring.dispatch('setIsSoundMuted')}/>
+  },
+  ({ isSoundMuted }) => {
+    return {
+      isSoundMuted,
+    }
+  }
+)
+
+export default {
+  Volume,
 }
