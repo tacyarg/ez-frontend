@@ -6,7 +6,6 @@ import GameNav from '../components/GameNav'
 import Assets from '../components/Assets'
 import Utils from '../components/Utils'
 import Modals from '../components/Modals'
-import Cards from '../components/Cards'
 
 const Amount = ({ amount }) => {
   return (
@@ -33,77 +32,83 @@ const TitleBar = ({ label = 'Inventory', children }) => {
   )
 }
 
-export default Wiring.connectMemo(
-  ({ inventory = [], socket, ...p }) => {
-    const [isOpen, setOpen] = useState(false)
+const Inventory = ({ inventory = [], socket, ...p }) => {
+  const [isOpen, setOpen] = useState(false)
 
-    function toggleModal() {
-      setOpen(!isOpen)
-    }
-
-    const [cache, setCache] = useState([])
-    const [selectedItems, setSelectedItems] = useState({})
-    const [selectedValue, setAmount] = useState(0)
-
-    useEffect(() => {
-      setCache(Object.values(inventory))
-      setSelectedItems({})
-      setAmount(0)
-    }, [inventory])
-
-    return (
-      <>
-        <Modals.ItemDeposit.WaxInventory
-          isOpen={isOpen}
-          onClose={e => toggleModal()}
-          onConfirm={async itemids => {
-            toggleModal()
-            await socket.private.call('depositExpressTradeItems', {
-              itemids,
-            })
-          }}
-        />
-        <GameNav {...p} />
-
-        <TitleBar>
-          {selectedItems.length > 0 ? (
-            <Button
-              as={Flex}
-              alignItems="center"
-              type="warning"
-              onClick={e => {
-                socket.private.call('withdrawExpressTradeItems', {
-                  itemids: selectedItems,
-                })
-              }}
-            >
-              Withdraw <Amount amount={selectedValue} />
-            </Button>
-          ) : (
-            <Button type="primary" onClick={e => toggleModal()}>
-              Deposit WAX Items
-            </Button>
-          )}
-        </TitleBar>
-
-        <Utils.ItemList
-          maxHeight={'100%'}
-          items={cache}
-          onChange={({ selectedItems, selectedValue }) => {
-            setSelectedItems(selectedItems)
-            setAmount(selectedValue)
-          }}
-        />
-      </>
-    )
-  },
-  p => {
-    return {
-      location: p.location,
-      history: p.history,
-      user: p.private.me || {},
-      socket: p.socket,
-      inventory: p.private.inventory || {},
-    }
+  function toggleModal() {
+    setOpen(!isOpen)
   }
-)
+
+  const [cache, setCache] = useState([])
+  const [selectedItems, setSelectedItems] = useState({})
+  const [selectedValue, setAmount] = useState(0)
+
+  useEffect(() => {
+    setCache(Object.values(inventory))
+    setSelectedItems({})
+    setAmount(0)
+  }, [inventory])
+
+  return (
+    <>
+      <Modals.ItemDeposit.WaxInventory
+        isOpen={isOpen}
+        onClose={e => toggleModal()}
+        onConfirm={async itemids => {
+          toggleModal()
+          await socket.private.call('depositExpressTradeItems', {
+            itemids,
+          })
+        }}
+      />
+      <GameNav {...p} />
+
+      <TitleBar>
+        {selectedItems.length > 0 ? (
+          <Button
+            as={Flex}
+            alignItems="center"
+            type="warning"
+            onClick={e => {
+              socket.private.call('withdrawExpressTradeItems', {
+                itemids: selectedItems,
+              })
+            }}
+          >
+            <Assets.Icons.Coins size={20} mr={2} bg="yellow" /> Withdraw{' '}
+            <Amount amount={selectedValue} />
+          </Button>
+        ) : (
+          <Button
+            as={Flex}
+            alignItems="center"
+            type="primary"
+            onClick={e => toggleModal()}
+          >
+            <Assets.Icons.Coins size={20} mr={2} bg="yellow" /> Deposit WAX
+            Items
+          </Button>
+        )}
+      </TitleBar>
+
+      <Utils.ItemList
+        maxHeight={'100%'}
+        items={cache}
+        onChange={({ selectedItems, selectedValue }) => {
+          setSelectedItems(selectedItems)
+          setAmount(selectedValue)
+        }}
+      />
+    </>
+  )
+}
+
+export default Wiring.connectMemo(Inventory, p => {
+  return {
+    location: p.location,
+    history: p.history,
+    user: p.private.me || {},
+    socket: p.socket,
+    inventory: p.private.inventory || {},
+  }
+})

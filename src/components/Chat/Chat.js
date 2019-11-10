@@ -74,7 +74,7 @@ const Chat = ({ showChat = true }) => {
       <Flex
         width={1}
         flex={1}
-        my={3}
+        my={2}
         bg="backingLight"
         style={{
           border: '1px solid #1b1b1b',

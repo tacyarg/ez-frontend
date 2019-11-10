@@ -30,7 +30,7 @@ const ItemDeposit = ({
         }, 0)
         .toFixed(2)
     )
-  }, [items])
+  }, [items, isOpen])
 
   return (
     <WiredModal

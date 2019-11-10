@@ -6,6 +6,7 @@ import GameNav from '../components/GameNav'
 
 import Wiring from '../libs/wiring'
 import Utils from '../components/Utils'
+import Assets from '../components/Assets'
 
 const Rule = ({ children, ...p }) => {
   return (
@@ -31,10 +32,7 @@ const Rules = Wiring.connectMemo(
   }) => {
     return (
       <Flex justifyContent="center">
-        <Flex
-          justifyContent="space-between"
-          flexDirection={['column', 'row']}
-        >
+        <Flex justifyContent="space-between" flexDirection={['column', 'row']}>
           <Rule>SKIN LIMIT: {betItemLimit}</Rule>
           <Rule>MIN BET: {Utils.parseValue(betValueMin)}</Rule>
           <Rule>MAX BET: {Utils.parseValue(betValueMax)}</Rule>
@@ -81,8 +79,13 @@ const JoinJackpot = p => {
   return (
     <>
       <ConnectedModal isOpen={isOpen} toggleModal={toggleModal} />
-      <Button type="primary" onClick={toggleModal}>
-        Join Jackpot
+      <Button
+        as={Flex}
+        alignItems="center"
+        type="primary"
+        onClick={e => toggleModal()}
+      >
+        <Assets.Icons.Coins size={20} mr={2} bg="yellow" /> Join Jackpot
       </Button>
     </>
   )
@@ -100,9 +103,7 @@ const ActionBar = () => {
 }
 
 const History = p => {
-  return <Box>
-yo
-  </Box>
+  return <Box>yo</Box>
 }
 
 export default p => {

@@ -10,9 +10,8 @@ import {
   Avatar,
 } from '../primitives'
 import FakeCoinflips from '../libs/fake/coinflips'
-import GameNav from '../components/GameNav'
-import Modals from '../components/Modals'
-import Utils from '../components/Utils'
+
+import { GameNav, Modals, Utils, Assets} from '../components'
 
 const Badge = ({ value, color, money }) => {
   return (
@@ -75,7 +74,7 @@ const CoinflipListing = ({
       flexDirection={['column', 'row']}
       bg={Utils.isOdd(idx) ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0.1)'}
     >
-      <Flex alignItems="center" width={[1, 1/5]}>
+      <Flex alignItems="center" width={[1, 1 / 5]}>
         <Avatar src={players[0].image} size={[32, 64]} />
         {players[1] && (
           <>
@@ -84,7 +83,7 @@ const CoinflipListing = ({
           </>
         )}
       </Flex>
-      <Flex alignItems="center" width={[1, 1/3]}>
+      <Flex alignItems="center" width={[1, 1 / 3]}>
         {items.map((p, k) => {
           if (k > 3) return
           return (
@@ -106,13 +105,13 @@ const CoinflipListing = ({
           </Flex>
         )}
       </Flex>
-      <Text fontSize={4} color="subtext" p={[1, 0]} width={[1, 1/6]}>
+      <Text fontSize={4} color="subtext" p={[1, 0]} width={[1, 1 / 6]}>
         {state}
       </Text>
-      <Text fontSize={4} color={'red'} p={[2, 0]} width={[1, 1/6]}>
+      <Text fontSize={4} color={'red'} p={[2, 0]} width={[1, 1 / 6]}>
         ${Utils.parseValue(value)}
       </Text>
-      <Flex width={[1, 1/5]}>
+      <Flex width={[1, 1 / 5]}>
         <Button type="primary">Join</Button>
         <Box mx={2} />
         <Button type="simple">Watch</Button>
@@ -167,10 +166,12 @@ export default p => {
           <Box mx={[0, 'auto']} />
           <Button
             mt={[3, 0]}
+            as={Flex}
+            alignItems="center"
             type="primary"
             onClick={e => toggleModal()}
           >
-            Create Coinflip
+            <Assets.Icons.Coins size={20} mr={2} bg="yellow" /> Create Coinflip
           </Button>
         </Utils.TitleBar>
         <Flex
@@ -182,11 +183,11 @@ export default p => {
           borderBottom="3px solid #42b142"
           flexDirection={['column', 'row']}
         >
-          <Text width={[1, 1/5]}>Players</Text>
-          <Text width={[1, 1/3]}>Items</Text>
-          <Text width={[1, 1/7]}>Status</Text>
-          <Text width={[1, 1/7]}>Total</Text>
-          <Text width={[1, 1/5]}>Actions</Text>
+          <Text width={[1, 1 / 5]}>Players</Text>
+          <Text width={[1, 1 / 3]}>Items</Text>
+          <Text width={[1, 1 / 7]}>Status</Text>
+          <Text width={[1, 1 / 7]}>Total</Text>
+          <Text width={[1, 1 / 5]}>Actions</Text>
         </Flex>
         {coinflips.map((cf, idx) => {
           return <CoinflipListing {...cf} key={cf.id} idx={idx} />
