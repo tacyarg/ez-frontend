@@ -78,7 +78,7 @@ const reducers = {
         ...channelState
       },
     }
-    newState.jackpot = utils.findCurrentRound(newState.public.jackpots)
+    // newState.jackpot = utils.findCurrentRound(newState.public.jackpots)
     return newState
   },
   auth(state, auth) {

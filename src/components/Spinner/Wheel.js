@@ -1,4 +1,4 @@
-import React  from 'react'
+import React from 'react'
 import { Box } from '../../primitives'
 import styled from 'styled-components'
 import utils from '../Utils'
@@ -66,7 +66,7 @@ const Wheel = ({
 }) => {
   console.log('rendering wheel.', { isRolling, bets, config, items, outcome })
   return (
-    <Box bg="subnavbg" height={100} border="1px solid #18181a">
+    <Box bg="subnavbg" width={1} height={100} border="1px solid #18181a">
       {isRolling && (
         <>
           <TopArrow />
@@ -86,7 +86,7 @@ const Wheel = ({
                 display: 'inline-block',
               }}
               width={`${(b.value / value) * 100}%`}
-              height={128}
+              height={100}
               background={utils.generateBackground(i, color)}
               key={uuid()}
               {...b}

@@ -9,7 +9,7 @@ import BetItems from './BetItems'
 
 const SpinnerDefault = p => {
   return (
-    <>
+    <Box>
       <BetItems />
       <Box position="relative" my={4} zIndex={1}>
         <RoundInfo />
@@ -17,13 +17,13 @@ const SpinnerDefault = p => {
         <Timer />
       </Box>
       <Bets />
-    </>
+    </Box>
   )
 }
 
 SpinnerDefault.CurrentJackpotRound = p => {
   return (
-    <>
+    <Box>
       <BetItems.CurrentJackpotRound />
       <Box position="relative" my={4} zIndex={1}>
         <RoundInfo.CurrentJackpotRound />
@@ -31,7 +31,7 @@ SpinnerDefault.CurrentJackpotRound = p => {
         <Timer.CurrentJackpotRound />
       </Box>
       <Bets.CurrentJackpotRound />
-    </>
+    </Box>
   )
 }
 

@@ -11,11 +11,9 @@ const Spinner = ({
 }) => {
   const [counter, setCounter] = useState(0)
   const [config, setData] = useState({ spinnerBets: bets })
-  const currentBets = !isRolling ? bets : data.spinnerBets
 
   useEffect(() => {
-    const config = spinnerConfig(outcome)
-    setData(config)
+    setData(spinnerConfig(outcome))
   }, [outcome])
 
   const [isRolling, setIsRolling] = useState(false)
@@ -59,12 +57,10 @@ const Spinner = ({
     return {
       spread,
       offset,
-      outcome, // 0/1
+      outcome,
       translateX: outcome * 100 + 550 + offset,
-      //        translateX: outcome + 50 + offset + 500,
       spinnerBets,
       width,
-      // winningIndex:
     }
   }
 
@@ -74,7 +70,7 @@ const Spinner = ({
       config={config}
       items={items}
       outcome={outcome}
-      bets={currentBets}
+      bets={!isRolling ? bets : config.spinnerBets}
       value={value}
     />
   )

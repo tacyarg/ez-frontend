@@ -97,7 +97,7 @@ const ConnectedModal = Wiring.connectMemo(
   }
 )
 
-export default p => {
+const JoinJackpot = p => {
   const [isOpen, setOpen] = useState(false)
 
   function toggleModal() {
@@ -107,16 +107,31 @@ export default p => {
   return (
     <>
       <ConnectedModal isOpen={isOpen} toggleModal={toggleModal} />
-      <GameNav {...p} />
+      <Button type="primary" onClick={toggleModal}>
+        Join Jackpot
+      </Button>
+    </>
+  )
+}
+
+const ActionBar = () => {
+  return (
+    <>
       <Utils.TitleBar>
         {/* <Text fontSize={4}>Jackpot: </Text> */}
         <Rules />
         <Box mx="auto" />
-        <Button type="primary" onClick={toggleModal}>
-          Join Jackpot
-        </Button>
+        <JoinJackpot />
       </Utils.TitleBar>
-      {/* <Nav onDeposit={e => toggleModal()} /> */}
+    </>
+  )
+}
+
+export default p => {
+  return (
+    <>
+      <GameNav {...p} />
+      <ActionBar />
       <Spinner.CurrentJackpotRound />
       <History />
     </>
