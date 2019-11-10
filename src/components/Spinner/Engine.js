@@ -46,10 +46,6 @@ const SpinnerEngine = ({ isRolling, config = {}, children, ...p }) => {
   const timeline = new TimelineLite({ paused: true })
 
   useEffect(() => {
-    // if (ref) setWidth(ref.offsetWidth)
-  }, [window.onresize, ref])
-
-  useEffect(() => {
     setTimeout(() => {
       console.log('roll', config)
       // roll(config)
@@ -58,11 +54,6 @@ const SpinnerEngine = ({ isRolling, config = {}, children, ...p }) => {
     //   timeline.kill()
     // }
   }, [isRolling])
-
-  // useEffect(() => {
-  // console.log('ref set', ref)
-  // if (ref) roll()
-  // }, [ref])
 
   const roll = config => {
     if (!config.outcome) return console.log('outcome is not ready yet.')

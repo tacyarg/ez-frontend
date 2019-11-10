@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box } from '../../primitives'
 import styled from 'styled-components'
 import utils from '../Utils'
@@ -63,15 +63,16 @@ const Wheel = ({
   config,
   items = [],
   outcome,
+  state,
 }) => {
+  useEffect(() => {
+    Assets.Sounds.newBet.play()
+  }, [bets.length])
 
   useEffect(() => {
     Assets.Sounds.roll.play()
   }, [isRolling])
 
-  useEffect(() => {
-    Assets.Sounds.newBet.play()
-  }, [bets.length])
 
   return (
     <Box bg="subnavbg" width={1} height={100} border="1px solid #18181a">

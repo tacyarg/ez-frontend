@@ -72,6 +72,7 @@ const Spinner = ({
       outcome={outcome}
       bets={!isRolling ? bets : config.spinnerBets}
       value={value}
+      state={state}
     />
   )
 }
