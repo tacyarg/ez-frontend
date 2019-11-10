@@ -64,7 +64,6 @@ const Wheel = ({
   items = [],
   outcome,
 }) => {
-  console.log('rendering wheel.', { isRolling, bets, config, items, outcome })
   return (
     <Box bg="subnavbg" width={1} height={100} border="1px solid #18181a">
       {isRolling && (

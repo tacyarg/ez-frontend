@@ -116,25 +116,24 @@ const SpinnerEngine = ({ isRolling, config = {}, children, ...p }) => {
             // tick.play()
           }
         },
-        // roundProps: 'x',
+        roundProps: 'x',
+      })
+      .to(ref, 0.5, {
+        delay: 0.3,
+        x: -pos - offset,
+        // clearProps: 'transform',
+        onStart() {
+          // stop.play()
+        },
+        onComplete: () => {
+          // const { outcome, spinnerContent, winner } = state
+          // const player = clone(players.find(plr => plr.id === winner))
+          // player.selected = true
+          // spinnerContent.splice(outcome, 1, player)
+          // setState({ ...state, spinnerContent })
+        },
       })
       .paused(false)
-
-    // .to(ref, 0.5, {
-    //   delay: 0.3,
-    //   x: -pos - offset,
-    //   // clearProps: 'transform',
-    //   onStart() {
-    //     // stop.play()
-    //   },
-    //   onComplete: () => {
-    //     // const { outcome, spinnerContent, winner } = state
-    //     // const player = clone(players.find(plr => plr.id === winner))
-    //     // player.selected = true
-    //     // spinnerContent.splice(outcome, 1, player)
-    //     // setState({ ...state, spinnerContent })
-    //   },
-    // })
   }
 
   return (
@@ -144,32 +143,10 @@ const SpinnerEngine = ({ isRolling, config = {}, children, ...p }) => {
       position="relative"
       overflow="hidden"
       boxShadow="inset 0 0 4px #000000"
-      // style={{
-      //   transition: 'transform 7s cubic-bezier(0.12, 0.5, 0.25, 1)',
-      //   willChange: 'transform',
-      //   left: 0,
-      //   whiteSpace: 'nowrap',
-      // }}
       {...p}
     >
       {/* <Tick /> */}
-      <SpinnerItems
-        isRolling={isRolling}
-        config={config}
-        // style={{
-        //   width: '100%',
-        //   position: 'absolute',
-        //   left: 0,
-        //   backfaceVisibility: 'visible',
-        //   transform: isRolling ? `translateX(-${config.translateX}%)` : null,
-        //   transition: 'transform 7s cubic-bezier(0.12, 0.5, 0.25, 1)',
-        //   willChange: 'transform',
-        //   perspective: 1000,
-        //   transform: 'translateZ(0)',
-        //   transform: 'rotateZ(360deg)',
-        // }}
-        // ref={div => setRef(div)}
-      >
+      <SpinnerItems isRolling={isRolling} config={config}>
         {children}
       </SpinnerItems>
     </Box>
@@ -194,31 +171,3 @@ const Tick = () => (
 )
 
 export default SpinnerEngine
-
-// export default Wiring.connectMemo(
-//   p => {
-//     console.log('test', p)
-//     const content = generateSpinner()
-
-//     return (
-//       <Box>
-//         <SpinnerEngine>
-//           {content.map((user, idx) => {
-//             return (
-//               <Avatar
-//                 selected={user.selected}
-//                 key={user.id + idx}
-//                 src={user.image}
-//               />
-//             )
-//           })}
-//         </SpinnerEngine>
-//       </Box>
-//     )
-//   },
-//   p => {
-//     return {
-//       jackpot: p.jackpot,
-//     }
-//   }
-// )

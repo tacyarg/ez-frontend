@@ -6,6 +6,7 @@ import RoundInfo from './RoundInfo'
 import Timer from './Timer'
 import Bets from './Bets'
 import BetItems from './BetItems'
+import Provable from './Provable'
 
 const SpinnerDefault = p => {
   return (
@@ -17,6 +18,7 @@ const SpinnerDefault = p => {
         <Timer />
       </Box>
       <Bets />
+      <Provable />
     </Box>
   )
 }
@@ -31,6 +33,7 @@ SpinnerDefault.CurrentJackpotRound = p => {
         <Timer.CurrentJackpotRound />
       </Box>
       <Bets.CurrentJackpotRound />
+      <Provable.CurrentJackpotRound />
     </Box>
   )
 }

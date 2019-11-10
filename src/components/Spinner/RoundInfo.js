@@ -9,8 +9,6 @@ const RoundInfo = ({
   value = 5.43,
   items = [],
   config = {},
-  state = 'open',
-  winner,
 }) => {
   return (
     <Flex position="absolute" width={1} top={-20} zIndex={2}>
@@ -18,9 +16,7 @@ const RoundInfo = ({
         <Assets.Icons.Coins size={20} bg="yellow" /> <Box mx={1} />
         {Utils.parseValue(value)}
       </Badge>
-      <Text color="subtext" mx="auto">
-        {winner ? winner.username : state}
-      </Text>
+      <Box mx="auto" />
       <Badge>
         <Assets.Icons.Gun bg="yellow" />({items.length}/
         {config.roundItemLimit || 100})

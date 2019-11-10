@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Flex, Box, Text, Button } from '../primitives'
+import { Divider, Flex, Box, Text, Button } from '../primitives'
 import Spinner from '../components/Spinner'
 import Modal from '../components/Modals'
 import GameNav from '../components/GameNav'
@@ -33,7 +33,6 @@ const Rules = Wiring.connectMemo(
       <Flex justifyContent="center">
         <Flex
           justifyContent="space-between"
-          // my={2}
           flexDirection={['column', 'row']}
         >
           <Rule>SKIN LIMIT: {betItemLimit}</Rule>
@@ -46,37 +45,12 @@ const Rules = Wiring.connectMemo(
   p => p.jackpot.config
 )
 
-const History = p => {
-  return <Box>{/* do somthing relevant */}</Box>
-}
-
-// const calcOdds = (betValue, JackpotValue) => {
-//   const percent = betValue / JackpotValue;
-//   return (percent * 100).toFixed(0);
-// }
-
-// const Nav = ({ onDeposit }) => {
-//   return (
-//     <Box p={2} width={1} bg="subnavbg">
-//       <Flex alignItems="center" p={2} border="thick" borderColor="backingLight">
-//         <Button type="primary" onClick={onDeposit}>
-//           Deposit
-//         </Button>
-//         <Box mx="auto" />
-//         <Text>Win Chance: 0%</Text>
-//       </Flex>
-//     </Box>
-//   )
-// }
-
 const ConnectedModal = Wiring.connectMemo(
   ({ socket, isOpen, toggleModal, gameid }) => {
     return (
       <Modal.DepositFromInventory
         isOpen={isOpen}
-        onClose={e => {
-          toggleModal()
-        }}
+        onClose={e => toggleModal()}
         onConfirm={itemids => {
           toggleModal()
           return socket.private.call('joinJackpotFromInventory', {
@@ -116,15 +90,19 @@ const JoinJackpot = p => {
 
 const ActionBar = () => {
   return (
-    <>
-      <Utils.TitleBar>
-        {/* <Text fontSize={4}>Jackpot: </Text> */}
-        <Rules />
-        <Box mx="auto" />
-        <JoinJackpot />
-      </Utils.TitleBar>
-    </>
+    <Utils.TitleBar>
+      {/* <Text fontSize={4}>Rules: </Text> */}
+      <Rules />
+      <Box mx="auto" />
+      <JoinJackpot />
+    </Utils.TitleBar>
   )
+}
+
+const History = p => {
+  return <Box>
+yo
+  </Box>
 }
 
 export default p => {
@@ -133,6 +111,7 @@ export default p => {
       <GameNav {...p} />
       <ActionBar />
       <Spinner.CurrentJackpotRound />
+      <Divider />
       <History />
     </>
   )
