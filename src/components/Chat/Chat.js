@@ -55,6 +55,7 @@ const Chat = ({ showChat = true }) => {
       bg="backingDark"
       alignItems="center"
       isOpen={showChat}
+      collapse={true}
     >
       <Heading />
 

@@ -13,7 +13,7 @@ const Sidebar = styled(Flex)`
   display: ${p => (p.isOpen ? 'auto' : 'none')};
 
   @media only screen and (max-width: 600px) {
-    display: none;
+    display: ${p => (p.collapse && !p.isOpen ? 'none' : 'auto')};
   }
 `
 
