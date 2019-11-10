@@ -16,7 +16,7 @@ const Messages = Wiring.connectMemo(
       onChange(messages)
     })
 
-    return Object.values(messages).map(m => {
+    return messages.map(m => {
       if (!m.user) return
       return <Message key={m.id} {...m} />
     })
@@ -24,7 +24,7 @@ const Messages = Wiring.connectMemo(
   p => {
     return {
       onChange: p.onChange,
-      messages: p.public.chats.en,
+      messages: Object.values(p.public.chats.en),
     }
   }
 )
@@ -74,7 +74,8 @@ const Chat = ({ showChat = true }) => {
       <Flex
         width={1}
         flex={1}
-        my={2}
+        my={3}
+        pb={2}
         bg="backingLight"
         style={{
           border: '1px solid #1b1b1b',

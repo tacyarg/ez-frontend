@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Input } from '../../primitives'
+import { Input, Box } from '../../primitives'
 import Wiring from '../../libs/wiring'
 
 const SendMessage = ({ onSubmit }) => {
@@ -17,6 +17,7 @@ const SendMessage = ({ onSubmit }) => {
   }
 
   return (
+    <>
     <Input
       width={1}
       value={message}
@@ -24,6 +25,8 @@ const SendMessage = ({ onSubmit }) => {
       onChange={e => setMessage(e.target.value)}
       placeholder="Say something..."
     />
+    <Box mb={2} />
+    </>
   )
 }
 
