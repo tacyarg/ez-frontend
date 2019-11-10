@@ -13,17 +13,17 @@ const Profile = Wiring.connectMemo(
       <Dropdown
         entries={[
           {
-            label: 'My Inventory',
+            label: 'Inventory',
             icon: Assets.Icons.Gun,
             onClick: () => {
               return p.history.push('/inventory')
             },
           },
           {
-            label: 'My Profile',
+            label: 'Profile',
             icon: Assets.Icons.User,
             onClick: () => {
-              return p.history.push('/settings')
+              return p.history.push('/profile')
             },
           },
           {

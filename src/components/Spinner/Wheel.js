@@ -1,11 +1,11 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Box } from '../../primitives'
 import styled from 'styled-components'
 import utils from '../Utils'
 
 import SpinnerEngine from './Engine'
-
 import uuid from 'uuid/v4'
+import Assets from '../Assets'
 
 const SpinnerBet = styled(Box)`
   flex-shrink: 0;
@@ -64,6 +64,15 @@ const Wheel = ({
   items = [],
   outcome,
 }) => {
+
+  useEffect(() => {
+    Assets.Sounds.roll.play()
+  }, [isRolling])
+
+  useEffect(() => {
+    Assets.Sounds.newBet.play()
+  }, [bets.length])
+
   return (
     <Box bg="subnavbg" width={1} height={100} border="1px solid #18181a">
       {isRolling && (

@@ -57,6 +57,9 @@ import ctCoin from '../assets/images/ctfliplogo.png'
 import tCoin from '../assets/images/tfliplogo.png'
 import Wax from '../assets/images/wax-primary-logo.png'
 
+import RollSound from '../assets/sounds/rollSound.mp3'
+import NewBetSound from '../assets/sounds/newBetSound.mp3'
+
 import { Box, Icon, Image } from '../primitives'
 import theme from '../styles/theme'
 
@@ -120,11 +123,15 @@ const sets = mapAssets({
     Telegram,
     Discord,
     Github,
-  },
+  }
 })
 
 export default {
   ...sets,
+  Sounds: {
+    roll: new Audio(RollSound),
+    newBet: new Audio(NewBetSound)
+  },
   Wax: p => <Image src={Wax} {...p} />,
   Logo: p => <Image src={Logo} {...p} />,
   Avatar: p => <Image size={[28, 40]} src={Avatar} m={2} {...p} />,
