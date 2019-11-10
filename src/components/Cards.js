@@ -9,8 +9,6 @@ const JackpotItem = React.memo(
     color = '#d32ee6',
     price = 25.99,
     name = 'Afterglow Wired Controller for Xbox One',
-    // image = 'https://files.opskins.media/file/vgo-img/item/wax-key-300.png'
-    // image = 'https://files.opskins.media/file/vgo-img/item/awp-golden-illusion-factory-new-300.png'
     image = 'https://static.wax.io/d-img/dynamic-apps/img/phpqkombg-ca194a2788.png',
     onClick = x => x,
     user,
@@ -38,17 +36,13 @@ const JackpotItem = React.memo(
         <Flex>
           <Text
             color="yellow"
-            // bg="darkBacking" p={1}
           >
             {utils.parseValue(price)} ({location})
           </Text>
           {user && (
             <>
               <Box mx="auto" />
-              <Avatar
-                src={user.avatar}
-                size={32}
-              />
+              <Avatar src={user.avatar} size={32} />
             </>
           )}
         </Flex>
@@ -57,7 +51,6 @@ const JackpotItem = React.memo(
           fontSize={1}
           cutoff
           color={color}
-          // bg="darkBacking" p={1}
         >
           {name}
         </Text>
@@ -66,21 +59,16 @@ const JackpotItem = React.memo(
   }
 )
 
-// JackpotItem.whyDidYouRender = true
-
 const JackpotBet = ({ index = 0, bet = {}, ...p }) => {
   const background = utils.generateBackground(index, bet.color || '#e94c4c')
   return (
     <Flex
-      // minWidth={"260px"}
-      // width={[1, 1 / 5]}
       border="1px solid #18181a"
-      // boxShadow="0 1px 1px 0 #18181a"
       alignItems="center"
       background={`rgba(${utils.hexToRgb(bet.color || '#e94c4c')},0.1)`}
       {...p}
     >
-      <Avatar src="" size={40} m={2} />
+      <Avatar src={bet.user.avatar} size={40} m={2} />
       <Box>
         <Flex alignItems="center">
           <Level rank={bet.user.rank} />
@@ -94,7 +82,6 @@ const JackpotBet = ({ index = 0, bet = {}, ...p }) => {
       <Box
         background={background}
         minWidth={'35px'}
-        // height={'100%'}
         height={58}
       />
     </Flex>

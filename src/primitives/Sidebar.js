@@ -10,15 +10,15 @@ import theme from '../styles/theme'
 
 const Sidebar = styled(Flex)`
   border-right: 2px solid rgba(0, 0, 0, 0.4);
+  display: ${p => (p.isOpen ? 'auto' : 'none')};
 
   @media only screen and (max-width: 600px) {
     display: none;
-    // display: '${p => (p.open ? 'block' : 'none')}';
   }
 `
 
 Sidebar.defaultProps = {
-  p: 2,
+  isOpen: true,
   height: '100%',
   flexDirection: 'column',
   boxShadow: '4px 0px 4px -2px rgba(0, 0, 0, 0.2)',
@@ -27,43 +27,4 @@ Sidebar.defaultProps = {
   // flex: 1
 }
 
-Sidebar.ToggleButton = styled(Button)`
-  border: 2px solid black;
-  position: ${p => (p.open ? 'relative' : 'absolute')};
-
-  @media only screen and (min-width: 600px) {
-    display: none;
-  }
-`
-
-Sidebar.ToggleButton.defaultProps = {
-  type: 'simple-shaded',
-  alt: 'Toggle Sidebar',
-}
-
-export default ({ children, ...p }) => {
-  const [open, setOpen] = useState(true)
-
-  return (
-    <>
-      <Sidebar {...p} open={open}>
-        {children}
-      </Sidebar>
-      {/* <Sidebar.ToggleButton
-        open={open}
-        onClick={e => {
-          setOpen(!open)
-        }}
-      >
-        <Flex
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Assets.Icons.Popular size={32} />
-          Toggle
-        </Flex>
-      </Sidebar.ToggleButton> */}
-    </>
-  )
-}
+export default Sidebar

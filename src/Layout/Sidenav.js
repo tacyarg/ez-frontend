@@ -1,17 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import Assets from '../components/Assets'
-import {
-  Button,
-  Flex,
-  Box,
-  Text,
-  Image,
-  Sidebar,
-  Page,
-  Divider,
-  Navbar,
-} from '../primitives'
+import { Flex, Text, Sidebar } from '../primitives'
+import Wiring from '../libs/wiring'
 
 const Link = ({ onClick, children }) => {
   return (
@@ -33,17 +24,37 @@ const Link = ({ onClick, children }) => {
 
 export default ({ onClick }) => {
   const links = [
-    Assets.Icons.Question,
-    Assets.Icons.Ban,
-    Assets.Icons.History,
-    Assets.Icons.Headset,
+    {
+      icon: Assets.Icons.Comments,
+      onClick: Wiring.dispatch('toggleChat'),
+    },
+    {
+      icon: Assets.Icons.Question,
+      path: '/faq',
+      label: 'FAQ',
+    },
+    {
+      icon: Assets.Icons.Ban,
+      path: '/tos',
+      label: 'TOS',
+    },
+    {
+      icon: Assets.Icons.History,
+      path: '/profile/history',
+      label: 'Game History',
+    },
+    {
+      icon: Assets.Icons.Headset,
+      path: '/support',
+      label: 'Support',
+    },
   ]
 
   return (
-    <Sidebar p={3} width={50} bg="backingDark" alignItems="center">
-      {links.map((Row, k) => (
-        <Link key={k} onClick={onClick}>
-          <Row size={20} />
+    <Sidebar p={3} bg="backingDark" alignItems="center">
+      {links.map(({ path, label, onClick = x => x, ...p }) => (
+        <Link key={path + label} onClick={onClick}>
+          <p.icon size={20} />
         </Link>
       ))}
     </Sidebar>

@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from 'react'
 
 import Header from './Header'
-// import Footer from './components/Footer'
 import Sidenav from './Sidenav'
-import Chat from './Chat'
+import Chat from '../components/Chat'
+// import Footer from './components/Footer'
 
 import { Box, Flex, Page } from '../primitives'
-import Pages from '../pages'
 import Assets from '../components/Assets'
 
 const Layout = ({ children, ...p }) => {
-  // const links = Object.keys(Pages).reduce((memo, k) => {
-  //   if (k === "NotFound") return memo;
-  //   memo.push({ label: k, href: `/${k.toLowerCase()}` });
-  //   return memo;
-  // }, []);
-
   return (
     <Box
       width={1}
@@ -24,11 +17,10 @@ const Layout = ({ children, ...p }) => {
         overflow: 'hidden',
       }}
     >
-      <Header {...p}/>
-
+      <Header {...p} />
       <Flex height={'calc(100% - 64px)'} width={1}>
         <Sidenav />
-        {/* <Chat /> */}
+        <Chat />
         <Page as={Assets.Background}>{children}</Page>
       </Flex>
       {/* <Footer /> */}

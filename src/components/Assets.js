@@ -18,6 +18,7 @@ import CaretDown from '../assets/images/icons/caret-down.svg'
 import UserCog from '../assets/images/icons/user-cog.svg'
 import SignOut from '../assets/images/icons/sign-out-alt.svg'
 import Close from '../assets/images/icons/times.svg'
+import Comments from '../assets/images/icons/comments.svg'
 
 import VolumeDown from '../assets/images/icons/volume-down.svg'
 import VolumeMute from '../assets/images/icons/volume-mute.svg'
@@ -98,6 +99,7 @@ const sets = mapAssets({
     Gun,
     Coins,
     Close,
+    Comments
   },
   Processors: {
     Bitcoin,

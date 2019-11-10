@@ -35,6 +35,7 @@ const defaultState = {
   },
   admin: {},
   auth: {},
+  showChat: true
 }
 
 //design your state reducers
@@ -49,6 +50,13 @@ const reducers = {
     return {
       ...state,
       time: Date.now(),
+    }
+  },
+  toggleChat(state) {
+    console.log('showchat', !state.showChat)
+    return {
+      ...state,
+      showChat: !state.showChat,
     }
   },
   sendChatMessage(state, message) {
