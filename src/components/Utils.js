@@ -261,6 +261,7 @@ const ItemCardList = ({ isSelected, handleSelect, items = [] }) => {
 }
 
 const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
+  console.log('ItemList change', items.length)
   const [selectedItems, setSelectedItems] = useState([])
   const [selectedValue, setSelectedValue] = useState(0)
 
@@ -316,7 +317,7 @@ const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
     >
       <Flex width={1} flexWrap="wrap" justifyContent="center">
         {items.length > 0 ? (
-          items.map(item => {
+          Object.values(items).map(item => {
             return (
               <Cards.JackpotItem
                 key={item.id}
@@ -329,11 +330,11 @@ const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
         ) : (
           <Box>
             <Text m={2}>You do not have any items.</Text>
-            {isLocal && (
+            {/* {isLocal && (
               <Button m={2} type="simple">
                 Deposit Items
               </Button>
-            )}
+            )} */}
           </Box>
         )}
       </Flex>

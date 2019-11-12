@@ -15,7 +15,7 @@ const defaultState = {
   user: null,
   userid: null,
   tokenid: null,
-  inventory: fake.inventory(),
+  // inventory: fake.inventory(),
   jackpot: fake.jackpot(),
   public: {
     stats: {
@@ -89,7 +89,10 @@ const reducers = {
         ...channelState
       },
     }
+
     newState.jackpot = utils.findCurrentRound(newState.public.jackpots)
+    newState.coinflips = newState.public.coinflips
+
     return newState
   },
   auth(state, auth) {

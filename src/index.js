@@ -27,7 +27,6 @@ const START = async p => {
   const socket = await Socket(
     process.env.SOCKET_URL,
     async (type, channel, channelState, fullState) => {
-      // console.log(type, channel)
 
       if (type === 'change') {
         console.log('state changed:', channel, channelState)

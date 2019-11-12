@@ -33,6 +33,7 @@ const TitleBar = ({ label = 'Inventory', children }) => {
 }
 
 const Inventory = ({ inventory = [], socket, ...p }) => {
+  console.log('inventory change', inventory.length)
   const [isOpen, setOpen] = useState(false)
 
   function toggleModal() {

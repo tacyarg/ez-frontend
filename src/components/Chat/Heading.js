@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex, Box } from '../../primitives'
 import Assets from '../Assets'
-import Online from './Online'
+import Online from '../Online'
 
 export default p => {
   return (
