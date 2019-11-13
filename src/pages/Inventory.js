@@ -23,7 +23,7 @@ const TitleBar = ({ label = 'Inventory', children }) => {
       p={3}
       bg="backingDark"
       borderBottom="2px solid rgba(0, 0, 0, 0.5)"
-      // boxShadow='0px 0px 2px 0px rgba(0, 0, 0, 1)'
+    // boxShadow='0px 0px 2px 0px rgba(0, 0, 0, 1)'
     >
       <Text fontSize={4}>{label}</Text>
       <Box mx="auto" />
@@ -40,6 +40,7 @@ const Inventory = ({ inventory = [], socket, ...p }) => {
     setOpen(!isOpen)
   }
 
+  const [total, setTotal] = useState([])
   const [cache, setCache] = useState([])
   const [selectedItems, setSelectedItems] = useState({})
   const [selectedValue, setAmount] = useState(0)
@@ -49,6 +50,14 @@ const Inventory = ({ inventory = [], socket, ...p }) => {
     setSelectedItems({})
     setAmount(0)
   }, [inventory])
+
+  useEffect(() => {
+    const subtotal = cache.reduce((memo, i) => {
+      memo += i.price
+      return memo
+    }, 0)
+    setTotal(subtotal)
+  }, [cache])
 
   return (
     <>
@@ -64,7 +73,8 @@ const Inventory = ({ inventory = [], socket, ...p }) => {
       />
       <GameNav {...p} />
 
-      <TitleBar>
+      <TitleBar label={<>Total Value: {Utils.parseValue(total)}</>}>
+        
         {selectedItems.length > 0 ? (
           <Button
             as={Flex}
@@ -76,20 +86,20 @@ const Inventory = ({ inventory = [], socket, ...p }) => {
               })
             }}
           >
-            <Assets.Icons.Coins size={20} mr={2} bg="yellow" /> Withdraw{' '}
+            <Assets.Icons.Coins size={20} mr={2} bg="yellow" /> Withdraw
             <Amount amount={selectedValue} />
           </Button>
         ) : (
-          <Button
-            as={Flex}
-            alignItems="center"
-            type="primary"
-            onClick={e => toggleModal()}
-          >
-            <Assets.Icons.Coins size={20} mr={2} bg="yellow" /> Deposit WAX
-            Items
+            <Button
+              as={Flex}
+              alignItems="center"
+              type="primary"
+              onClick={e => toggleModal()}
+            >
+              <Assets.Icons.Coins size={20} mr={2} bg="yellow" /> Deposit WAX
+              Items
           </Button>
-        )}
+          )}
       </TitleBar>
 
       <Utils.ItemList

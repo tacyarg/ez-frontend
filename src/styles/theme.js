@@ -62,6 +62,13 @@ const colors = {
   // get primaryGradient() {
   //   return linearGradient('290deg', '#f03c3c', '#ff7e24')
   // },
+  get navbar() {
+    return linearGradient({
+      colorStops: [`${this.white} 0%`, `${this.black} 100%`], 
+      oDirection: 'to top right',
+      fallback: '#FFF'
+    })
+  },
   get card() {
     return this.foregroundBacking
   },
