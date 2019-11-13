@@ -72,16 +72,12 @@ const Stats = Wiring.connectMemo(({ coinflips }) => {
   }
 );
 
-const ConnectedListings = Wiring.connectMemo(
-  ({ coinflips }) => {
-    return coinflips.map((cf, idx) => {
+const ConnectedListings = Wiring.connect(
+  p => {
+    const { coinflips ={} } = p
+    return Object.values(coinflips).map((cf, idx) => {
       return <CoinflipListing {...cf} key={cf.id} idx={idx} />;
     });
-  },
-  ({ coinflips = {} }) => {
-    return {
-      coinflips: Object.values(coinflips)
-    };
   }
 );
 

@@ -25,7 +25,6 @@ const defaultState = {
       'fake': fake.jackpot(),
     },
     coinflips: {
-      ...fake.coinflips()
     },
     chats: {
       en: fake.messages()
