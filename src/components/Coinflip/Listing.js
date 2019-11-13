@@ -75,7 +75,8 @@ const CoinflipListing = ({
   winner,
   id,
   config,
-  timeleft = 0
+  timeleft = 0,
+  userid = null
 }) => {
 
   const Player1 = players[0]
@@ -85,6 +86,8 @@ const CoinflipListing = ({
   const selection = config.selections.find(b => Player1Bet.selection !== b)
   const time = Math.floor(timeleft / 1000)
   const gameWinner = players.find(p => p.id === winner)
+
+  console.log(Player1.id, userid)
 
   return <Flex
     p={3}
@@ -134,18 +137,20 @@ const CoinflipListing = ({
     <RoundLimits value={value} config={config} />
     <Flex width={[1, 1 / 5]} alignItems="center">
       {!winner ?
-          <>
+        <>
+          {Player1.id !== userid && <>
             <JoinCoinflip gameid={id} selection={selection} />
             <Box mx={2} />
-            <Button type="simple">Watch</Button>
-          </>
-          :
-          <>
-            <Avatar src={gameWinner.avatar} size={[32, 48]} position="relative" />
-            <Box mx={2} />
-            <Text>{gameWinner.username}</Text>
-          </>
-        }
+          </>}
+          <Button type="simple">Watch</Button>
+        </>
+        :
+        <>
+          <Avatar src={gameWinner.avatar} size={[32, 48]} position="relative" />
+          <Box mx={2} />
+          <Text>{gameWinner.username}</Text>
+        </>
+      }
     </Flex>
   </Flex>
 

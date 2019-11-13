@@ -76,7 +76,7 @@ const ConnectedListings = Wiring.connect(
   p => {
     const { coinflips ={} } = p
     return Object.values(coinflips).map((cf, idx) => {
-      return <CoinflipListing {...cf} key={cf.id} idx={idx} />;
+      return <CoinflipListing {...cf} key={cf.id} idx={idx} userid={p.private.me.id || {}} />;
     });
   }
 );
