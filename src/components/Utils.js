@@ -59,8 +59,8 @@ const RenderObject = ({ heading, data, ...p }) => {
           )
         })
       ) : (
-        <Text p={2}>Nothing to show yet, check back later.</Text>
-      )}
+          <Text p={2}>Nothing to show yet, check back later.</Text>
+        )}
     </Card>
   )
 }
@@ -124,8 +124,8 @@ const MarkdownLink = ({ link }) => {
       <ReactMarkdown source={state} />
     </Box>
   ) : (
-    <LoadingPage />
-  )
+      <LoadingPage />
+    )
 }
 
 const generateCSV = data => {
@@ -265,13 +265,13 @@ const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
   const [selectedItems, setSelectedItems] = useState([])
   const [selectedValue, setSelectedValue] = useState(0)
 
-  useEffect(() => {
-    const value = selectedItems.reduce((memo, item) => {
-      memo += item.price
-      return memo
-    }, 0)
-    setSelectedValue(value)
-  }, [selectedItems])
+  // useEffect(() => {
+  //   const value = selectedItems.reduce((memo, item) => {
+  //     memo += item.price
+  //     return memo
+  //   }, 0)
+  //   setSelectedValue(value)
+  // }, [selectedItems])
 
   const isSelected = itemid => {
     if (!itemid) return false
@@ -281,14 +281,18 @@ const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
   const handleSelect = item => {
     if (isSelected(item.id)) {
       console.log('DE-SELECT ITEM')
+
+      const index = selectedItems.findIndex(r => r.id === item.id)
+      selectedItems.splice(index, 1)
+
+      setSelectedValue(selectedValue - item.price)
       return setSelectedItems(
-        selectedItems.filter(sel => {
-          return sel.id !== item.id
-        })
+        selectedItems
       )
     }
 
     console.log('SELECT ITEM', item.id)
+    setSelectedValue(selectedValue + item.price)
     setSelectedItems([...selectedItems, item])
   }
 
@@ -328,15 +332,15 @@ const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
             )
           })
         ) : (
-          <Box>
-            <Text m={2}>You do not have any items.</Text>
-            {/* {isLocal && (
+            <Box>
+              <Text m={2}>You do not have any items.</Text>
+              {/* {isLocal && (
               <Button m={2} type="simple">
                 Deposit Items
               </Button>
             )} */}
-          </Box>
-        )}
+            </Box>
+          )}
       </Flex>
     </Box>
   )
