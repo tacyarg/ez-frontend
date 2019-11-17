@@ -92,7 +92,7 @@ const CoinflipBtn = Wiring.connectMemo(
 
 export default ({ location, history }) => {
   const cPage = location.pathname
-  console.log('CURRENT PAGE', cPage)
+  // console.log('CURRENT PAGE', cPage)
 
   const isPage = page => {
     return cPage === page

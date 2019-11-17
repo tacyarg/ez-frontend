@@ -1,3 +1,8 @@
+import LogRocket from 'logrocket';
+import setupLogRocketReact from 'logrocket-react';
+LogRocket.init('chipsoft/ezrage');
+setupLogRocketReact(LogRocket);
+
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
@@ -27,9 +32,9 @@ const START = async p => {
   const socket = await Socket(
     process.env.SOCKET_URL,
     async (type, channel, channelState, fullState) => {
-
+      console.log({type, channel})
       if (type === 'change') {
-        console.log('state changed:', channel, channelState)
+        // console.log('state changed:', channel, channelState)
         Wiring.dispatch('updateChannelState')(channel, channelState)
       }
 

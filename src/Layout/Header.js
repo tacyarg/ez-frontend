@@ -9,7 +9,7 @@ import { Buttons, Settings } from '../components'
 
 const Profile = Wiring.connectMemo(
   p => {
-    console.log("PROFILE", p)
+    // console.log("PROFILE", p)
     return p.user ? (
       <Dropdown
         entries={[
@@ -49,7 +49,7 @@ const Profile = Wiring.connectMemo(
     )
   },
   p => {
-    console.log(p.private)
+    // console.log(p.private)
     return { history: p.history, user: p.private.me, socket: p.socket }
   }
 )

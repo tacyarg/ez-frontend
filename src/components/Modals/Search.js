@@ -26,7 +26,7 @@ const Search = ({ onSearch = x => x }) => {
 Search.Wrapper = React.memo(({ items = [], children }) => {
   const [cache, setCache] = useState(items)
 
-  console.log('SEARCHABLE RENDER')
+  // console.log('SEARCHABLE RENDER')
 
   useEffect(() => {
     setCache(items)

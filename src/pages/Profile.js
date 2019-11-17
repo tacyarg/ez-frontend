@@ -94,7 +94,7 @@ export default Wiring.connectMemo(
     )
   },
   p => {
-    console.log('PROFILE', p)
+    // console.log('PROFILE', p)
 
     return {
       location: p.location,

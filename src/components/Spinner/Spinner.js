@@ -32,7 +32,7 @@ const Spinner = ({
       setCounter(counter + p)
       return p
     })
-    console.log('percents', spread)
+    // console.log('percents', spread)
 
     // calculate outcome offset
     const offset = spread.reduce((memo, p) => {

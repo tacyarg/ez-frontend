@@ -14,7 +14,7 @@ const Online = ({ online = 0 }) => {
 }
 
 export default Wiring.connectMemo(Online, p => {
-  console.log(p.public.stats)
+  // console.log(p.public.stats)
   return {
     online: p.public.stats.online,
   }

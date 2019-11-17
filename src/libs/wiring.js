@@ -55,7 +55,7 @@ const reducers = {
     }
   },
   toggleChat(state) {
-    console.log('showchat', !state.showChat)
+    // console.log('showchat', !state.showChat)
     return {
       ...state,
       showChat: !state.showChat,
@@ -95,7 +95,7 @@ const reducers = {
     return newState
   },
   auth(state, auth) {
-    console.log('auth', auth)
+    // console.log('auth', auth)
     return {
       ...state,
       ...auth,

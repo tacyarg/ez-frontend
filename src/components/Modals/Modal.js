@@ -25,7 +25,7 @@ const WiredModal = ({
   ...p
 }) => {
   return (
-    <Modal isOpen={isOpen} width={[1, 2 / 3]} m={4}>
+    <Modal isOpen={isOpen} width={[1, 3 / 4]} m={4}>
       <Flex
         width={1}
         p={3}

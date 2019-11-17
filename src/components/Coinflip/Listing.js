@@ -1,93 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { Image, Button, Box, Text, Flex, Avatar } from "../../primitives";
-import { GameNav, Modals, Utils, Assets } from "../index";
-import Wiring from "../../libs/wiring";
+import { Image, Box, Text, Flex, Avatar } from "../../primitives";
+import { Utils } from "../index";
+import utils from '../../libs/utils'
 import CoinSide from "./CoinSide";
 import RoundLimits from './RoundLimits'
-
-// TODO: insted of taking the info in as props, spawn a connected version.
-
-const ConnectedModal = Wiring.connectMemo(
-  React.memo(({ socket, isOpen, toggleModal, selection, gameid }) => {
-    return (
-      <Modals.ItemDeposit.LocalInventory
-        isOpen={isOpen}
-        onClose={e => toggleModal()}
-        onConfirm={itemids => {
-          toggleModal()
-          return socket.private.call('joinCoinflipFromInventory', {
-            gameid,
-            itemids,
-            selection
-          })
-        }}
-      />
-    )
-  }),
-  p => {
-    return {
-      socket: p.socket,
-      isOpen: p.isOpen,
-      toggleModal: p.toggleModal,
-      gameid: p.gameid,
-      selection: p.selection,
-    }
-  }
-)
-
-const JoinCoinflip = React.memo(({ gameid, selection }) => {
-  const [isOpen, setOpen] = useState(false)
-
-  function toggleModal() {
-    setOpen(!isOpen)
-  }
-
-  return (
-    <>
-      <ConnectedModal selection={selection} gameid={gameid} isOpen={isOpen} toggleModal={toggleModal} />
-      <Button
-        as={Flex}
-        alignItems="center"
-        type="primary"
-        onClick={e => toggleModal()}
-      >
-        <Assets.Icons.Coins size={20} mr={2} bg="yellow" /> Join
-      </Button>
-    </>
-  )
-})
-
-const CoinflipTimer = React.memo(({ coinflips, gameid }) => {
-  const timeleft = coinflips[gameid] ? coinflips[gameid].timeleft / 1000 : 0
-  return (
-    <Text>{timeleft}</Text>
-  )
-})
-
+import JoinCoinflipModal from './JoinCoinflip'
+import WatchCoinflipModal from './WatchCoinflip'
 
 const CoinflipListing = ({
+  coinflip = {},
+  userid = null,
   idx = 0,
-  players = [],
-  bets = [],
-  items = [],
-  state = "open",
-  value = 4.2,
-  winner,
-  id,
-  config,
-  timeleft = 0,
-  userid = null
 }) => {
 
-  const Player1 = players[0]
-  const Player1Bet = bets[0]
-  const Player2 = players[1]
-  const Player2Bet = bets[1]
-  const selection = config.selections.find(b => Player1Bet.selection !== b)
-  const time = Math.floor(timeleft / 1000)
-  const gameWinner = players.find(p => p.id === winner)
-
-  console.log(Player1.id, userid)
+  const {
+    Player1,
+    Player1Bet,
+    Player2,
+    Player2Bet,
+    selection,
+    time,
+    gameWinner,
+    items,
+    id,
+    state,
+    value,
+    config,
+    winner
+  } = utils.parseCoinflip(coinflip)
 
   return <Flex
     p={3}
@@ -98,13 +38,13 @@ const CoinflipListing = ({
   >
     <Flex alignItems="center" width={[1, 1 / 5]}>
       <Avatar src={Player1.avatar} size={[32, 48]} position="relative">
-        <CoinSide selection={Player1Bet.selection} />
+        <CoinSide position="absolute" selection={Player1Bet.selection} />
       </Avatar>
       {Player2 && (
         <>
           <Text mx={2}>VS</Text>
           <Avatar src={Player2.avatar} size={[32, 48]} position="relative">
-            <CoinSide selection={Player2Bet.selection} />
+            <CoinSide position="absolute" selection={Player2Bet.selection} />
           </Avatar>
         </>
       )}
@@ -139,10 +79,10 @@ const CoinflipListing = ({
       {!winner ?
         <>
           {Player1.id !== userid && <>
-            <JoinCoinflip gameid={id} selection={selection} />
+            <JoinCoinflipModal gameid={id} selection={selection} />
             <Box mx={2} />
           </>}
-          <Button type="simple">Watch</Button>
+          <WatchCoinflipModal gameid={id} />
         </>
         :
         <>

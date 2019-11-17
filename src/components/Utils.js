@@ -261,7 +261,7 @@ const ItemCardList = ({ isSelected, handleSelect, items = [] }) => {
 }
 
 const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
-  console.log('ItemList change', items.length)
+  // console.log('ItemList change', items.length)
   const [selectedItems, setSelectedItems] = useState([])
   const [selectedValue, setSelectedValue] = useState(0)
 
@@ -280,7 +280,7 @@ const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
 
   const handleSelect = item => {
     if (isSelected(item.id)) {
-      console.log('DE-SELECT ITEM')
+      // console.log('DE-SELECT ITEM')
 
       const index = selectedItems.findIndex(r => r.id === item.id)
       selectedItems.splice(index, 1)
@@ -291,7 +291,7 @@ const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
       )
     }
 
-    console.log('SELECT ITEM', item.id)
+    // console.log('SELECT ITEM', item.id)
     setSelectedValue(selectedValue + item.price)
     setSelectedItems([...selectedItems, item])
   }
@@ -303,10 +303,10 @@ const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
     })
   }, [selectedItems, selectedValue])
 
-  useEffect(() => {
-    setSelectedItems([])
-    setSelectedValue(0)
-  }, [items])
+  // useEffect(() => {
+  //   setSelectedItems([])
+  //   setSelectedValue(0)
+  // }, [items])
 
   return (
     <Box
@@ -333,7 +333,7 @@ const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
           })
         ) : (
             <Box>
-              <Text m={2}>You do not have any items.</Text>
+              <Text m={2}>Nothing to display.</Text>
               {/* {isLocal && (
               <Button m={2} type="simple">
                 Deposit Items

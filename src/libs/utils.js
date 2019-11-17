@@ -94,3 +94,33 @@ exports.parseValue = function (data = 0) {
     maximumFractionDigits: 2,
   })
 }
+
+exports.parseCoinflip = coinflip => {
+  const {
+    players = [],
+    bets = [],
+    winner,
+    config,
+    timeleft = 0,
+  } = coinflip
+
+  const Player1 = players[0]
+  const Player1Bet = bets[0]
+  const Player2 = players[1]
+  const Player2Bet = bets[1]
+  const selection = config.selections.find(b => Player1Bet.selection !== b)
+  const time = Math.floor(timeleft / 1000) || 0
+  const gameWinner = players.find(p => p.id === winner)
+
+  return {
+    ...coinflip,
+    Player1,
+    Player1Bet,
+    Player2,
+    Player2Bet,
+    selection,
+    time,
+    gameWinner,
+    winner,
+  }
+}

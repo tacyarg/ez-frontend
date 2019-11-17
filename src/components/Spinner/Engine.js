@@ -39,7 +39,7 @@ const SpinnerContainer = styled(Box)`
 `
 
 const SpinnerEngine = ({ isRolling, config = {}, children, ...p }) => {
-  console.log('SPINNER PROPS', isRolling, config, p)
+  // console.log('SPINNER PROPS', isRolling, config, p)
   const [offsetWidth, setWidth] = useState(0)
   const [ref, setRef] = useState(null)
 
@@ -47,7 +47,7 @@ const SpinnerEngine = ({ isRolling, config = {}, children, ...p }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      console.log('roll', config)
+      // console.log('roll', config)
       // roll(config)
     }, 1000)
     // return () => {
@@ -73,20 +73,20 @@ const SpinnerEngine = ({ isRolling, config = {}, children, ...p }) => {
     // tile count, each time it increments we play a "tick" sound.
     let lastTile = 0
 
-    console.log('SPINNING', outcome)
-    console.log({
-      width,
-      config,
-      duration,
-      offset,
-      tileSize,
-      outcome,
-      tickPos,
-      centerTile,
-      pos,
-      lastTile,
-      translateX,
-    })
+    // console.log('SPINNING', outcome)
+    // console.log({
+    //   width,
+    //   config,
+    //   duration,
+    //   offset,
+    //   tileSize,
+    //   outcome,
+    //   tickPos,
+    //   centerTile,
+    //   pos,
+    //   lastTile,
+    //   translateX,
+    // })
 
     // define the animation timeline.
     timeline
@@ -97,7 +97,7 @@ const SpinnerEngine = ({ isRolling, config = {}, children, ...p }) => {
         onStart() {
           // play the starting spin sound.
           // start.play()
-          console.log('starting spinner')
+          // console.log('starting spinner')
         },
         onUpdate(tween) {
           const x = tween.target._gsTransform.x

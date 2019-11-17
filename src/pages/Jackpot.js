@@ -102,9 +102,17 @@ const ActionBar = () => {
   )
 }
 
-const History = p => {
-  return <Box>yo</Box>
-}
+const History = Wiring.connectMemo(p => {
+  return <Box>{Object.values(p.history).map(game => {
+    return <Text>{game.id}</Text>
+  })}</Box>
+}, p => {
+  console.log(p)
+  return {
+    currentJackpot: p.public.jackpot,
+    history: p.public.jackpots
+  }
+})
 
 export default p => {
   return (
