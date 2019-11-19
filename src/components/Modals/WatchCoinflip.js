@@ -28,9 +28,9 @@ const PlayerAvatar = ({ src, size = [64, 128], selection = 'tails' }) => {
     <CoinSide m={4} size={size} selection={selection} />
 }
 
-const CoinflipPlayer = ({ player = {}, bet = {} }) => {
+const CoinflipPlayer = ({ player = {}, bet = {}, ...p }) => {
   const [cache, setCache] = useState(bet.items)
-  return <Flex flexDirection="column" alignItems="center">
+  return <Flex flexDirection="column" alignItems="center" {...p}>
     <PlayerAvatar src={player.avatar} />
     <Text fontSize={6} m={2}>{player.username || 'Waiting...'}</Text>
     <Divider />
@@ -88,17 +88,15 @@ const WatchCoinflip = ({
       title={
         <Box>
           <ModalValue label="Coinflip ID" value={coinflip.id} />
-          <ModalValue label="Value" color="green" value={coinflip.value} />
+          <ModalValue label="Value" color="green" value={Utils.parseValue(coinflip.value)} />
           <ModalValue label="State" value={coinflip.state} />
         </Box>
       }
     >
-      <Flex width={[1, 2 / 3]}>
-        <CoinflipPlayer player={Player1} bet={Player1Bet} />
-        <Box mx="auto">
-          <CoinEngine />
-        </Box>
-        <CoinflipPlayer player={Player2} bet={Player2Bet} />
+      <Flex width={1} mx={2}>
+        <CoinflipPlayer player={Player1} bet={Player1Bet} width={1 / 3} />
+        <CoinEngine width={1}/>
+        <CoinflipPlayer player={Player2} bet={Player2Bet} width={1 / 3} />
       </Flex>
     </WiredModal>
   )

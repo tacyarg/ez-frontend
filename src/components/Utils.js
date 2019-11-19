@@ -72,8 +72,17 @@ const renderProp = (value, type) => {
       return moment(value).calendar()
     case 'boolean':
       return Boolean(value) ? 'yes' : 'no'
-    case 'number':
-      return <Text.Number value={value} />
+    case 'string':
+      var expression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+      var regex = new RegExp(expression);
+      if (regex.test(value)) {
+        return <Text.Link color="primary" onClick={e => {
+          var win = window.open(value, '_blank');
+          win.focus();
+        }}>{value}</Text.Link>
+      }
+    // case 'number':
+    // return <Text.Number value={value} />
     default:
       return value
   }
@@ -310,7 +319,7 @@ const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
 
   return (
     <Box
-      p={4}
+      p={2}
       width={1}
       maxHeight={400}
       style={{

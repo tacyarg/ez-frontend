@@ -68,6 +68,10 @@ export default Wiring.connectMemo(
   p => {
     // if(!user) return history.location.push()
 
+    // useEffect(() => {
+    //   // same as initial mount
+    // }, [])
+
     return (
       <>
         <GameNav {...p} />
@@ -88,19 +92,35 @@ export default Wiring.connectMemo(
         </TitleBar>
 
         <Flex p={2} flexDirection="column">
-          history yo
+          {p.commands.map(cmd => {
+            return <Utils.RenderObject 
+              heading={`ID: ${cmd.id}`}
+              data={cmd}
+            />
+          })}
         </Flex>
       </>
     )
   },
   p => {
     // console.log('PROFILE', p)
+    const active = p.private.commands ? p.private.commands.active : {}
+    const history = p.private.commands ? p.private.commands.history : {}
+
+    const commands = Object.values(active).reduce((memo, cmd) => {
+      memo[cmd.id] = cmd
+      return memo
+    }, history)
 
     return {
       location: p.location,
       history: p.history,
       user: p.private.me || {},
       stats: p.private.stats || {},
+      commands: Object.values(commands).sort((p, n) => {
+        return p.updated > n.updated ? 1 : -1
+      } ) || {},      
+      // activeCommands: p.private.commands || {},
       pages: [
         {
           name: 'commands'

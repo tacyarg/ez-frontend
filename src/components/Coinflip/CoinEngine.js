@@ -31,18 +31,36 @@ const Animation = styled(Image)`
   @keyframes play {
     100% { background-position: -86800px; }
   }
-  
-  width: 400px;
-  height: 300px;
-  margin: 2% auto;
-  position: absolute;
-  left: -97px;
-  bottom: -50px;
-  background-position: left center;
 `
 
 export default p => {
-  return <Box position="relative">
-    <Animation src={coinflips.BlueBlue} />
+
+  const [frame, setFrame] = useState(0)
+
+  var fps = 15;
+  var window = 400
+  function draw() {
+    setTimeout(function () {
+      console.log('DRAW FRAME', fps)
+      requestAnimationFrame(draw);
+      // Drawing code goes here
+      setFrame(fps + window) // camera position
+    }, 1000 / fps);
+  }
+
+  useEffect(() => draw(), [])
+
+  useEffect(() => {
+    console.log('Frame', frame)
+  }, [frame])
+
+  return <Box position="relative" {...p}>
+    <Image
+      position="absolute"
+      overflow="hidden"
+      height={400}
+      src={coinflips.BlueBlue}
+      backgroundPosition={`-${frame}px`}
+    />
   </Box>
 }
