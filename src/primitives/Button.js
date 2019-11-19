@@ -81,6 +81,19 @@ const type = props => {
           color: ${props.disabled ? null : theme.colors.offwhite}
         };
     `;
+    case "attention":
+      return `
+        background-color: ${p =>
+          p.active ? theme.colors.orange : theme.colors.orangeMuted};
+        color: ${theme.colors.text};
+        
+        &:hover,
+        &:focus {
+          background-color: rgba(0,0,0,0.5);
+          box-shadow: 0px 4px 2px -4px ${theme.colors.orange};
+          color: ${props.disabled ? null : theme.colors.orangeMuted}
+        };
+    `;
     case "simple-shaded":
       return `
         background-color: rgba(0,0,0,0.5);

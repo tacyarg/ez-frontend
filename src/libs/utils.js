@@ -122,5 +122,6 @@ exports.parseCoinflip = coinflip => {
     time,
     gameWinner,
     winner,
+    winnerBet: bets.find(b => b.userid === winner)
   }
 }

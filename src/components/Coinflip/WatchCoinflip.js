@@ -24,7 +24,7 @@ const WatchCoinflipModal = ({coinflips, socket, gameid}) => {
         mt={[3, 0]}
         as={Flex}
         alignItems="center"
-        type="simple"
+        type="attention"
         onClick={e => {
           toggleModal();
         }}
@@ -36,7 +36,7 @@ const WatchCoinflipModal = ({coinflips, socket, gameid}) => {
   );
 };
 
-export default Wiring.connectMemo(WatchCoinflipModal, p => {
+export default Wiring.connect(WatchCoinflipModal, p => {
   return {
     socket: p.socket,
     coinflips: p.public.coinflips

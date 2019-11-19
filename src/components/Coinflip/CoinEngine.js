@@ -42,11 +42,14 @@ const blueAnimations = [coinflips.RedBlue, coinflips.BlueBlue]
 
 const PickAnimiation = (selection, outcome = 0) => {
   // outcome should be 0 or 1
+  const index = outcome >= 0.5 ? 1 : 0
   return selection === 'heads' ?
-    redAnimations[outcome] : blueAnimations[outcome]
+    redAnimations[index] : blueAnimations[index]
 }
 
 export default ({ selection, outcome, ...p }) => {
+
+  console.log("coin engine", selection, outcome, p)
 
   // const [frame, setFrame] = useState(0)
 
@@ -67,7 +70,7 @@ export default ({ selection, outcome, ...p }) => {
   //   console.log('Frame', frame)
   // }, [frame])
 
-  return <Box position="relative" {...p}>
+  return <Flex position="relative" justifyContent="center" alignItems="center">
     <Box
       width={'400px'}
       position="absolute"
@@ -75,11 +78,11 @@ export default ({ selection, outcome, ...p }) => {
       m={2}
     >
       <Animation
-        height={'400px'}
+        height={['200px', '400px']}
         src={PickAnimiation(selection, outcome)}
       // backgroundPosition={`-${frame}px`}
       />
 
     </Box>
-  </Box>
+  </Flex>
 }

@@ -26,7 +26,9 @@ const CoinflipListing = ({
     state,
     value,
     config,
-    winner
+    winner,
+    payouts,
+    players
   } = utils.parseCoinflip(coinflip)
 
   return <Flex
@@ -78,19 +80,18 @@ const CoinflipListing = ({
     <Flex width={[1, 1 / 5]} alignItems="center">
       {!winner ?
         <>
-          {Player1.id !== userid && <>
+          {Player1.id !== userid && players.length < 2 && <>
             <JoinCoinflipModal gameid={id} selection={selection} />
             <Box mx={2} />
           </>}
-          <WatchCoinflipModal gameid={id} />
         </>
-        :
-        <>
+        : payouts.length > 0 && <>
           <Avatar src={gameWinner.avatar} size={[32, 48]} position="relative" />
           <Box mx={2} />
           <Text>{gameWinner.username}</Text>
         </>
       }
+      <WatchCoinflipModal gameid={id} />
     </Flex>
   </Flex>
 

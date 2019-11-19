@@ -64,7 +64,7 @@ const Stats = ({ label, value }) => {
   )
 }
 
-export default Wiring.connectMemo(
+export default Wiring.connect(
   p => {
 
     if(!p.user) return <Text p={4} >Please login to view your profile.</Text>
@@ -104,18 +104,18 @@ export default Wiring.connectMemo(
     const active = p.private.commands ? p.private.commands.active : {}
     const history = p.private.commands ? p.private.commands.history : {}
 
-    const commands = Object.values(active).reduce((memo, cmd) => {
-      memo[cmd.id] = cmd
-      return memo
-    }, history)
+    // const commands = Object.values(active).reduce((memo, cmd) => {
+    //   memo[cmd.id] = cmd
+    //   return memo
+    // }, history)
 
     return {
       location: p.location,
       history: p.history,
       user: p.private.me,
       stats: p.private.stats || {},
-      commands: Object.values(commands).sort((p, n) => {
-        return p.updated > n.updated ? 1 : -1
+      commands: Object.values(active).sort((p, n) => {
+        return p.updated < n.updated ? 1 : -1
       } ) || {},      
       // activeCommands: p.private.commands || {},
       pages: [

@@ -22,7 +22,7 @@ const Triangle = styled(Box)`
 const PlayerAvatar = ({ src, size = [64, 128], selection = 'tails' }) => {
   // console.log('PlayerAvatar', src)
   return src ?
-    <Avatar m={4} src={src} size={size} position='relative'>
+    <Avatar m={2} src={src} size={size} position='relative'>
       <CoinSide size={[32, 64]} position="absolute" selection={selection} />
     </Avatar> :
     <CoinSide m={4} size={size} selection={selection} />
@@ -30,10 +30,20 @@ const PlayerAvatar = ({ src, size = [64, 128], selection = 'tails' }) => {
 
 const CoinflipPlayer = ({ player = {}, bet = {}, ...p }) => {
   const [cache, setCache] = useState(bet.items)
-  return <Flex flexDirection="column" alignItems="center" {...p}>
-    <PlayerAvatar src={player.avatar} />
-    <Text fontSize={6} m={2}>{player.username || 'Waiting...'}</Text>
-    <Divider />
+
+  useEffect(() => {
+    setCache(bet.items)
+  }, [bet.items])
+
+  return <Flex
+    flexDirection="column"
+    alignItems="center"
+    // justifyContent="center"
+    {...p}
+  >
+    <PlayerAvatar src={player.avatar} selection={bet.selection} />
+    <Text fontSize={[3, 5]} m={1}>{player.username || 'Waiting...'}</Text>
+    <Divider bg="backingLight" m={2} />
     <Utils.ItemList
       items={cache}
     // onChange={({ selectedItems, selectedValue }) => {
@@ -46,11 +56,29 @@ const CoinflipPlayer = ({ player = {}, bet = {}, ...p }) => {
 
 const ModalValue = ({ label = 'value', value = 0, ...p }) => {
   return <Flex alignItems="center">
-    <Text fontSize={4}>{label}:</Text>
+    <Text fontSize={3}>{label}:</Text>
     <Box mx={1} />
-    <Text fontSize={5} color='subtext' {...p}>
+    <Text fontSize={2} color='subtext' {...p}>
       {value}
     </Text>
+  </Flex>
+}
+
+const CoinAnimation = ({ selection, time = 0, outcome, ...p }) => {
+  return <Flex
+    {...p}
+    mx="auto"
+    alignItems="center"
+    justifyContent="center"
+  >
+    {selection && outcome ?
+      <CoinEngine
+        selection={selection}
+        outcome={outcome}
+      />
+      : time > 60 ? <Text color="subtext">Expires in  {Number(time / 60).toFixed(2)} minutes.</Text>
+        : <Text color="subtext">{Number(time)} seconds.</Text>
+    }
   </Flex>
 }
 
@@ -66,6 +94,7 @@ const WatchCoinflip = ({
     Player1Bet,
     Player2 = {},
     Player2Bet,
+    bets,
     selection,
     time,
     gameWinner,
@@ -76,8 +105,8 @@ const WatchCoinflip = ({
     config,
     winner,
     selections,
-    winningBet,
-    provable
+    winnerBet,
+    provable,
   } = utils.parseCoinflip(coinflip)
 
   // const Player2Selection = selections.find(s => s !== Player1Bet.selection)
@@ -95,10 +124,21 @@ const WatchCoinflip = ({
         </Box>
       }
     >
-      <Flex width={1} mx={2}>
-        <CoinflipPlayer player={Player1} bet={Player1Bet} width={1 / 3} />
-        {winningBet ? <CoinEngine width={1} selection={winningBet.selection} outcome={provable.outcome}/> : <Box width={1} />}
-        <CoinflipPlayer player={Player2} bet={Player2Bet} width={1 / 3} />
+      <Flex
+        width={1}
+        m={4}
+        flexDirection={['column', 'row']}
+        alignItems="center"
+        justifyContent="center"
+      >
+        <CoinflipPlayer player={Player1} bet={Player1Bet} width={[1, 1 / 3]} />
+        <CoinAnimation
+          // bg="backingLight"
+          selection={winnerBet ? winnerBet.selection : null}
+          outcome={provable ? provable.outcome : null}
+          time={time}
+        />
+        <CoinflipPlayer player={Player2} bet={Player2Bet} width={[1, 1 / 3]} />
       </Flex>
     </WiredModal>
   )
