@@ -14,7 +14,7 @@ const Container = styled.div`
   right: 0;
   bottom: 0;
   flex-direction: column;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
   perspective: 500px;
   transform: translateZ(0);
   flex-direction: column;
@@ -39,6 +39,7 @@ const Shade = posed(Container)({
 })
 
 const Modal = styled(Flex)`
+  maxHeight: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;

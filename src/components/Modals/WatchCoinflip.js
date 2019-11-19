@@ -126,7 +126,6 @@ const WatchCoinflip = ({
     >
       <Flex
         width={1}
-        m={4}
         flexDirection={['column', 'row']}
         alignItems="center"
         justifyContent="center"

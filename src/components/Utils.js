@@ -315,7 +315,7 @@ const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
   useEffect(() => {
     setSelectedItems([])
     setSelectedValue(0)
-  }, [items.length])
+  }, [])
 
   return (
     <Box
