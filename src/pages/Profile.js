@@ -19,7 +19,7 @@ const TitleBar = ({ label = 'Settings' }) => {
   )
 }
 
-const User = ({ user }) => {
+const User = ({ user ={} }) => {
   return (
     <Flex flexDirection="column">
       <Box
@@ -66,11 +66,8 @@ const Stats = ({ label, value }) => {
 
 export default Wiring.connectMemo(
   p => {
-    // if(!user) return history.location.push()
 
-    // useEffect(() => {
-    //   // same as initial mount
-    // }, [])
+    if(!p.user) return <Text p={4} >Please login to view your profile.</Text>
 
     return (
       <>
@@ -115,7 +112,7 @@ export default Wiring.connectMemo(
     return {
       location: p.location,
       history: p.history,
-      user: p.private.me || {},
+      user: p.private.me,
       stats: p.private.stats || {},
       commands: Object.values(commands).sort((p, n) => {
         return p.updated > n.updated ? 1 : -1

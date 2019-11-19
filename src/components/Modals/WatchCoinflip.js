@@ -75,7 +75,9 @@ const WatchCoinflip = ({
     value,
     config,
     winner,
-    selections
+    selections,
+    winningBet,
+    provable
   } = utils.parseCoinflip(coinflip)
 
   // const Player2Selection = selections.find(s => s !== Player1Bet.selection)
@@ -95,7 +97,7 @@ const WatchCoinflip = ({
     >
       <Flex width={1} mx={2}>
         <CoinflipPlayer player={Player1} bet={Player1Bet} width={1 / 3} />
-        <CoinEngine width={1}/>
+        {winningBet ? <CoinEngine width={1} selection={winningBet.selection} outcome={provable.outcome}/> : <Box width={1} />}
         <CoinflipPlayer player={Player2} bet={Player2Bet} width={1 / 3} />
       </Flex>
     </WiredModal>

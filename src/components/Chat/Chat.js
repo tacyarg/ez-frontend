@@ -16,10 +16,10 @@ const Messages = Wiring.connectMemo(
       onChange(messages)
     })
 
-    return messages.map(m => {
+    return messages.length > 0 ? messages.map(m => {
       if (!m.user) return
       return <Message key={m.id} {...m} />
-    })
+    }) : <Text color="subtext" p={2}>No messages...</Text>
   },
   p => {
     return {

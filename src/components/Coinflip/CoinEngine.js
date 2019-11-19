@@ -31,36 +31,55 @@ const Animation = styled(Image)`
   @keyframes play {
     100% { background-position: -86800px; }
   }
+
+  background-size: auto;
+  background-position: left center;
 `
 
-export default p => {
+const redAnimations = [coinflips.BlueRed, coinflips.RedRed]
+const blueAnimations = [coinflips.RedBlue, coinflips.BlueBlue]
 
-  const [frame, setFrame] = useState(0)
 
-  var fps = 15;
-  var window = 400
-  function draw() {
-    setTimeout(function () {
-      console.log('DRAW FRAME', fps)
-      requestAnimationFrame(draw);
-      // Drawing code goes here
-      setFrame(fps + window) // camera position
-    }, 1000 / fps);
-  }
+const PickAnimiation = (selection, outcome = 0) => {
+  // outcome should be 0 or 1
+  return selection === 'heads' ?
+    redAnimations[outcome] : blueAnimations[outcome]
+}
 
-  useEffect(() => draw(), [])
+export default ({ selection, outcome, ...p }) => {
 
-  useEffect(() => {
-    console.log('Frame', frame)
-  }, [frame])
+  // const [frame, setFrame] = useState(0)
+
+  // var fps = 15;
+  // var window = 400
+  // function draw() {
+  //   setTimeout(function () {
+  //     console.log('DRAW FRAME', fps)
+  //     requestAnimationFrame(draw);
+  //     // Drawing code goes here
+  //     setFrame(fps + window) // camera position
+  //   }, 1000 / fps);
+  // }
+
+  // useEffect(() => draw(), [])
+
+  // useEffect(() => {
+  //   console.log('Frame', frame)
+  // }, [frame])
 
   return <Box position="relative" {...p}>
-    <Image
+    <Box
+      width={'400px'}
       position="absolute"
       overflow="hidden"
-      height={400}
-      src={coinflips.BlueBlue}
-      backgroundPosition={`-${frame}px`}
-    />
+      m={2}
+    >
+      <Animation
+        height={'400px'}
+        src={PickAnimiation(selection, outcome)}
+      // backgroundPosition={`-${frame}px`}
+      />
+
+    </Box>
   </Box>
 }

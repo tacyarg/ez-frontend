@@ -33,6 +33,8 @@ const TitleBar = ({ label = 'Inventory', children }) => {
 }
 
 const Inventory = ({ inventory = [], socket, ...p }) => {
+  if(!p.user) return <Text p={4} >Please login to view your inventory.</Text>
+
   // console.log('inventory change', inventory.length)
   const [isOpen, setOpen] = useState(false)
 
@@ -115,10 +117,11 @@ const Inventory = ({ inventory = [], socket, ...p }) => {
 }
 
 export default Wiring.connectMemo(Inventory, p => {
+
   return {
     location: p.location,
     history: p.history,
-    user: p.private.me || {},
+    user: p.private.me,
     socket: p.socket,
     inventory: p.private.inventory || {},
   }
