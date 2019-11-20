@@ -270,7 +270,7 @@ const ItemCardList = ({ isSelected, handleSelect, items = [] }) => {
 }
 
 const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
-  // console.log('ItemList change', items.length)
+  console.log('ItemList change', items.length)
   const [selectedItems, setSelectedItems] = useState([])
   const [selectedValue, setSelectedValue] = useState(0)
 
@@ -315,7 +315,7 @@ const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
   useEffect(() => {
     setSelectedItems([])
     setSelectedValue(0)
-  }, [])
+  }, [items.length])
 
   return (
     <Box

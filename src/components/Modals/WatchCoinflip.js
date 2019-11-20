@@ -25,7 +25,7 @@ const PlayerAvatar = ({ src, size = [64, 128], selection = 'tails' }) => {
     <Avatar m={2} src={src} size={size} position='relative'>
       <CoinSide size={[32, 64]} position="absolute" selection={selection} />
     </Avatar> :
-    <CoinSide m={4} size={size} selection={selection} />
+    <CoinSide m={2} size={size} selection={selection} />
 }
 
 const CoinflipPlayer = ({ player = {}, bet = {}, ...p }) => {
@@ -127,8 +127,8 @@ const WatchCoinflip = ({
       <Flex
         width={1}
         flexDirection={['column', 'row']}
-        alignItems="center"
-        justifyContent="center"
+        // alignItems="center"
+        // justifyContent="center"
       >
         <CoinflipPlayer player={Player1} bet={Player1Bet} width={[1, 1 / 3]} />
         <CoinAnimation
