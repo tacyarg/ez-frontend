@@ -75,7 +75,9 @@ const Stats = Wiring.connectMemo(({ coinflips }) => {
 const ConnectedListings = Wiring.connect(
   p => {
     const { coinflips = {} } = p
-    return Object.values(coinflips).map((cf, idx) => {
+    return Object.values(coinflips).sort((x,y) => {
+      return x.updated < y.updated ? 1 : -1
+    }).map((cf, idx) => {
       return <CoinflipListing
         coinflip={cf}
         key={cf.id}

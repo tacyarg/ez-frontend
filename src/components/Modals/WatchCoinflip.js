@@ -24,6 +24,7 @@ const CountdownStage = styled('svg')`
   position: relative;
   height: 400px;
   width: 400px;
+  // width: 100%;
   bottom: 100px;
   right: 100px;
 `
