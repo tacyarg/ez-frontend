@@ -82,7 +82,7 @@ const Countdown = ({ secondsLeft = 0, totalSeconds = 0 }) => {
       </CountdownStage>
     </Box>
     <Text position="absolute" color="subtext">
-      {secondsLeft > 60 ? `${(secondsLeft/60).toFixed(2)} min.` : `${(secondsLeft).toFixed(2)} sec.`}
+      {secondsLeft > 60 ? `${(secondsLeft / 60).toFixed(2)} min.` : `${Math.floor(secondsLeft)} sec.`}
     </Text>
   </Flex>
 }

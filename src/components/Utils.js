@@ -269,7 +269,7 @@ const ItemCardList = ({ isSelected, handleSelect, items = [] }) => {
   )
 }
 
-const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
+const ItemList = React.memo(({ isLocal = true, onChange = x => x, items = [], ...p }) => {
   console.log('ItemList change', items.length)
   const [selectedItems, setSelectedItems] = useState([])
   const [selectedValue, setSelectedValue] = useState(0)
@@ -310,12 +310,7 @@ const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
       selectedItems,
       selectedValue,
     })
-  }, [selectedItems, selectedValue])
-
-  useEffect(() => {
-    setSelectedItems([])
-    setSelectedValue(0)
-  }, [items.length])
+  }, [selectedItems, selectedValue, items])
 
   return (
     <Box
@@ -353,7 +348,13 @@ const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
       </Flex>
     </Box>
   )
-}
+}, (oldState, newState) => {
+  // console.log(oldState, newState)
+  // if(!oldState.items || !newState.items) return false
+  const oldKeys = Object.keys(oldState.items || [])
+  const newKeys = Object.keys(newState.items || [])
+  return oldKeys.length === newKeys.length
+})
 
 const TitleBar = ({ label = 'Inventory', children, ...p }) => {
   return (

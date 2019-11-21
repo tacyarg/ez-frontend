@@ -47,29 +47,7 @@ const PickAnimiation = (selection, outcome = 0) => {
     redAnimations[index] : blueAnimations[index]
 }
 
-export default ({ selection, outcome, ...p }) => {
-
-  console.log("coin engine", selection, outcome, p)
-
-  // const [frame, setFrame] = useState(0)
-
-  // var fps = 15;
-  // var window = 400
-  // function draw() {
-  //   setTimeout(function () {
-  //     console.log('DRAW FRAME', fps)
-  //     requestAnimationFrame(draw);
-  //     // Drawing code goes here
-  //     setFrame(fps + window) // camera position
-  //   }, 1000 / fps);
-  // }
-
-  // useEffect(() => draw(), [])
-
-  // useEffect(() => {
-  //   console.log('Frame', frame)
-  // }, [frame])
-
+export default React.memo(({ selection, outcome }) => {
   return <Flex position="relative" justifyContent="center" alignItems="center">
     <Box
       width={'400px'}
@@ -85,4 +63,4 @@ export default ({ selection, outcome, ...p }) => {
 
     </Box>
   </Flex>
-}
+})
