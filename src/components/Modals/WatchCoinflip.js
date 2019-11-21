@@ -19,6 +19,74 @@ const Triangle = styled(Box)`
 `
 
 
+const CountdownStage = styled('svg')`
+  transform: rotateY(-180deg) rotateZ(-90deg);
+  position: relative;
+  height: 400px;
+  width: 400px;
+  bottom: 100px;
+  right: 100px;
+`
+
+const CountdownOutlineCircle = styled('circle')`
+  stroke-dasharray: 440px;
+  stroke-dashoffset: 0px;
+  stroke-width: 25px;
+  // stroke: #600F0B;
+  fill: none;
+
+  stroke: #41634A;  
+`
+
+const CountdownCircle = styled('circle')`
+  stroke-dasharray: 440px;
+  // stroke-dashoffset: 440px;
+  stroke-width: 25px;
+  stroke: #A91B0D;
+  fill: none;
+
+  stroke: #37ba29;
+  stroke-dashoffset: 0px;
+
+  stroke-dashoffset: ${p => Math.floor(p.timeleft)}px;
+`
+
+
+const Countdown = ({ secondsLeft = 0, totalSeconds = 0 }) => {
+
+  let endDashArray = 440;
+  // const secondsLeft = timeleft
+  // const totalSeconds = config.duration / 1000
+  let startingOffset = (1 - (secondsLeft / totalSeconds)) * endDashArray;
+
+  return <Flex position="relative" alignItems="center" justifyContent="center">
+    <Box>
+      <CountdownStage>
+        <CountdownOutlineCircle
+          r='70'
+          // cx='0'
+          // cy='0'
+          cx='100'
+          // cx='50'
+          cy='100'
+        />
+        <CountdownCircle
+          r='70'
+          // cx='0'
+          // cy='0'
+          cx='100'
+          // cx='50'
+          cy='100'
+          timeleft={startingOffset}
+        />
+      </CountdownStage>
+    </Box>
+    <Text position="absolute" color="subtext">
+      {secondsLeft > 60 ? `${(secondsLeft/60).toFixed(2)} min.` : `${(secondsLeft).toFixed(2)} sec.`}
+    </Text>
+  </Flex>
+}
+
 const PlayerAvatar = ({ src, size = [64, 128], selection = 'tails' }) => {
   // console.log('PlayerAvatar', src)
   return src ?
@@ -28,8 +96,10 @@ const PlayerAvatar = ({ src, size = [64, 128], selection = 'tails' }) => {
     <CoinSide m={2} size={size} selection={selection} />
 }
 
-const CoinflipPlayer = ({ player = {}, bet = {}, ...p }) => {
+const CoinflipPlayer = ({ player = {}, bet = {}, value = 0, ...p }) => {
   const [cache, setCache] = useState(bet.items)
+
+  const chance = value > 0 ? (bet.value / value) * 100 : 0
 
   useEffect(() => {
     setCache(bet.items)
@@ -42,7 +112,7 @@ const CoinflipPlayer = ({ player = {}, bet = {}, ...p }) => {
     {...p}
   >
     <PlayerAvatar src={player.avatar} selection={bet.selection} />
-    <Text fontSize={[3, 5]} m={1}>{player.username || 'Waiting...'}</Text>
+    <Text fontSize={[3, 5]} m={1}>{player.username ? `${player.username} - ${chance}%` : 'Waiting...'}</Text>
     <Divider bg="backingLight" m={2} />
     <Utils.ItemList
       items={cache}
@@ -64,7 +134,7 @@ const ModalValue = ({ label = 'value', value = 0, ...p }) => {
   </Flex>
 }
 
-const CoinAnimation = ({ selection, time = 0, outcome, ...p }) => {
+const CoinAnimation = ({ selection, time = 0, outcome, duration, ...p }) => {
   return <Flex
     {...p}
     mx="auto"
@@ -76,8 +146,9 @@ const CoinAnimation = ({ selection, time = 0, outcome, ...p }) => {
         selection={selection}
         outcome={outcome}
       />
-      : time > 60 ? <Text color="subtext">Expires in  {Number(time / 60).toFixed(2)} minutes.</Text>
-        : <Text color="subtext">{Number(time)} seconds.</Text>
+      : <Countdown secondsLeft={time} totalSeconds={duration} />
+      // : time > 60 ? <Text color="subtext">Expires in  {Number(time / 60).toFixed(2)} minutes.</Text>
+      //   : <Text color="subtext">{Number(time)} seconds.</Text>
     }
   </Flex>
 }
@@ -109,6 +180,10 @@ const WatchCoinflip = ({
     provable,
   } = utils.parseCoinflip(coinflip)
 
+  const isState = (s) => {
+    return Boolean(state === s)
+  }
+
   // const Player2Selection = selections.find(s => s !== Player1Bet.selection)
 
   return (
@@ -127,17 +202,20 @@ const WatchCoinflip = ({
       <Flex
         width={1}
         flexDirection={['column', 'row']}
-        // alignItems="center"
-        // justifyContent="center"
+      // alignItems="center"
+      // justifyContent="center"
       >
-        <CoinflipPlayer player={Player1} bet={Player1Bet} width={[1, 1 / 3]} />
+        <CoinflipPlayer player={Player1} bet={Player1Bet} value={value} width={[1, 1 / 3]} />
+
         <CoinAnimation
           // bg="backingLight"
           selection={winnerBet ? winnerBet.selection : null}
           outcome={provable ? provable.outcome : null}
           time={time}
+          duration={isState('draw') ? config.drawDuration / 1000 : config.duration / 1000}
         />
-        <CoinflipPlayer player={Player2} bet={Player2Bet} width={[1, 1 / 3]} />
+
+        <CoinflipPlayer player={Player2} bet={Player2Bet} value={value} width={[1, 1 / 3]} />
       </Flex>
     </WiredModal>
   )

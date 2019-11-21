@@ -55,11 +55,11 @@ exports.parseEnv = env => {
   )
 }
 
-exports.makeID = function(start, end) {
+exports.makeID = function (start, end) {
   return [start, end].join('_')
 }
 
-exports.Authenticate = async function(actions, tokenid) {
+exports.Authenticate = async function (actions, tokenid) {
   if (tokenid == null) {
     return exports.Authenticate(actions, await actions.auth.call('token'))
   }
@@ -81,7 +81,7 @@ exports.formatJson = schema => {
 
 exports.findCurrentRound = (data = {}) => {
   return Object.values(data)
-    .sort(function(a, b) {
+    .sort(function (a, b) {
       return a.created - b.created
     })
     .pop()
@@ -102,6 +102,7 @@ exports.parseCoinflip = coinflip => {
     winner,
     config,
     timeleft = 0,
+    history= [],
   } = coinflip
 
   const Player1 = players[0]
@@ -122,6 +123,7 @@ exports.parseCoinflip = coinflip => {
     time,
     gameWinner,
     winner,
-    winnerBet: bets.find(b => b.userid === winner)
+    winnerBet: bets.find(b => b.userid === winner),
+    // lastStateUpdate: history[history.length - 1].updated
   }
 }
