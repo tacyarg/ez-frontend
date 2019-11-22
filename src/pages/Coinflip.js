@@ -72,9 +72,8 @@ const Stats = Wiring.connectMemo(({ coinflips }) => {
   }
 );
 
-const ConnectedListings = Wiring.connect(
-  p => {
-    const { coinflips = {} } = p
+const ConnectedListings = Wiring.connectMemo(
+  ({coinflips, user}) => {
     return Object.values(coinflips).sort((x,y) => {
       return x.updated < y.updated ? 1 : -1
     }).map((cf, idx) => {
@@ -82,9 +81,14 @@ const ConnectedListings = Wiring.connect(
         coinflip={cf}
         key={cf.id}
         idx={idx}
-        userid={p.private.me ? p.private.me.id : {}}
+        userid={user.id}
       />;
     });
+  }, memo => {
+    return {
+      user: memo.private.me || {},
+      coinflips: Object.values(memo.public.coinflips) || {}
+    }
   }
 );
 

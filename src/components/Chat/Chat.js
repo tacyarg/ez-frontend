@@ -12,6 +12,8 @@ import Heading from './Heading'
 
 const Messages = Wiring.connectMemo(
   ({ messages, onChange }) => {
+    messages = Object.values(messages)
+
     useEffect(() => {
       onChange(messages)
     })
@@ -24,7 +26,7 @@ const Messages = Wiring.connectMemo(
   p => {
     return {
       onChange: p.onChange,
-      messages: Object.values(p.public.chats.en),
+      messages: p.public.chats.en
     }
   }
 )

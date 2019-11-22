@@ -21,12 +21,13 @@ const Triangle = styled(Box)`
 
 const CountdownStage = styled('svg')`
   transform: rotateY(-180deg) rotateZ(-90deg);
+  // transform: rotateZ(-90deg);
   position: relative;
-  height: 400px;
-  width: 400px;
-  // width: 100%;
-  bottom: 100px;
-  right: 100px;
+  height: 400px
+  // width: 400px;
+  width: 100%;
+  // bottom: 100px;
+  // right: 100px;
 `
 
 const CountdownOutlineCircle = styled('circle')`
@@ -61,27 +62,19 @@ const Countdown = ({ secondsLeft = 0, totalSeconds = 0 }) => {
   let startingOffset = (1 - (secondsLeft / totalSeconds)) * endDashArray;
 
   return <Flex position="relative" alignItems="center" justifyContent="center">
-    <Box>
-      <CountdownStage>
-        <CountdownOutlineCircle
-          r='70'
-          // cx='0'
-          // cy='0'
-          cx='100'
-          // cx='50'
-          cy='100'
-        />
-        <CountdownCircle
-          r='70'
-          // cx='0'
-          // cy='0'
-          cx='100'
-          // cx='50'
-          cy='100'
-          timeleft={startingOffset}
-        />
-      </CountdownStage>
-    </Box>
+    <CountdownStage>
+      <CountdownOutlineCircle
+        r="70" cx="50%" cy="50%"
+      // cx='100'
+      // cy='100'
+      />
+      <CountdownCircle
+        r="70" cx="50%" cy="50%"
+        // cx='100'
+        // cy='100'
+        timeleft={startingOffset}
+      />
+    </CountdownStage>
     <Text position="absolute" color="subtext">
       {secondsLeft > 60 ? `${(secondsLeft / 60).toFixed(2)} min.` : `${Math.floor(secondsLeft)} sec.`}
     </Text>
@@ -113,7 +106,7 @@ const CoinflipPlayer = ({ player = {}, bet = {}, value = 0, ...p }) => {
     {...p}
   >
     <PlayerAvatar src={player.avatar} selection={bet.selection} />
-    <Text fontSize={[3, 5]} m={1}>{player.username ? `${player.username} - ${chance}%` : 'Waiting...'}</Text>
+    <Text fontSize={[3, 5]} m={1}>{player.username ? `${player.username} - ${chance.toFixed(2)}%` : 'Waiting...'}</Text>
     <Divider bg="backingLight" m={2} />
     <Utils.ItemList
       items={cache}
