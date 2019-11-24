@@ -269,13 +269,6 @@ const ItemCardList = ({ isSelected, handleSelect, items = [] }) => {
   )
 }
 
-const SelectionManager = ({ onChange = x => x, children }) => {
-  const [selectedItems, setSelectedItems] = useState([])
-  const [selectedValue, setSelectedValue] = useState(0)
-
-  return <children onClick={e => console.log("child clicked", e)} />
-}
-
 const ItemList = ({ isLocal = true, onChange = x => x, items = [], ...p }) => {
   console.log('ItemList change', items.length)
   const [selectedItems, setSelectedItems] = useState([])

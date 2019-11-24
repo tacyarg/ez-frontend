@@ -7,9 +7,10 @@ const Spinner = ({
   items = [],
   value = 5.43,
   bets = [],
-  outcome = null,
+  provable = null,
   isSoundMuted 
 }) => {
+  const outcome = provable ? provable.outcome : null
   const [counter, setCounter] = useState(0)
   const [config, setData] = useState({ spinnerBets: bets })
 
@@ -86,7 +87,7 @@ Spinner.CurrentJackpotRound = Wiring.connectMemo(Spinner, ({ jackpot, isSoundMut
     value,
     bets,
     players,
-    outcome: provable ? provable.outcome : null,
+    provable,
     isSoundMuted
   }
 })

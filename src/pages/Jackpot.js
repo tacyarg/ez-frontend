@@ -102,14 +102,19 @@ const ActionBar = () => {
   )
 }
 
-const History = Wiring.connectMemo(p => {
-  return <Box>{Object.values(p.history).map(game => {
-    return <Text>{game.id}</Text>
-  })}</Box>
+const History = Wiring.connect(p => {
+  return Object.values(p.history)
+    .sort((x, y) => {
+      return x.updated < y.updated ? 1 : -1
+    })
+    .map(game => {
+      // return <Text>{game.id}</Text>
+      return <Spinner game={game} />
+    })
 }, p => {
   console.log(p)
   return {
-    currentJackpot: p.public.jackpot,
+    // currentJackpot: p.public.jackpot,
     history: p.public.jackpots
   }
 })
@@ -119,8 +124,8 @@ export default p => {
     <>
       <GameNav {...p} />
       <ActionBar />
-      <Spinner.CurrentJackpotRound />
-      <Divider />
+      {/* <Spinner.CurrentJackpotRound /> */}
+      {/* <Divider /> */}
       <History />
     </>
   )

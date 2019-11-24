@@ -8,20 +8,22 @@ import Bets from './Bets'
 import BetItems from './BetItems'
 import Provable from './Provable'
 
-const SpinnerDefault = p => {
+const SpinnerDefault = React.memo(({ game = {} }) => {
   return (
     <Box>
-      <BetItems />
+      <BetItems {...game} />
       <Box position="relative" my={4} zIndex={1}>
-        <RoundInfo />
-        <Spinner />
-        <Timer />
+        <RoundInfo {...game} />
+        <Spinner {...game} />
+        <Timer timeleft={game.timeleft / 100} />
       </Box>
-      <Bets />
-      <Provable />
+      <Bets {...game} />
+      <Provable gameid={game.id} state={game.state} />
     </Box>
   )
-}
+}, (oldState, newState) => {
+  return oldState.game.updated === newState.game.updated
+})
 
 SpinnerDefault.CurrentJackpotRound = p => {
   return (

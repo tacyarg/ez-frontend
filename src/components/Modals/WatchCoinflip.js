@@ -18,7 +18,6 @@ const Triangle = styled(Box)`
   background-color: red;
 `
 
-
 const CountdownStage = styled('svg')`
   transform: rotateY(-180deg) rotateZ(-90deg);
   // transform: rotateZ(-90deg);

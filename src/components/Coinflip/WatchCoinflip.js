@@ -4,7 +4,7 @@ import { Button, Flex } from "../../primitives";
 import { Modals, Assets } from "../index";
 import Wiring from "../../libs/wiring";
 
-const WatchCoinflipModal = ({coinflips, socket, gameid}) => {
+const WatchCoinflipModal = React.memo(({coinflips, socket, gameid}) => {
   // console.log('WatchCoinflipModal', coinflips, socket, gameid)
   const [isOpen, setOpen] = useState(false);
 
@@ -34,7 +34,7 @@ const WatchCoinflipModal = ({coinflips, socket, gameid}) => {
       </Button>
     </>
   );
-};
+});
 
 export default Wiring.connect(WatchCoinflipModal, p => {
   return {

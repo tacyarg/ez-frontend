@@ -7,7 +7,7 @@ import RoundLimits from './RoundLimits'
 import JoinCoinflipModal from './JoinCoinflip'
 import WatchCoinflipModal from './WatchCoinflip'
 
-const CoinflipListing = ({
+const CoinflipListing = React.memo(({
   coinflip = {},
   userid = null,
   idx = 0,
@@ -95,6 +95,8 @@ const CoinflipListing = ({
     </Flex>
   </Flex>
 
-}
+}, (oldState, newState) => {
+  return oldState.updated === newState.updated
+})
 
 export default CoinflipListing;
