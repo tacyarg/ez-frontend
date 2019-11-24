@@ -74,7 +74,7 @@ const TimerBar = ({ isSoundMuted, timeleft = 0, ...p }) => {
 TimerBar.CurrentJackpotRound = Wiring.connectMemo(TimerBar, p => {
   return {
     isSoundMuted: p.isSoundMuted,
-    timeleft: p.jackpot.timeleft / 100,
+    timeleft: Math.floor(p.jackpot.timeleft / 100),
   }
 })
 
