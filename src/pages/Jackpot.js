@@ -109,7 +109,10 @@ const History = Wiring.connect(p => {
     })
     .map(game => {
       // return <Text>{game.id}</Text>
-      return <Spinner game={game} />
+      return <>
+        <Spinner game={game} my={4} />
+        <Divider />
+      </>
     })
 }, p => {
   console.log(p)

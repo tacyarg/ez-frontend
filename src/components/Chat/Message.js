@@ -12,7 +12,6 @@ import Level from '../Level'
 const Message = ({ id, user, message }) => {
   return (
     <>
-      <Divider my={1} />
       <Box mx={2} key={id}>
         <Flex alignItems="center" p={1} flexWrap="wrap">
           <Avatar size={30} src={user.avatar} mr={2} />
@@ -30,6 +29,7 @@ const Message = ({ id, user, message }) => {
           </Text>
         </Flex>
       </Box>
+      <Divider my={2} />
     </>
   )
 }

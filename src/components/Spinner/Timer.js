@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import {} from 'styled-system'
+import { } from 'styled-system'
 import { Box, Flex } from '../../primitives'
 import Wiring from '../../libs/wiring'
 import Assets from '../Assets'
@@ -56,7 +56,7 @@ const Bar = styled.div`
 const TimerBar = ({ isSoundMuted, timeleft = 0, ...p }) => {
 
   useEffect(() => {
-    if(timeleft > 5 || isSoundMuted) return 
+    if (timeleft > 5 || isSoundMuted) return
     Assets.Sounds.tick.play()
   }, [timeleft])
 
@@ -72,9 +72,18 @@ const TimerBar = ({ isSoundMuted, timeleft = 0, ...p }) => {
 }
 
 TimerBar.CurrentJackpotRound = Wiring.connectMemo(TimerBar, p => {
+  function normalize(value, min=1, max=100) {
+    var delta = max - min;
+    return (value - min) / delta;
+  }
+  const normalTime = normalize(p.jackpot.timeleft)
+  const timeleft = Math.floor(normalTime)
+
+  console.log("time", p.jackpot.timeleft, normalTime, timeleft)
+
   return {
     isSoundMuted: p.isSoundMuted,
-    timeleft: Math.floor(p.jackpot.timeleft / 100),
+    timeleft,
   }
 })
 
