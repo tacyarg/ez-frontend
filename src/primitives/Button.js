@@ -25,6 +25,19 @@ const type = props => {
               opacity: 0.8
           };
         `;
+    case "offwhite":
+      return `
+        box-shadow: 0 2px 0px rgba(0, 0, 0, .5);
+        color: ${theme.colors.backingDark};
+        border: ${theme.colors.offwhiteBorder} ${theme.borders.normal};
+        // background-color: ${theme.colorStyles.textOnPrimary.bgColor};
+        background-image: linear-gradient(290deg, ${theme.colors.offwhiteBorder}, ${theme.colors.offwhite});
+        
+        &:hover,
+        &:focus {
+            opacity: 0.8
+        };
+      `;
     case "steam":
       return `
         box-shadow: 0 2px 0px rgba(0, 0, 0, .5);
@@ -84,7 +97,7 @@ const type = props => {
     case "attention":
       return `
         background-color: ${p =>
-          p.active ? theme.colors.orange : theme.colors.orangeMuted};
+          p.active ? theme.colors.primary : theme.colors.lightPrimary};
         color: ${theme.colors.text};
         
         &:hover,
@@ -117,12 +130,6 @@ const type = props => {
           };
       `;
   }
-};
-
-const disabled = () => {
-  return `
-    pointer: not-allowed;
-  `;
 };
 
 const Button = styled(Text)`

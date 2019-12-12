@@ -31,7 +31,7 @@ const RenderError = ({
 }
 
 // render shallow object.
-const RenderObject = ({ heading, data, ...p }) => {
+const RenderObject = ({ heading, data, children, ...p }) => {
   const valid = !data || typeof data !== 'object' ? false : true
 
   // console.log('RenderObject', data)

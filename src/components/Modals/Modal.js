@@ -32,7 +32,7 @@ const WiredModal = ({
         alignItems="center"
         bg="backingDark"
         borderBottom="1px solid rgba(0, 0, 0, 0.5)"
-        boxShadow= '4px 0px 4px 0px rgba(0, 0, 0, 0.2)'
+        boxShadow='4px 0px 4px 0px rgba(0, 0, 0, 0.2)'
       >
         <Text.Heading fontSize={6}>{title}</Text.Heading>
         <Box mx="auto" />
@@ -41,7 +41,8 @@ const WiredModal = ({
       <Divider />
       {children}
       <Divider />
-      <Flex width={1} p={3}>
+      <Flex width={1} p={3} borderTop="1px solid rgba(0, 0, 0, 0.5)"
+        boxShadow='-4px 0px 4px 0px rgba(0, 0, 0, 0.2)'>
         {onSearch && <Search onSearch={onSearch} />}
         <Box mx="auto" />
         <Button

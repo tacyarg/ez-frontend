@@ -4,7 +4,7 @@ import Profile from './Profile'
 import NotFound from './NotFound'
 import Inventory from './Inventory'
 import Test from './Test'
-import DepositGateway from './DepositGateway'
+import Wallet from './Wallet'
 // import JackpotHistory from './JackpotHistory'
 
 export default {
@@ -14,6 +14,6 @@ export default {
   Profile,
   Inventory,
   Test,
-  DepositGateway,
+  Wallet,
   NotFound,
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 
 // TODO: use the wildcard import
+import Processors from '../assets/images/processors/*.svg'
 
 import Logo from '../assets/images/logo.png'
 import Avatar from '../assets/images/avatar.jpg'
@@ -19,6 +20,7 @@ import UserCog from '../assets/images/icons/user-cog.svg'
 import SignOut from '../assets/images/icons/sign-out-alt.svg'
 import Close from '../assets/images/icons/times.svg'
 import Comments from '../assets/images/icons/comments.svg'
+import Wallet from '../assets/images/icons/wallet.svg'
 
 import VolumeDown from '../assets/images/icons/volume-down.svg'
 import VolumeMute from '../assets/images/icons/volume-mute.svg'
@@ -32,15 +34,6 @@ import User from '../assets/images/icons/user.svg'
 import Edit from '../assets/images/icons/edit.svg'
 import Envelope from '../assets/images/icons/envelope.svg'
 import Key from '../assets/images/icons/key.svg'
-
-// processors
-import Bitcoin from '../assets/images/processors/Bitcoin.svg'
-import Mastercard from '../assets/images/processors/Mastercard.svg'
-import PayPal from '../assets/images/processors/PayPal.svg'
-import Visa from '../assets/images/processors/Visa.svg'
-
-// import Logo from "../assets/images/P2P.svg";
-// import Banner01 from "../assets/images/banner01.png";
 
 // Social
 import Twitter from '../assets/images/icons/twitter.svg'
@@ -56,6 +49,8 @@ import Background from '../assets/images/jackpotBackground.png'
 import ctCoin from '../assets/images/ctfliplogo.png'
 import tCoin from '../assets/images/tfliplogo.png'
 import Wax from '../assets/images/wax-primary-logo.png'
+import Waxpeer from '../assets/images/waxpeer.png'
+import Chipsgg from '../assets/images/chipsgg.png'
 
 import RollSound from '../assets/sounds/rollSound.mp3'
 import NewBetSound from '../assets/sounds/newBetSound.mp3'
@@ -108,13 +103,8 @@ const sets = mapAssets({
     Comments,
     ctCoin,
     tCoin,
-    Steam
-  },
-  Processors: {
-    Bitcoin,
-    Mastercard,
-    PayPal,
-    Visa,
+    Steam,
+    Wallet
   },
   Banners: {
     // Banner01
@@ -135,8 +125,15 @@ export default {
     tick: new Audio(TickSound)
   },
   Wax: p => <Image src={Wax} {...p} />,
+  Waxpeer: p => <Image src={Waxpeer} {...p} />,
+  Chipsgg: p => <Image src={Chipsgg} {...p} />,
   Logo: p => <Image src={Logo} {...p} />,
   Avatar: p => <Image size={[28, 40]} src={Avatar} m={2} {...p} />,
+  Processors: Object.keys(Processors).reduce((memo, k) => {
+    const src = Processors[k]
+    memo[k] = p => <Image src={src} width={128} height={64} {...p} />
+    return memo
+  }, {}),
   Background: ({ children, ...p }) => {
     return (
       <Image
@@ -164,14 +161,14 @@ export default {
           {...p}
         />
       ) : (
-        <Image
-          style={{ cursor: 'pointer' }}
-          size={[32, 64]}
-          src={ctCoin}
-          m={2}
-          {...p}
-        />
-      ),
+          <Image
+            style={{ cursor: 'pointer' }}
+            size={[32, 64]}
+            src={ctCoin}
+            m={2}
+            {...p}
+          />
+        ),
     tCoin: p =>
       p.selected ? (
         <Image
@@ -184,13 +181,13 @@ export default {
           {...p}
         />
       ) : (
-        <Image
-          style={{ cursor: 'pointer' }}
-          size={[32, 64]}
-          src={tCoin}
-          m={2}
-          {...p}
-        />
-      ),
+          <Image
+            style={{ cursor: 'pointer' }}
+            size={[32, 64]}
+            src={tCoin}
+            m={2}
+            {...p}
+          />
+        ),
   },
 }
