@@ -1,20 +1,5 @@
-import LogRocket from 'logrocket';
-import setupLogRocketReact from 'logrocket-react';
-LogRocket.init('chipsoft/ezrage');
-setupLogRocketReact(LogRocket);
-
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
-
-// if (process.env.NODE_ENV !== 'production') {
-//   const whyDidYouRender = require('@welldone-software/why-did-you-render')
-//   whyDidYouRender(React, {
-//     onlyLogs: true,
-//     titleColor: 'green',
-//     diffNameColor: 'darkturquoise',
-//   })
-// }
-
 import { BrowserRouter, HashRouter, Switch, Route } from 'react-router-dom'
 
 import App from './App'

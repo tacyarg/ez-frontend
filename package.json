@@ -58,10 +58,13 @@
     "start": "parcel index.html",
     "build": "parcel build index.html --out-dir dist && yarn deletemaps",
     "deletemaps": "find . -type f -name *.map -delete",
+    "lint": "prettier-eslint --write '**/*.{js,jsx}' --no-semi --trailing-comma es5 --tab-width 2 --single-quote",
     "delete-locks": "find . -type f -name package-lock.json -delete && find . -type f -name yarn.lock -delete",
     "delete-modules": "find . -type d -name node_modules -exec rm -rf \"{}\" +",
     "mass-install": "find . -maxdepth 1 -type d \\( ! -name . \\) -exec bash -c \"cd '{}' && npm install\" \\;",
-    "cleanup": "yarn delete-locks && yarn delete-modules"
+    "cleanup": "yarn delete-locks && yarn delete-modules",
+    "zipdist": "zip dist.zip dist/*",
+    "build-prod": "yarn cleanup && yarn && yarn build && yarn zipdist"
   },
   "targets": {
     "chrome": "58",
